@@ -48,7 +48,7 @@
 #'# If not searching for critical constants, we use only the observed p-values
 #'sorted.pvals <- sort(raw.pvalues)
 #'y.DLR.fast <- kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
-#'y.NDGR.fast <- kernel_DGR_fast(pCDFlist, sorted.pvals, FALSE)
+#'y.NDGR.fast <- kernel_DGR_fast(pCDFlist, sorted.pvals, FALSE)$pval.transf
 #'# transformed values
 #'y.DLR.fast
 #'y.NDGR.fast

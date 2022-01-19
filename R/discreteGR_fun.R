@@ -99,7 +99,7 @@ discrete.GR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adaptiv
     idx <- which(sorted.pvals > crit.constants)
   }else{
     # compute transformed sorted p-values
-    y <- kernel_DGR_fast(pCDFlist, sorted.pvals, adaptive, alpha)
+    y <- kernel_DGR_fast(pCDFlist, sorted.pvals, adaptive, alpha)$pval.transf
     # determine significant (transformed) p-values
     idx <- which(y > zeta)
   }

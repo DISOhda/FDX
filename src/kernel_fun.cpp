@@ -47,7 +47,7 @@
 //'# If not searching for critical constants, we use only the observed p-values
 //'sorted.pvals <- sort(raw.pvalues)
 //'y.DLR.fast <- kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
-//'y.NDGR.fast <- kernel_DGR_fast(pCDFlist, sorted.pvals, FALSE)
+//'y.NDGR.fast <- kernel_DGR_fast(pCDFlist, sorted.pvals, FALSE)$pval.transf
 //'# transformed values
 //'y.DLR.fast
 //'y.NDGR.fast
@@ -470,7 +470,7 @@ List kernel_DLR_crit(const List &pCDFlist, const NumericVector &pvalues, const N
 //'@rdname kernel
 //'@export
 // [[Rcpp::export]]
-NumericVector kernel_DGR_fast(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05) {
+List kernel_DGR_fast(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05) {
   // number of tests
   int numTests = pCDFlist.length();
   // form logarithms of pCDFlist
@@ -482,6 +482,8 @@ NumericVector kernel_DGR_fast(const List &pCDFlist, const NumericVector &pvalues
   IntegerVector a = IntegerVector(NumericVector(floor(seq_m * alpha)));
   // vector to store transformed p-values
   NumericVector pval_transf(numTests);
+  // vector to store computed binomial probabilities
+  NumericVector probs(numTests);
   
   // log p-value support
   NumericVector log_pv_list = log(1 - pvalues);
@@ -531,13 +533,14 @@ NumericVector kernel_DGR_fast(const List &pCDFlist, const NumericVector &pvalues
       }
       // compute logarithms to avoid numerical problems
       // sum => log of product of probabilities
-      double s = sum(pv);
-      pval_transf[idx_pval] = R::pbinom(a[idx_pval], numSum, 1 - std::exp(s / numSum), false, false);
+      double s = sum(pv) / numSum;
+      probs[idx_pval] = 1 - std::exp(s);
+      pval_transf[idx_pval] = R::pbinom(a[idx_pval], numSum, probs[idx_pval], false, false);
     }
   }
   
   // output
-  return pval_transf;
+  return List::create(Named("pval.transf") = pval_transf, Named("bin.probs") = probs);//pval_transf;
 }
 
 //'@rdname kernel

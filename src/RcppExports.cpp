@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // kernel_DLR_fast
 NumericVector kernel_DLR_fast(const List& pCDFlist, const NumericVector& pvalues, const bool adaptive, const double alpha, const bool stepUp, const double zeta, const NumericVector& support);
 RcppExport SEXP _FDX_kernel_DLR_fast(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP stepUpSEXP, SEXP zetaSEXP, SEXP supportSEXP) {
@@ -40,7 +45,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // kernel_DGR_fast
-NumericVector kernel_DGR_fast(const List& pCDFlist, const NumericVector& pvalues, const bool adaptive, const double alpha);
+List kernel_DGR_fast(const List& pCDFlist, const NumericVector& pvalues, const bool adaptive, const double alpha);
 RcppExport SEXP _FDX_kernel_DGR_fast(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

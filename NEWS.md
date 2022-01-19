@@ -1,13 +1,18 @@
+# FDX 1.0.4
+* Minor modification to `kernel_DGR_fast` C++ function to return approximated
+  binomial probabilities, too.
+* Added GitHub.
+
 # FDX 1.0.3
 * Necessary updates due to changed signatures of imported functions of package
-  PoissonBinomial
+  PoissonBinomial.
 
 # FDX 1.0.2
 * Minor improvements to internal functions to achieve better accuracy for upper
   tail Poisson binomial probabilities.
 
 # FDX 1.0.1
-* Fixed a bug that prevented compilation on Solaris and clang configurations
+* Fixed a bug that prevented compilation on Solaris and clang configurations.
 
 # FDX 1.0.0
 
