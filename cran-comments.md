@@ -3,7 +3,7 @@
 # Tests
 
 ## Environments
-* local Manjaro Linux install, R 4.1.2
+* local Manjaro Linux install, R 4.2.1
 * win-builder (release, oldrelease, devel)
 * R-hub (configurations: "Check for CRAN", with sanitizers", "with valgrind")
 

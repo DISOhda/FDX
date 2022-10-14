@@ -208,9 +208,10 @@ plot.FDX <- function(x, col = c(2, 4, 1), pch = c(1, 1, 1), lwd = c(1, 1, 1), ty
 #'
 #'@importFrom graphics plot abline mtext
 #'@importFrom stats stepfun ecdf p.adjust
+#'@importFrom methods is
 #'@export
 rejection.path <- function(x, xlim = NULL, ylim = NULL, main = NULL, xlab = expression(zeta), ylab = "Number of Rejections", verticals = FALSE, pch = 19, ref.show = FALSE, ref.col = "gray", ref.lty = 2, ref.lwd = 2, ...){
-  if(class(x) != "FDX") stop("'x' must be an object of class 'FDX'!")
+  if(!is(x, "FDX")) stop("'x' must be an object of class 'FDX'!")
   # number of hypotheses
   m <- length(x$Data$raw.pvalues)
   # number of BH rejections

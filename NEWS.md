@@ -1,3 +1,7 @@
+# FDX 1.0.5
+* Fixed a severe bug that produced completely wrong critical constants of the 
+  continuous Guo-Romano and Lehmann-Romano procedure.
+
 # FDX 1.0.4
 * Minor modification to `kernel_DGR_fast` C++ function to return approximated
   binomial probabilities, too.

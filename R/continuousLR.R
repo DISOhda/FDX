@@ -105,9 +105,9 @@ continuous.LR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE
   # find critical constants
   if(critical.values){
     if(adaptive){
-      crit.constants <- zeta * a / (m - 1:m + a)
+      crit.constants <- alpha * a / (m - 1:m + a)
     }else{
-      crit.constants <- zeta * a / m ######################### does non-adaptive version exist for LR?
+      crit.constants <- alpha * a / m ######################### does non-adaptive version exist for LR?
     }
   }
   
