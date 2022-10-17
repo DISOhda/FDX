@@ -106,9 +106,9 @@ continuous.GR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE
   # find critical constants
   if(critical.values){
     if (adaptive){
-      crit.constants <- qbeta(alpha, a, m - 1:m + 1)
+      crit.constants <- qbeta(zeta, a, m - 1:m + 1)
     }else{
-      crit.constants <- qbeta(alpha, a, m - a + 1)
+      crit.constants <- qbeta(zeta, a, m - a + 1)
     }
   }
   

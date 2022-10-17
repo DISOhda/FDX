@@ -1,8 +1,8 @@
 Package: FDX
 Type: Package
 Title: False Discovery Exceedance Controlling Multiple Testing Procedures
-Version: 1.0.5
-Date: 2022-10-14
+Version: 1.0.6
+Date: 2022-10-17
 Authors@R: c(person("Sebastian", "Döhler", role = "aut"), person("Florian","Junge", role = c("aut", "cre"), email = "florian.junge@h-da.de"), person("Etienne", "Roquain", role = "ctb"))
 Maintainer: Florian Junge <florian.junge@h-da.de>
 Language: en-US

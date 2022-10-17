@@ -1,6 +1,9 @@
+# FDX 1.0.6
+* The "fix" of 1.0.5 could cause even more trouble and has been corrected.
+
 # FDX 1.0.5
 * Fixed a severe bug that produced completely wrong critical constants of the 
-  continuous Guo-Romano and Lehmann-Romano procedure.
+  **continuous** Guo-Romano and Lehmann-Romano procedures.
 
 # FDX 1.0.4
 * Minor modification to `kernel_DGR_fast` C++ function to return approximated
