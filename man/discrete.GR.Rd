@@ -98,8 +98,8 @@ summary(NDGR.crit)
 
 }
 \seealso{
-\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-\code{\link{discrete.PB}}, \code{\link{weighted.LR}},
-\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
+\code{\link{kernel}}, \code{\link[=FDX-package]{FDX}}, \code{\link[=continuous.LR]{continuous.LR()}},
+\code{\link[=continuous.GR]{continuous.GR()}}, \code{\link[=discrete.LR]{discrete.LR()}},
+\code{\link[=discrete.PB]{discrete.PB()}}, \code{\link[=weighted.LR]{weighted.LR()}},
+\code{\link[=weighted.GR]{weighted.GR()}}, \code{\link[=weighted.PB]{weighted.PB()}}
 }

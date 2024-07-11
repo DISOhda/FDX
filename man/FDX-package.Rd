@@ -2,6 +2,7 @@
 % Please edit documentation in R/FDX.R
 \docType{package}
 \name{FDX-package}
+\alias{FDX}
 \alias{FDX-package}
 \title{False Discovery Exceedance (FDX) Control for Heterogeneous and Discrete Tests}
 \description{
@@ -10,27 +11,27 @@ heterogeneous and discrete tests (see Reference).
 }
 \details{
 The functions are reorganized from the reference paper in the following way.
-\code{discrete.LR} (for Discrete Lehmann-Romano) implements [DLR],
-\code{discrete.GR} (for Discrete Guo-Romano) implements [DGR] and
-\code{discrete.PB} (for Discrete Poisson-Binomial) implements [DPB].
-\code{DLR} and \code{NDLR} are wrappers for \code{discrete.LR} to access
-[DLR] and its non-adaptive version directly. Likewise, \code{DGR},
-\code{NDGR}, \code{DPB} and \code{NDPB} are wrappers for
-\code{discrete.GR} and \code{discrete.PB}, respectively. Their main
+\code{\link[=discrete.LR]{discrete.LR()}} (for Discrete Lehmann-Romano) implements [DLR],
+\code{\link[=discrete.GR]{discrete.GR()}} (for Discrete Guo-Romano) implements [DGR] and
+\code{\link[=discrete.PB]{discrete.PB()}} (for Discrete Poisson-Binomial) implements [DPB].
+\code{\link[=DLR]{DLR()}} and \code{\link[=NDLR]{NDLR()}} are wrappers for \code{\link[=discrete.LR]{discrete.LR()}} to access
+[DLR] and its non-adaptive version directly. Likewise, \code{\link[=DGR]{DGR()}},
+\code{\link[=NDGR]{NDGR()}}, \code{\link[=DPB]{DPB()}} and \code{\link[=NDPB]{NDPB()}} are wrappers for
+\code{\link[=discrete.GR]{discrete.GR()}} and \code{\link[=discrete.PB]{discrete.PB()}}, respectively. Their main
 parameters are a vector of raw observed p-values and a list of the same
 length, whose elements are the discrete supports of the CDFs of the p-values.
 
-In the same fashion, \code{weighted.LR} (for Weighted Lehmann-Romano),
-\code{weighted.GR} (for Weighted Guo-Romano) and \code{weighted.PB}
+In the same fashion, \code{\link[=weighted.LR]{weighted.LR()}} (for Weighted Lehmann-Romano),
+\code{\link[=weighted.GR]{weighted.GR()}} (for Weighted Guo-Romano) and \code{\link[=weighted.PB]{weighted.PB()}}
 (for Weighted Poisson-Binomial) implement [wLR], [wGR] and [wGR],
-respectively. They also possess wrapper functions, namely \code{wLR.AM},
-\code{wGR.AM} and \code{wPB.AM} for arithmetic weighting, and \code{wLR.GM},
-\code{wPB.GM} and \code{wPB.GM} for geometric weighting.
+respectively. They also possess wrapper functions, namely \code{\link[=wLR.AM]{wLR.AM()}},
+\code{\link[=wGR.AM]{wGR.AM()}} and \code{\link[=wPB.AM]{wPB.AM()}} for arithmetic weighting, and \code{\link[=wLR.GM]{wLR.GM()}},
+\code{\link[=wPB.GM]{wPB.GM()}} and \code{\link[=wPB.GM]{wPB.GM()}} for geometric weighting.
 
-The functions \code{fast.Discrete.LR}, \code{fast.Discrete.GR}
-and \code{fast.Discrete.PB} are wrappers for
-\code{\link[DiscreteFDR]{fisher.pvalues.support}} and \code{discrete.LR},
-\code{discrete.GR} and \code{discrete.PB}, respectively, which allow to apply
+The functions \code{\link[=fast.Discrete.LR]{fast.Discrete.LR()}}, \code{\link[=fast.Discrete.GR]{fast.Discrete.GR()}}
+and \code{\link[=fast.Discrete.PB]{fast.Discrete.PB()}} are wrappers for
+\code{\link[DiscreteFDR:fisher.pvalues.support]{DiscreteFDR::fisher.pvalues.support()}} and \code{\link[=discrete.LR]{discrete.LR()}},
+\code{\link[=discrete.GR]{discrete.GR()}} and \code{\link[=discrete.PB]{discrete.PB()}}, respectively, which allow to apply
 discrete procedures directly to a data set of contingency tables.
 }
 \section{References}{
@@ -40,3 +41,25 @@ Heterogeneous Tests.
 \href{https://arxiv.org/abs/1912.04607v1}{arXiv:1912.04607v1}.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/DISOhda/FDX}
+  \item Report bugs at \url{https://github.com/DISOhda/FDX/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Florian Junge \email{florian.junge@h-da.de}
+
+Authors:
+\itemize{
+  \item Sebastian Döhler
+}
+
+Other contributors:
+\itemize{
+  \item Etienne Roquain [contributor]
+}
+
+}

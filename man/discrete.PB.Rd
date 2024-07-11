@@ -61,7 +61,6 @@ A \code{FDX} S3 class object whose elements are:
 \item{FDP.threshold}{FDP threshold \code{alpha}.}
 \item{Exceedance.probability}{Probability \code{zeta} of FDP exceeding \code{alpha}; thus, FDP is being controlled at level \code{alpha} with confidence \code{1 - zeta}.}
 
-
 \item{Data$raw.pvalues}{The values of \code{raw.pvalues}.}
 \item{Data$pCDFlist}{The values of \code{pCDFlist}.}
 
@@ -117,8 +116,8 @@ summary(NDPB.crit)
 
 }
 \seealso{
-\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-\code{\link{discrete.GR}}, \code{\link{weighted.LR}},
-\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
+\code{\link{kernel}}, \code{\link[=FDX-package]{FDX}}, \code{\link[=continuous.LR]{continuous.LR()}},
+\code{\link[=continuous.GR]{continuous.GR()}}, \code{\link[=discrete.LR]{discrete.LR()}},
+\code{\link[=discrete.GR]{discrete.GR()}}, \code{\link[=weighted.LR]{weighted.LR()}},
+\code{\link[=weighted.GR]{weighted.GR()}}, \code{\link[=weighted.PB]{weighted.PB()}}
 }

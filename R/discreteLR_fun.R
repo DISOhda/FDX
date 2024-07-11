@@ -1,73 +1,74 @@
-#'@name discrete.LR
-#'
-#'@title Discrete Lehmann-Romano procedure
-#'
-#'@description
-#'Apply the [DLR] procedure, with or without computing the critical values, to
-#'a set of p-values and their discrete support. Both step-down and step-up
-#'procedures can be computed and non-adaptive versions are available as well.
-#'
-#'@details
-#'\code{DLR} and \code{NDLR} are wrapper functions for \code{discrete.LR}.
-#'The first one simply passes all its parameters to \code{discrete.LR} with
-#'\code{adaptive = TRUE} and \code{NDLR} does the same with
-#'\code{adaptive = FALSE}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-#'\code{\link{continuous.GR}}, \code{\link{discrete.GR}}, 
-#'\code{\link{discrete.PB}}, \code{\link{weighted.LR}},
-#'\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist TRUE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction TRUE
-#'@templateVar adaptive TRUE
-#'@templateVar critical.values TRUE
-#'@templateVar exact FALSE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights FALSE
-#'@templateVar weighting.method FALSE
-#'@template param
+#' @name discrete.LR
 #' 
-#'@section References:
-#' S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
-#' Heterogeneous Tests.
-#' \href{https://arxiv.org/abs/1912.04607v1}{arXiv:1912.04607v1}.
+#' @title
+#' Discrete Lehmann-Romano procedure
+#' 
+#' @description
+#' Apply the \[DLR\] procedure, with or without computing the critical values,
+#' to a set of p-values and their discrete support. Both step-down and step-up
+#' procedures can be computed and non-adaptive versions are available as well.
+#' 
+#' @details
+#' `DLR` and `NDLR` are wrapper functions for `discrete.LR`.
+#' The first one simply passes all its parameters to `discrete.LR` with
+#' `adaptive = TRUE` and `NDLR` does the same with
+#' `adaptive = FALSE`.
+#' 
+#' @seealso
+#' [`kernel`], [`FDX`][FDX-package], [`continuous.LR()`],
+#' [`continuous.GR()`], [`discrete.GR()`], 
+#' [`discrete.PB()`], [`weighted.LR()`],
+#' [`weighted.GR()`], [`weighted.PB()`]
+#' 
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction TRUE
+#' @templateVar adaptive TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact FALSE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights FALSE
+#' @templateVar weighting.method FALSE
+#' @template param
+#' 
+#' @section References:
+#'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
+#'  Heterogeneous Tests.
+#'  [arXiv:1912.04607v1](https://arxiv.org/abs/1912.04607v1).
 #'
-#'@template example
-#'@examples
-#'
-#'DLR.sd.fast <- DLR(raw.pvalues, pCDFlist)
-#'summary(DLR.sd.fast)
-#'DLR.su.fast <- DLR(raw.pvalues, pCDFlist, direction = "su")
-#'summary(DLR.su.fast)
-#'
-#'DLR.sd.crit <- DLR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'summary(DLR.sd.crit)
-#'DLR.su.crit <- DLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
-#'summary(DLR.su.crit)
-#'
-#'NDLR.sd.fast <- NDLR(raw.pvalues, pCDFlist)
-#'summary(NDLR.sd.fast)
-#'NDLR.su.fast <- NDLR(raw.pvalues, pCDFlist, direction = "su")
-#'summary(NDLR.su.fast)
-#'
-#'NDLR.sd.crit <- NDLR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'summary(NDLR.sd.crit)
-#'NDLR.su.crit <- NDLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
-#'summary(NDLR.su.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@template return
-#'
-#'@importFrom DiscreteFDR match.pvals
-#'@export
+#' @template example
+#' @examples
+#' 
+#' DLR.sd.fast <- DLR(raw.pvalues, pCDFlist)
+#' summary(DLR.sd.fast)
+#' DLR.su.fast <- DLR(raw.pvalues, pCDFlist, direction = "su")
+#' summary(DLR.su.fast)
+#' 
+#' DLR.sd.crit <- DLR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(DLR.sd.crit)
+#' DLR.su.crit <- DLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
+#' summary(DLR.su.crit)
+#' 
+#' NDLR.sd.fast <- NDLR(raw.pvalues, pCDFlist)
+#' summary(NDLR.sd.fast)
+#' NDLR.su.fast <- NDLR(raw.pvalues, pCDFlist, direction = "su")
+#' summary(NDLR.su.fast)
+#' 
+#' NDLR.sd.crit <- NDLR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(NDLR.sd.crit)
+#' NDLR.su.crit <- NDLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
+#' summary(NDLR.su.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @template return
+#' 
+#' @importFrom DiscreteFDR match.pvals
+#' @export
 discrete.LR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, direction = "sd", adaptive = TRUE, critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
@@ -198,14 +199,14 @@ discrete.LR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, directi
   return(output)
 }
 
-#'@rdname discrete.LR
-#'@export
+#' @rdname discrete.LR
+#' @export
 DLR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, direction = "sd", critical.values = FALSE){
   return(discrete.LR(raw.pvalues, pCDFlist, alpha, zeta, direction, TRUE, critical.values))
 }
 
-#'@rdname discrete.LR
-#'@export
+#' @rdname discrete.LR
+#' @export
 NDLR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, direction = "sd", critical.values = FALSE){
   return(discrete.LR(raw.pvalues, pCDFlist, alpha, zeta, direction, FALSE, critical.values))
 }

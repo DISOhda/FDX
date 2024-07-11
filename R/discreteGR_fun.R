@@ -1,67 +1,68 @@
-#'@name discrete.GR
-#'
-#'@title Discrete Guo-Romano procedure
-#'
-#'@description
-#'Apply the [DGR] procedure, with or without computing the critical values, to
-#'a set of p-values and their discrete support. A non-adaptive version is
-#'available as well.
-#'
-#'@details
-#'\code{DGR} and \code{NDGR} are wrapper functions for \code{discrete.GR}.
-#'The first one simply passes all its parameters to \code{discrete.GR} with
-#'\code{adaptive = TRUE} and \code{NDGR} does the same with
-#'\code{adaptive = FALSE}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-#'\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-#'\code{\link{discrete.PB}}, \code{\link{weighted.LR}},
-#'\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist TRUE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction FALSE
-#'@templateVar adaptive TRUE
-#'@templateVar critical.values TRUE
-#'@templateVar exact FALSE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights FALSE
-#'@templateVar weighting.method FALSE
-#'@template param
+#' @name discrete.GR
 #' 
-#'@section References:
-#' S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
-#' Heterogeneous Tests.
-#' \href{https://arxiv.org/abs/1912.04607v1}{arXiv:1912.04607v1}.
-#'
-#'@template example
-#'@examples
-#'
-#'DGR.fast <- DGR(raw.pvalues, pCDFlist)
-#'summary(DGR.fast)
-#'
-#'DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'summary(DGR.crit)
-#'
-#'NDGR.fast <- NDGR(raw.pvalues, pCDFlist)
-#'summary(NDGR.fast)
-#'
-#'NDGR.crit <- NDGR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'summary(NDGR.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@templateVar Adaptive TRUE
-#'@templateVar Weighting FALSE
-#'@template return
-#'
-#'@importFrom DiscreteFDR match.pvals
-#'@export
+#' @title
+#' Discrete Guo-Romano procedure
+#' 
+#' @description
+#' Apply the \[DGR\] procedure, with or without computing the critical values, to
+#' a set of p-values and their discrete support. A non-adaptive version is
+#' available as well.
+#' 
+#' @details
+#' `DGR` and `NDGR` are wrapper functions for `discrete.GR`.
+#' The first one simply passes all its parameters to `discrete.GR` with
+#' `adaptive = TRUE` and `NDGR` does the same with
+#' `adaptive = FALSE`.
+#' 
+#' @seealso
+#' [`kernel`], [`FDX`][FDX-package], [`continuous.LR()`],
+#' [`continuous.GR()`], [`discrete.LR()`], 
+#' [`discrete.PB()`], [`weighted.LR()`],
+#' [`weighted.GR()`], [`weighted.PB()`]
+#' 
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction FALSE
+#' @templateVar adaptive TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact FALSE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights FALSE
+#' @templateVar weighting.method FALSE
+#' @template param
+#'  
+#' @section References:
+#'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
+#'  Heterogeneous Tests.
+#'  [arXiv:1912.04607v1](https://arxiv.org/abs/1912.04607v1).
+#' 
+#' @template example
+#' @examples
+#' 
+#' DGR.fast <- DGR(raw.pvalues, pCDFlist)
+#' summary(DGR.fast)
+#' 
+#' DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(DGR.crit)
+#' 
+#' NDGR.fast <- NDGR(raw.pvalues, pCDFlist)
+#' summary(NDGR.fast)
+#' 
+#' NDGR.crit <- NDGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(NDGR.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @templateVar Adaptive TRUE
+#' @templateVar Weighting FALSE
+#' @template return
+#' 
+#' @importFrom DiscreteFDR match.pvals
+#' @export
 discrete.GR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
@@ -155,14 +156,14 @@ discrete.GR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adaptiv
   return(output)
 }
 
-#'@rdname discrete.GR
-#'@export
+#' @rdname discrete.GR
+#' @export
 DGR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(discrete.GR(raw.pvalues, pCDFlist, alpha, zeta, TRUE, critical.values))
 }
 
-#'@rdname discrete.GR
-#'@export
+#' @rdname discrete.GR
+#' @export
 NDGR <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(discrete.GR(raw.pvalues, pCDFlist, alpha, zeta, FALSE, critical.values))
 }

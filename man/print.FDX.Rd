@@ -7,7 +7,7 @@
 \method{print}{FDX}(x, ...)
 }
 \arguments{
-\item{x}{an object of class "\code{FDX}".}
+\item{x}{object of class \code{FDX}.}
 
 \item{...}{further arguments to be passed to or from other methods.
 They are ignored in this function.}

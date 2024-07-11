@@ -69,9 +69,9 @@ The first one simply passes all its parameters to \code{weighted.PB} with
 \examples{
 # Construction of the p-values and their supports for weighted methods
 raw.pvalues.weighted <- c(0.7389727, 0.1882310, 0.1302457, 0.9513677,
-                         0.7592122, 0.0100559, 0.0000027, 0.1651034)
+                          0.7592122, 0.0100559, 0.0000027, 0.1651034)
 weights <- c(0.7947122, 1.2633867, 2.8097858, 2.2112801,
-            2.3878654, 1.2389620, 2.3878654, 0.7947122)
+             2.3878654, 1.2389620, 2.3878654, 0.7947122)
 
 wPB.AM.fast <- wPB.AM(raw.pvalues.weighted, weights)
 summary(wPB.AM.fast)
@@ -87,8 +87,8 @@ summary(wPB.GM.crit)
 
 }
 \seealso{
-\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-\code{\link{discrete.GR}}, \code{\link{discrete.PB}}, 
-\code{\link{weighted.LR}}, \code{\link{weighted.GR}}
+\code{\link{kernel}}, \code{\link[=FDX-package]{FDX}}, \code{\link[=continuous.LR]{continuous.LR()}},
+\code{\link[=continuous.GR]{continuous.GR()}}, \code{\link[=discrete.LR]{discrete.LR()}},
+\code{\link[=discrete.GR]{discrete.GR()}}, \code{\link[=discrete.PB]{discrete.PB()}},
+\code{\link[=weighted.LR]{weighted.LR()}}, \code{\link[=weighted.GR]{weighted.GR()}}
 }

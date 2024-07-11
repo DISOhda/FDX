@@ -1,25 +1,25 @@
-#'@title Printing FDX results
-#'
-#'@description
-#'Prints the results of discrete FDX analysis, stored in a \code{FDX}
-#'S3 class object.
-#'
-#'@return
-#'The respective input object is invisibly returned via \code{invisible(x)}. 
-#'
-#'@param x          an object of class "\code{FDX}".
-#'@param ...        further arguments to be passed to or from other methods.
-#'                  They are ignored in this function.
-#'
-#'@template example
-#'@examples
-#'
-#'DPB.crit <- DPB(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'print(DPB.crit)
-#'
-#'@method print FDX
-#'@importFrom stats p.adjust
-#'@export
+#' @title Printing FDX results
+#' 
+#' @description
+#' Prints the results of discrete FDX analysis, stored in a `FDX`
+#' S3 class object.
+#' 
+#' @return
+#' The respective input object is invisibly returned via `invisible(x)`. 
+#' 
+#' @param x          object of class `FDX`.
+#' @param ...        further arguments to be passed to or from other methods.
+#'                   They are ignored in this function.
+#' 
+#' @template example
+#' @examples
+#' 
+#' DPB.crit <- DPB(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' print(DPB.crit)
+#' 
+#' @method print FDX
+#' @importFrom stats p.adjust
+#' @export
 ## S3 method for class 'FDX'
 print.FDX <- function(x, ...){
   m <- length(x$Data$raw.pvalues)

@@ -97,13 +97,13 @@ weighting.}
 }
 \value{
 For ".fast" kernels, a vector of transformed p-values is returned; ".crit"
-kernels return a list object with critical constants (\code{$crit.consts})
-and transformed p-values (\code{$pval.transf}).
+kernels return a list object with critical constants (\verb{$crit.consts})
+and transformed p-values (\verb{$pval.transf}).
 }
 \description{
 Kernel functions transform observed p-values or their support according to
-[HLR], [PB] and [HGR]. The output is used by \code{\link{discrete.LR}},
-\code{\link{discrete.PB}} and \code{\link{discrete.GR}}, respectively.
+[HLR], [PB] and [HGR]. The output is used by \code{\link[=discrete.LR]{discrete.LR()}},
+\code{\link[=discrete.PB]{discrete.PB()}} and \code{\link[=discrete.GR]{discrete.GR()}}, respectively.
 For each procedure, there is a kernel for fast computation and one for
 calculation of critical values. Kernels followed by ".crit", e.g.
 \code{kernel.DGR.crit}, compute and return these critical values, while
@@ -149,8 +149,8 @@ y.NDPB.crit$pval.transf
 
 }
 \seealso{
-\code{\link{FDX-package}}, \code{\link{discrete.LR}}
-\code{\link{discrete.GR}}, \code{\link{discrete.PB}},
-\code{\link{weighted.LR}}, \code{\link{weighted.GR}},
-\code{\link{discrete.PB}}
+\code{\link[=FDX-package]{FDX}}, \code{\link[=discrete.LR]{discrete.LR()}}
+\code{\link[=discrete.GR]{discrete.GR()}}, \code{\link[=discrete.PB]{discrete.PB()}},
+\code{\link[=weighted.LR]{weighted.LR()}}, \code{\link[=weighted.GR]{weighted.GR()}},
+\code{\link[=discrete.PB]{discrete.PB()}}
 }

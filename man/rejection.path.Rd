@@ -21,10 +21,10 @@ rejection.path(
 )
 }
 \arguments{
-\item{x}{an object of class "\code{FDX}".}
+\item{x}{object of class "\code{FDX}".}
 
-\item{xlim}{the x limits of the plot. If \code{NULL} (default),
-the (0, 1) range is used.}
+\item{xlim}{x axis limits of the plot. If \code{NULL} (default),
+the [0, 1] range is used.}
 
 \item{ylim}{the y limits of the plot. If \code{NULL} (default),
 the double of the median of the number of possible
@@ -49,7 +49,7 @@ procedure.}
 
 \item{ref.lty, ref.lwd}{line type and thickness for the reference line.}
 
-\item{...}{further arguments to \code{\link{plot.stepfun}}.}
+\item{...}{further arguments to \code{\link[stats:plot.stepfun]{stats::plot.stepfun()}}.}
 }
 \value{
 Invisibly returns a \code{stepfun} object that computes the number of

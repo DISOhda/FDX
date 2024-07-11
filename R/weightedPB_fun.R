@@ -1,65 +1,66 @@
-#'@name weighted.PB
-#'
-#'@title Weighted Poisson-Binomial Procedure
-#'
-#'@description
-#'Apply the weighted [wPB] procedure, with or without computing the
-#'critical values, to a set of p-values. Both arithmetic and geometric
-#'weighting are available. Additionally, the user can choose between exact
-#'computation of the Poisson-Binomial distribution or a refined normal
-#'approximation.
-#'
-#'@details
-#'\code{wPB.AM} and \code{wPB.GM} are wrapper functions for \code{weighted.PB}.
-#'The first one simply passes all its parameters to \code{weighted.PB} with
-#'\code{weighting.method = "AM"} and \code{wPB.GM} does the same with
-#'\code{weighting.method = "GM"}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-#'\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-#'\code{\link{discrete.GR}}, \code{\link{discrete.PB}}, 
-#'\code{\link{weighted.LR}}, \code{\link{weighted.GR}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist FALSE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction FALSE
-#'@templateVar adaptive FALSE
-#'@templateVar critical.values TRUE
-#'@templateVar exact TRUE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights TRUE
-#'@templateVar weighting.method TRUE
-#'@template param 
-#'
-#'@template exampleWeighted
-#'@examples
-#'
-#'wPB.AM.fast <- wPB.AM(raw.pvalues.weighted, weights)
-#'summary(wPB.AM.fast)
-#'
-#'wPB.AM.crit <- wPB.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
-#'summary(wPB.AM.crit)
-#'
-#'wPB.GM.fast <- wPB.GM(raw.pvalues.weighted, weights)
-#'summary(wPB.GM.fast)
-#'
-#'wPB.GM.crit <- wPB.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
-#'summary(wPB.GM.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@templateVar Adaptive FALSE
-#'@templateVar Weighting TRUE
-#'@template return
-#'
-#'@importFrom pracma fzero
-#'@importFrom PoissonBinomial ppbinom
-#'@export
+#' @name weighted.PB
+#' 
+#' @title
+#' Weighted Poisson-Binomial Procedure
+#' 
+#' @description
+#' Apply the weighted \[wPB\] procedure, with or without computing the
+#' critical values, to a set of p-values. Both arithmetic and geometric
+#' weighting are available. Additionally, the user can choose between exact
+#' computation of the Poisson-Binomial distribution or a refined normal
+#' approximation.
+#' 
+#' @details
+#' `wPB.AM` and `wPB.GM` are wrapper functions for `weighted.PB`.
+#' The first one simply passes all its parameters to `weighted.PB` with
+#' `weighting.method = "AM"` and `wPB.GM` does the same with
+#' `weighting.method = "GM"`.
+#' 
+#' @seealso
+#' [`kernel`], [`FDX`][`FDX-package`], [`continuous.LR()`],
+#' [`continuous.GR()`], [`discrete.LR()`], 
+#' [`discrete.GR()`], [`discrete.PB()`], 
+#' [`weighted.LR()`], [`weighted.GR()`]
+#' 
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist FALSE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction FALSE
+#' @templateVar adaptive FALSE
+#' @templateVar critical.values TRUE
+#' @templateVar exact TRUE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights TRUE
+#' @templateVar weighting.method TRUE
+#' @template param 
+#' 
+#' @template exampleWeighted
+#' @examples
+#' 
+#' wPB.AM.fast <- wPB.AM(raw.pvalues.weighted, weights)
+#' summary(wPB.AM.fast)
+#' 
+#' wPB.AM.crit <- wPB.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
+#' summary(wPB.AM.crit)
+#' 
+#' wPB.GM.fast <- wPB.GM(raw.pvalues.weighted, weights)
+#' summary(wPB.GM.fast)
+#' 
+#' wPB.GM.crit <- wPB.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
+#' summary(wPB.GM.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @templateVar Adaptive FALSE
+#' @templateVar Weighting TRUE
+#' @template return
+#' 
+#' @importFrom pracma fzero
+#' @importFrom PoissonBinomial ppbinom
+#' @export
 weighted.PB <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.05, weighting.method = "AM", critical.values = FALSE, exact = TRUE){
   #--------------------------------------------
   #       check arguments
@@ -170,14 +171,14 @@ weighted.PB <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.05, weighti
   return(output)
 }
 
-#'@rdname weighted.PB
-#'@export
+#' @rdname weighted.PB
+#' @export
 wPB.AM <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(weighted.PB(raw.pvalues, weights, alpha, zeta, "AM", critical.values))
 }
 
-#'@rdname weighted.PB
-#'@export
+#' @rdname weighted.PB
+#' @export
 wPB.GM <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(weighted.PB(raw.pvalues, weights, alpha, zeta, "GM", critical.values))
 }

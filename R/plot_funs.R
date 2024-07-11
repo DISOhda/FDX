@@ -1,37 +1,37 @@
-#'@name hist.FDX
-#'@title Histogram of Raw p-Values
-#'
-#'@description
-#'Computes a histogram of the raw p-values of a \code{FDX} object.
-#'
-#'@param x          an object of class "\code{FDX}".
-#'@param breaks     as in \code{\link{hist}}; here, the Friedman-Diaconis
-#'                  algorithm(\code{"FD"}) is used as default.
-#'@param main       main title. If \code{NULL} (default), a description string
-#'                  is used.
-#'@param xlab,ylab  labels for x and y axis.
-#'@param plot       a boolean If \code{TRUE} (the default), a histogram is
-#'                  plotted, otherwise a list of breaks and counts is returned.
-#'@param ...        further arguments to \code{\link{hist}} or
-#'                  \code{\link{plot.histogram}}, respectively.
-#'
-#'@details
-#'If \code{x} contains results of a weighted approach, a histogram of the
-#'weighted p-values is constructed. Otherwise, it is constituted by the
-#'raw ones. 
-#'
-#'@return
-#'An object of class \code{histogram}.
-#'
-#'@template example
-#'@examples
-#'
-#'DGR <- DGR(raw.pvalues, pCDFlist)
-#'hist(DGR)
-#'
-#'@method hist FDX
-#'@importFrom graphics hist
-#'@export
+#' @name hist.FDX
+#' @title Histogram of Raw p-Values
+#' 
+#' @description
+#' Computes a histogram of the raw p-values of a `FDX` object.
+#' 
+#' @param x          object of class `FDX`.
+#' @param breaks     as in [`graphics::hist()`]; here, the Friedman-Diaconis
+#'                   algorithm (`"FD"`) is used as default.
+#' @param main       main title; if `NULL` (default), a description string
+#'                   is used.
+#' @param xlab,ylab  labels for x and y axis.
+#' @param plot       boolean; if `TRUE` (the default), a histogram is plotted,
+#'                   otherwise a list of breaks and counts is returned.
+#' @param ...        further arguments to [`graphics::hist()`] or 
+#'                   [`graphics::plot.histogram()`], respectively.
+#' 
+#' @details
+#' If `x` contains results of a weighted approach, a histogram of the
+#' weighted p-values is constructed. Otherwise, it is constituted by the
+#' raw ones. 
+#' 
+#' @return
+#' An object of class `histogram`.
+#' 
+#' @template example
+#' @examples
+#' 
+#' DGR <- DGR(raw.pvalues, pCDFlist)
+#' hist(DGR)
+#' 
+#' @method hist FDX
+#' @importFrom graphics hist
+#' @export
 hist.FDX <- function(x, breaks = "FD", main = NULL, xlab = NULL, ylab = NULL, plot = TRUE, ...){
   # check if 'main' or 'xlab' arguments are NULL and set defaults accordingly
   if(!grepl("Weighted", x$Method)){
@@ -58,62 +58,64 @@ hist.FDX <- function(x, breaks = "FD", main = NULL, xlab = NULL, ylab = NULL, pl
 }
 
 
-#'@name plot.FDX
-#'@title Plot Method for \code{FDX} objects
-#'
-#'@description
-#'Plots raw p-values of a \code{FDX} object and highlights rejected and
-#'accepted p-values. If present, the critical values are plotted, too.
-#'
-#'@param x          an object of class "\code{FDX}".
-#'@param col        a numeric or character vector of length 3 indicating the
-#'                  colors of the \enumerate{
-#'                    \item rejected p-values
-#'                    \item accepted p-values
-#'                    \item critical values (if present).
-#'                  }
-#'@param pch        a numeric or character vector of length 3 indicating the
-#'                  point characters of the \enumerate{
-#'                    \item rejected p-values
-#'                    \item accepted p-values
-#'                    \item critical values (if present and \code{type.crit}
-#'                          is a plot type like \code{'p'}, \code{'b'} etc.).
-#'                  }
-#'@param lwd        a numeric vector of length 3 indicating the thickness of
-#'                  the points and lines.
-#'@param type.crit  1-character string giving the type of plot desired for the
-#'                  critical values (e.g.: \code{'p'}, \code{'l'} etc; see
-#'                  \code{\link{plot}}).
-#'@param legend     if NULL, no legend is plotted; otherwise expecting a
-#'                  character string like "topleft" etc. or a numeric vector
-#'                  of two elements indicating (x, y) coordinates.
-#'@param ...        further arguments to \code{\link{plot.default}}.
-#'
-#'@details
-#'If \code{x} contains results of a weighted approach, the Y-axis of the plot
-#'is derived from the weighted p-values. Otherwise, it is constituted by the
-#'raw ones. 
-#'
-#'@template example
-#'@examples
-#'
-#'DLR.sd.fast <- DLR(raw.pvalues, pCDFlist)
-#'DLR.sd.crit <- DLR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'DLR.su.fast <- DLR(raw.pvalues, pCDFlist, direction = "su")
-#'DLR.su.crit <- DLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
-#'
-#'plot(DLR.su.fast)
-#'plot(DLR.su.crit, xlim = c(1, 5), ylim = c(0, 0.4))
-#'plot(DLR.sd.fast, col = c(2, 4), pch = c(2, 3), lwd = c(2, 2), 
-#'     legend = "topleft", xlim = c(1, 5), ylim = c(0, 0.4))
-#'plot(DLR.sd.crit, col = c(2, 4, 1), pch = c(1, 1, 4), lwd = c(1, 1, 2), 
-#'     type.crit = 'o', legend = c(1, 0.4), lty = 1, xlim = c(1, 5), 
-#'     ylim = c(0, 0.4))
-#'
-#'@method plot FDX
-#'@importFrom graphics plot lines points
-#'@importFrom methods hasArg
-#'@export
+#' @name plot.FDX
+#' 
+#' @title
+#' Plot Method for `FDX` objects
+#' 
+#' @description
+#' Plots raw p-values of a `FDX` object and highlights rejected and
+#' accepted p-values. If present, the critical values are plotted, too.
+#' 
+#' @param x          an object of class "`FDX`".
+#' @param col        a numeric or character vector of length 3 indicating the
+#'                   colors of the \enumerate{
+#'                     \item rejected p-values
+#'                     \item accepted p-values
+#'                     \item critical values (if present).
+#'                   }
+#' @param pch        a numeric or character vector of length 3 indicating the
+#'                   point characters of the \enumerate{
+#'                     \item rejected p-values
+#'                     \item accepted p-values
+#'                     \item critical values (if present and `type.crit`
+#'                           is a plot type like `'p'`, `'b'` etc.).
+#'                   }
+#' @param lwd        a numeric vector of length 3 indicating the thickness of
+#'                   the points and lines.
+#' @param type.crit  single character giving the type of plot desired for the
+#'                   critical values (e.g.: `'p'`, `'l'` etc; see
+#'                   [`graphics::plot.default()`]).
+#' @param legend     if NULL, no legend is plotted; otherwise expecting a
+#'                   character string like "topleft" etc. or a numeric vector
+#'                    of two elements indicating (x, y) coordinates.
+#' @param ...        further arguments to [`graphics::plot.default()`].
+#' 
+#' @details
+#' If `x` contains results of a weighted approach, the Y-axis of the plot
+#' is derived from the weighted p-values. Otherwise, it is constituted by the
+#' raw ones. 
+#' 
+#' @template example
+#' @examples
+#' 
+#' DLR.sd.fast <- DLR(raw.pvalues, pCDFlist)
+#' DLR.sd.crit <- DLR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' DLR.su.fast <- DLR(raw.pvalues, pCDFlist, direction = "su")
+#' DLR.su.crit <- DLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
+#' 
+#' plot(DLR.su.fast)
+#' plot(DLR.su.crit, xlim = c(1, 5), ylim = c(0, 0.4))
+#' plot(DLR.sd.fast, col = c(2, 4), pch = c(2, 3), lwd = c(2, 2), 
+#'      legend = "topleft", xlim = c(1, 5), ylim = c(0, 0.4))
+#' plot(DLR.sd.crit, col = c(2, 4, 1), pch = c(1, 1, 4), lwd = c(1, 1, 2), 
+#'      type.crit = 'o', legend = c(1, 0.4), lty = 1, xlim = c(1, 5), 
+#'      ylim = c(0, 0.4))
+#' 
+#' @method plot FDX
+#' @importFrom graphics plot lines points
+#' @importFrom methods hasArg
+#' @export
 plot.FDX <- function(x, col = c(2, 4, 1), pch = c(1, 1, 1), lwd = c(1, 1, 1), type.crit = 'b', legend = NULL, ...){
   # necessary to appease automated R CMD check on CRAN
   main <- ylab <- lty <- NULL
@@ -166,50 +168,50 @@ plot.FDX <- function(x, col = c(2, 4, 1), pch = c(1, 1, 1), lwd = c(1, 1, 1), ty
 }
 
 
-#'@name rejection.path
-#'@title Rejection Path Plot (for \code{FDX} objects)
-#'
-#'@description
-#'Displays the number of rejections of the raw p-values in a \code{FDX}
-#'object in dependence of the exceedance probability \code{zeta}.
-#'
-#'@param x                 an object of class "\code{FDX}".
-#'@param xlim              the x limits of the plot. If \code{NULL} (default),
-#'                         the (0, 1) range is used.
-#'@param ylim              the y limits of the plot. If \code{NULL} (default),
-#'                         the double of the median of the number of possible
-#'                         rejections is used as upper limit.
-#'@param main              main title. If \code{NULL} (default), a description
-#'                         string is used.
-#'@param xlab,ylab         labels for x and y axis.
-#'@param verticals         logical; if \code{TRUE}, draw vertical lines at
-#'                         steps.
-#'@param pch               jump point character.
-#'@param ref.show          logical; if \code{TRUE} a vertical reference line
-#'                         is plotted, whose height is the number of
-#'                         rejections of the original Benjamini-Hochberg (BH)
-#'                         procedure.
-#'@param ref.col           color of the reference line.
-#'@param ref.lty,ref.lwd   line type and thickness for the reference line.
-#'@param ...               further arguments to \code{\link{plot.stepfun}}.
-#'
-#'@return
-#'Invisibly returns a \code{stepfun} object that computes the number of
-#'rejectionsin dependence on the exceedance probability \code{zeta}.
-#'
-#'@template example
-#'@examples
-#'
-#'DLR <- DLR(raw.pvalues, pCDFlist)
-#'NDLR <- NDLR(raw.pvalues, pCDFlist)
-#'
-#'rejection.path(DLR, xlim = c(0, 1), ref.show = TRUE, ref.col = "green", ref.lty = 4)
-#'rejection.path(NDLR, col = "red", add = TRUE)
-#'
-#'@importFrom graphics plot abline mtext
-#'@importFrom stats stepfun ecdf p.adjust
-#'@importFrom methods is
-#'@export
+#' @name rejection.path
+#' @title Rejection Path Plot (for `FDX` objects)
+#' 
+#' @description
+#' Displays the number of rejections of the raw p-values in a `FDX`
+#' object in dependence of the exceedance probability `zeta`.
+#' 
+#' @param x                 object of class "`FDX`".
+#' @param xlim              x axis limits of the plot. If `NULL` (default),
+#'                          the \[0, 1\] range is used.
+#' @param ylim              the y limits of the plot. If `NULL` (default),
+#'                          the double of the median of the number of possible
+#'                          rejections is used as upper limit.
+#' @param main              main title. If `NULL` (default), a description
+#'                          string is used.
+#' @param xlab,ylab         labels for x and y axis.
+#' @param verticals         logical; if `TRUE`, draw vertical lines at
+#'                          steps.
+#' @param pch               jump point character.
+#' @param ref.show          logical; if `TRUE` a vertical reference line
+#'                          is plotted, whose height is the number of
+#'                          rejections of the original Benjamini-Hochberg (BH)
+#'                          procedure.
+#' @param ref.col           color of the reference line.
+#' @param ref.lty,ref.lwd   line type and thickness for the reference line.
+#' @param ...               further arguments to [`stats::plot.stepfun()`].
+#' 
+#' @return
+#' Invisibly returns a `stepfun` object that computes the number of
+#' rejectionsin dependence on the exceedance probability `zeta`.
+#' 
+#' @template example
+#' @examples
+#' 
+#' DLR <- DLR(raw.pvalues, pCDFlist)
+#' NDLR <- NDLR(raw.pvalues, pCDFlist)
+#' 
+#' rejection.path(DLR, xlim = c(0, 1), ref.show = TRUE, ref.col = "green", ref.lty = 4)
+#' rejection.path(NDLR, col = "red", add = TRUE)
+#' 
+#' @importFrom graphics plot abline mtext
+#' @importFrom stats stepfun ecdf p.adjust plot.stepfun
+#' @importFrom methods is
+#' @export
 rejection.path <- function(x, xlim = NULL, ylim = NULL, main = NULL, xlab = expression(zeta), ylab = "Number of Rejections", verticals = FALSE, pch = 19, ref.show = FALSE, ref.col = "gray", ref.lty = 2, ref.lwd = 2, ...){
   if(!is(x, "FDX")) stop("'x' must be an object of class 'FDX'!")
   # number of hypotheses
@@ -232,7 +234,7 @@ rejection.path <- function(x, xlim = NULL, ylim = NULL, main = NULL, xlab = expr
     if(!exists('add', where = lst) || (exists('add', where = lst) && !lst$add)) subt <- x$Method
   }
   
-  plot(stepfun.x, xlim = xlim, ylim = ylim, main = main, xlab = xlab, ylab = ylab, verticals = verticals, pch = pch, ...)
+  plot.stepfun(stepfun.x, xlim = xlim, ylim = ylim, main = main, xlab = xlab, ylab = ylab, verticals = verticals, pch = pch, ...)
   if(!is.null(subt)) mtext(subt, line = 0.3)
   
   if(ref.show) abline(h = num.rejections.BH, col = ref.col, lty = ref.lty, lwd = ref.lwd)

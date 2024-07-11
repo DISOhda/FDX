@@ -1,67 +1,68 @@
-#'@name discrete.PB
-#'
-#'@title Discrete Poisson-Binomial procedure
-#'
-#'@description
-#'Apply the [DPB] procedure, with or without computing the critical values, to
-#'a set of p-values and their discrete support. A non-adaptive version is
-#'available as well. Additionally, the user can choose between exact
-#'computation of the Poisson-Binomial distribution or a refined normal
-#'approximation.
-#'
-#'@details
-#'\code{DPB} and \code{NDPB} are wrapper functions for \code{discrete.PB}.
-#'The first one simply passes all its parameters to \code{discrete.PB} with
-#'\code{adaptive = TRUE} and \code{NDPB} does the same with
-#'\code{adaptive = FALSE}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-#'\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-#'\code{\link{discrete.GR}}, \code{\link{weighted.LR}},
-#'\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist TRUE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction FALSE
-#'@templateVar adaptive TRUE
-#'@templateVar critical.values TRUE
-#'@templateVar exact TRUE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights FALSE
-#'@templateVar weighting.method FALSE
-#'@template param
+#' @name discrete.PB
 #' 
-#'@section References:
-#' S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
-#' Heterogeneous Tests.
-#' \href{https://arxiv.org/abs/1912.04607v1}{arXiv:1912.04607v1}.
-#'
-#'@template example
-#'@examples
-#'
-#'DPB.fast <- DPB(raw.pvalues, pCDFlist)
-#'summary(DPB.fast)
-#'
-#'DPB.crit <- DPB(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'summary(DPB.crit)
-#'
-#'NDPB.fast <- NDPB(raw.pvalues, pCDFlist)
-#'summary(NDPB.fast)
-#'
-#'NDPB.crit <- NDPB(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'summary(NDPB.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@template return
-#'
-#'@importFrom DiscreteFDR match.pvals
-#'@export
+#' @title
+#' Discrete Poisson-Binomial procedure
+#' 
+#' @description
+#' Apply the \[DPB\] procedure, with or without computing the critical values, to
+#' a set of p-values and their discrete support. A non-adaptive version is
+#' available as well. Additionally, the user can choose between exact
+#' computation of the Poisson-Binomial distribution or a refined normal
+#' approximation.
+#' 
+#' @details
+#' `DPB` and `NDPB` are wrapper functions for `discrete.PB`.
+#' The first one simply passes all its parameters to `discrete.PB` with
+#' `adaptive = TRUE` and `NDPB` does the same with
+#' `adaptive = FALSE`.
+#' 
+#' @seealso
+#' [`kernel`], [`FDX`][FDX-package], [`continuous.LR()`],
+#' [`continuous.GR()`], [`discrete.LR()`], 
+#' [`discrete.GR()`], [`weighted.LR()`],
+#' [`weighted.GR()`], [`weighted.PB()`]
+#' 
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction FALSE
+#' @templateVar adaptive TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact TRUE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights FALSE
+#' @templateVar weighting.method FALSE
+#' @template param
+#' 
+#' @section References:
+#'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
+#'  Heterogeneous Tests.
+#'  [arXiv:1912.04607v1](https://arxiv.org/abs/1912.04607v1).
+#' 
+#' @template example
+#' @examples
+#' 
+#' DPB.fast <- DPB(raw.pvalues, pCDFlist)
+#' summary(DPB.fast)
+#' 
+#' DPB.crit <- DPB(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(DPB.crit)
+#' 
+#' NDPB.fast <- NDPB(raw.pvalues, pCDFlist)
+#' summary(NDPB.fast)
+#' 
+#' NDPB.crit <- NDPB(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(NDPB.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @template return
+#' 
+#' @importFrom DiscreteFDR match.pvals
+#' @export
 discrete.PB <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE, exact = TRUE){
   #--------------------------------------------
   #       check arguments
@@ -156,14 +157,14 @@ discrete.PB <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adaptiv
   return(output)
 }
 
-#'@rdname discrete.PB
-#'@export
+#' @rdname discrete.PB
+#' @export
 DPB <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, critical.values = FALSE, exact = TRUE){
   return(discrete.PB(raw.pvalues, pCDFlist, alpha, zeta, TRUE, critical.values, exact))
 }
 
-#'@rdname discrete.PB
-#'@export
+#' @rdname discrete.PB
+#' @export
 NDPB <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, critical.values = FALSE, exact = TRUE){
   return(discrete.PB(raw.pvalues, pCDFlist, alpha, zeta, FALSE, critical.values, exact))
 }

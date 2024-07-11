@@ -1,62 +1,62 @@
-#'@name weighted.LR
-#'
-#'@title Weighted Lehmann-Romano Procedure
-#'
-#'@description
-#'Apply the weighted [wLR] procedure, with or without computing the
-#'critical values, to a set of p-values. Both arithmetic and geometric
-#'weighting are available.
-#'
-#'@details
-#'\code{wLR.AM} and \code{wLR.GM} are wrapper functions for \code{weighted.LR}.
-#'The first one simply passes all its parameters to \code{weighted.LR} with
-#'\code{weighting.method = "AM"} and \code{wLR.GM} does the same with
-#'\code{weighting.method = "GM"}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-#'\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-#'\code{\link{discrete.GR}}, \code{\link{discrete.PB}}, 
-#'\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist FALSE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction FALSE
-#'@templateVar adaptive FALSE
-#'@templateVar critical.values TRUE
-#'@templateVar exact FALSE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights TRUE
-#'@templateVar weighting.method TRUE
-#'@template param 
-#'
-#'@template exampleWeighted
-#'@examples
-#'
-#'wLR.AM.fast <- wLR.AM(raw.pvalues.weighted, weights)
-#'summary(wLR.AM.fast)
-#'
-#'wLR.AM.crit <- wLR.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
-#'summary(wLR.AM.crit)
-#'
-#'wLR.GM.fast <- wLR.GM(raw.pvalues.weighted, weights)
-#'summary(wLR.GM.fast)
-#'
-#'wLR.GM.crit <- wLR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
-#'summary(wLR.GM.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@templateVar Adaptive FALSE
-#'@templateVar Weighting TRUE
-#'@template return
-#'
-#'@importFrom pracma fzero
-#'@export
+#' @name weighted.LR
+#' 
+#' @title Weighted Lehmann-Romano Procedure
+#' 
+#' @description
+#' Apply the weighted \[wLR\] procedure, with or without computing the
+#' critical values, to a set of p-values. Both arithmetic and geometric
+#' weighting are available.
+#' 
+#' @details
+#' `wLR.AM` and `wLR.GM` are wrapper functions for `weighted.LR`.
+#' The first one simply passes all its parameters to `weighted.LR` with
+#' `weighting.method = "AM"` and `wLR.GM` does the same with
+#' `weighting.method = "GM"`.
+#' 
+#' @seealso
+#' [`kernel`], [`FDX`][`FDX-package`], [`continuous.LR()`],
+#' [`continuous.GR()`], [`discrete.LR()`], 
+#' [`discrete.GR()`], [`discrete.PB()`], 
+#' [`weighted.GR()`], [`weighted.PB()`]
+#' 
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist FALSE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction FALSE
+#' @templateVar adaptive FALSE
+#' @templateVar critical.values TRUE
+#' @templateVar exact FALSE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights TRUE
+#' @templateVar weighting.method TRUE
+#' @template param 
+#' 
+#' @template exampleWeighted
+#' @examples
+#' 
+#' wLR.AM.fast <- wLR.AM(raw.pvalues.weighted, weights)
+#' summary(wLR.AM.fast)
+#' 
+#' wLR.AM.crit <- wLR.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
+#' summary(wLR.AM.crit)
+#' 
+#' wLR.GM.fast <- wLR.GM(raw.pvalues.weighted, weights)
+#' summary(wLR.GM.fast)
+#' 
+#' wLR.GM.crit <- wLR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
+#' summary(wLR.GM.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @templateVar Adaptive FALSE
+#' @templateVar Weighting TRUE
+#' @template return
+#' 
+#' @importFrom pracma fzero
+#' @export
 weighted.LR <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, weighting.method = "AM", critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
@@ -166,14 +166,14 @@ weighted.LR <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, weightin
   return(output)
 }
 
-#'@rdname weighted.LR
-#'@export
+#' @rdname weighted.LR
+#' @export
 wLR.AM <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(weighted.LR(raw.pvalues, weights, alpha, zeta, "AM", critical.values))
 }
 
-#'@rdname weighted.LR
-#'@export
+#' @rdname weighted.LR
+#' @export
 wLR.GM <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(weighted.LR(raw.pvalues, weights, alpha, zeta, "GM", critical.values))
 }

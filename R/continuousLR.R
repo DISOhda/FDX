@@ -1,61 +1,63 @@
-#'@name continuous.LR
-#'@title Continuous Lehmann-Romano procedure
-#'
-#'@description
-#'Apply the usual (continuous) [LR] procedure, with or without computing the
-#'critical values, to a set of p-values. A non-adaptive version is available as
-#'well.
-#'
-#'@details
-#'\code{LR} and \code{NLR} are wrapper functions for \code{continuous.LR}. The
-#'first one simply passes all its parameters to \code{continuous.LR} with
-#'\code{adaptive = TRUE} and \code{NLR} does the same with
-#'\code{adaptive = FALSE}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.GR}},
-#'\code{\link{discrete.LR}}, \code{\link{discrete.GR}}, 
-#'\code{\link{discrete.PB}}, \code{\link{weighted.LR}}, 
-#'\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist FALSE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction FALSE
-#'@templateVar adaptive TRUE
-#'@templateVar critical.values TRUE
-#'@templateVar exact FALSE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights FALSE
-#'@templateVar weighting.method FALSE
-#'@template param 
-#'
-#'@template example
-#'@examples
-#'
-#'LR.fast <- LR(raw.pvalues)
-#'summary(LR.fast)
-#'
-#'LR.crit <- LR(raw.pvalues, critical.values = TRUE)
-#'summary(LR.crit)
-#'
-#'NLR.fast <- NLR(raw.pvalues)
-#'summary(NLR.fast)
-#'
-#'NLR.crit <- NLR(raw.pvalues, critical.values = TRUE)
-#'summary(NLR.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@templateVar Adaptive TRUE
-#'@templateVar Weighting FALSE
-#'@template return
-#'
-#'@importFrom DiscreteFDR match.pvals
-#'@export
+#' @name continuous.LR
+#' 
+#' @title
+#' Continuous Lehmann-Romano procedure
+#' 
+#' @description
+#' Apply the usual (continuous) \[LR\] procedure, with or without computing the
+#' critical values, to a set of p-values. A non-adaptive version is available as
+#' well.
+#' 
+#' @details
+#' `LR` and `NLR` are wrapper functions for `continuous.LR`. The
+#' first one simply passes all its parameters to `continuous.LR` with
+#' `adaptive = TRUE` and `NLR` does the same with
+#' `adaptive = FALSE`.
+#'  
+#' @seealso
+#' [`kernel()`], [`FDX`][FDX-package], [`continuous.GR()`],
+#' [`discrete.LR()`], [`discrete.GR()`], 
+#' [`discrete.PB()`], [`weighted.LR()`], 
+#' [`weighted.GR()`], [`weighted.PB()`]
+#' 
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist FALSE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction FALSE
+#' @templateVar adaptive TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact FALSE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights FALSE
+#' @templateVar weighting.method FALSE
+#' @template param 
+#' 
+#' @template example
+#' @examples
+#' 
+#' LR.fast <- LR(raw.pvalues)
+#' summary(LR.fast)
+#' 
+#' LR.crit <- LR(raw.pvalues, critical.values = TRUE)
+#' summary(LR.crit)
+#' 
+#' NLR.fast <- NLR(raw.pvalues)
+#' summary(NLR.fast)
+#' 
+#' NLR.crit <- NLR(raw.pvalues, critical.values = TRUE)
+#' summary(NLR.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @templateVar Adaptive TRUE
+#' @templateVar Weighting FALSE
+#' @template return
+#' 
+#' @importFrom DiscreteFDR match.pvals
+#' @export
 continuous.LR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
@@ -140,14 +142,14 @@ continuous.LR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE
   return(output)
 }
 
-#'@rdname continuous.LR
-#'@export
+#' @rdname continuous.LR
+#' @export
 LR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(continuous.LR(raw.pvalues, alpha, zeta, TRUE, critical.values))
 }
 
-#'@rdname continuous.LR
-#'@export
+#' @rdname continuous.LR
+#' @export
 NLR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(continuous.LR(raw.pvalues, alpha, zeta, FALSE, critical.values))
 }

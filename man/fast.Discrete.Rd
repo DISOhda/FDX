@@ -41,16 +41,16 @@ fast.Discrete.GR(
 each line representing a 2 x 2 contingency table to
 test. The number of columns and what they must contain
 depend on the value of the \code{input} argument, see
-Details of \code{\link{fisher.pvalues.support}}.}
+Details of \code{\link[=fisher.pvalues.support]{fisher.pvalues.support()}}.}
 
-\item{alternative}{same argument as in \code{\link{fisher.test}}. The three
+\item{alternative}{same argument as in \code{\link[=fisher.test]{fisher.test()}}. The three
 possible values are \code{"greater"} (default),
 \code{"two.sided"} or \code{"less"}; may be abbreviated.}
 
 \item{input}{the format of the input data frame, see Details of
-\code{\link[DiscreteFDR]{fisher.pvalues.support}}. The
+\code{\link[DiscreteFDR:fisher.pvalues.support]{DiscreteFDR::fisher.pvalues.support()}}. The
 three possible values are \code{"noassoc"} (default),
-\code{"marginal"} or \code{"HG2011"}; may be 
+\code{"marginal"} or \code{"HG2011"}; may be
 abbreviated.}
 
 \item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
@@ -70,14 +70,12 @@ A \code{FDX} S3 class object whose elements are:
 \item{Num.rejected}{Number of rejections.}
 \item{Adjusted}{Adjusted p-values (only for step-down direction).}
 
-
 \item{Method}{A character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
 \item{FDP.threshold}{FDP threshold \code{alpha}.}
 \item{Exceedance.probability}{Probability \code{zeta} of FDP exceeding \code{alpha}; thus, FDP is being controlled at level \code{alpha} with confidence \code{1 - zeta}.}
 \item{Adaptive}{A boolean specifying whether an adaptive procedure was conducted or not.}
 
 \item{Data$raw.pvalues}{The values of \code{raw.pvalues}.}
-
 
 \item{Data$data.name}{The respective variable names of \code{raw.pvalues} and \code{pCDFlist}.}
 }

@@ -1,47 +1,48 @@
-#'@name summary.FDX
+#' @name summary.FDX
+#' 
+#' @title
+#' Summarizing Discrete FDX Results
+#' 
+#' @description
+#' `summary` method for class `FDX`
 #'
-#'@title Summarizing Discrete FDX Results
+#' @param object       an object of class "`FDX`".
+#' @param x            an object of class "`summary.FDX`".
+#' @param max          numeric or `NULL`, specifying the maximal number of
+#'                     *rows* of the p-value table to be printed. By
+#'                     default, when `NULL`, `getOption("max.print")`
+#'                     is used.
+#' @param ...          further arguments passed to or from other methods.
+#' 
+#' @details
+#' `summary.FDX` objects include all data of an `FDX` class
+#' object, but also include an additional table which includes the raw p-values,
+#' their indices, the respective critical values (if present), the adjusted
+#' p-values (if present) and a logical column to indicate rejection. The table
+#' is sorted in ascending order by the raw p-values.
+#' 
+#' `print.summary.FDX` simply prints the same output as
+#' `print.FDX`, but also prints the p-value table.
 #'
-#'@description
-#'\code{summary} method for class "\code{FDX}"
-#'
-#'@param object       an object of class "\code{FDX}".
-#'@param x            an object of class "\code{summary.FDX}".
-#'@param max          numeric or \code{NULL}, specifying the maximal number of
-#'                    \emph{rows} of the p-value table to be printed. By
-#'                    default, when \code{NULL}, \code{getOption("max.print")}
-#'                    is used.
-#'@param ...          further arguments passed to or from other methods.
-#'
-#'@details
-#'\code{summary.FDX} objects include all data of an \code{FDX}
-#'object, but also include an additional table which includes the raw p-values,
-#'their indices, the respective critical values (if present), the adjusted
-#'p-values (if present) and a logical column to indicate rejection. The table
-#'is sorted in ascending order by the raw p-values.
-#'
-#'\code{print.summary.FDX} simply prints the same output as
-#'\code{print.FDX}, but also prints the p-value table.
-#'
-#'@return
-#'\code{summary.FDX} computes and returns a list that includes all the
-#'data of an input \code{FDX}, plus
-#'\item{Table}{a \code{data.frame}, sorted by the raw p-values, that contains
-#'             the indices, that raw p-values themselves, their respective
-#'             critical values (if present), their adjusted p-values (if
-#'             present) and a logical column to indicate rejection.}
-#'             
-#'\code{print.summary.FDX} returns that object invisibly.
-#'
-#'@template example
-#'@examples
-#'
-#'DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#'DGR.crit.summary <- summary(DGR.crit)
-#'print(DGR.crit.summary)
-#'
-#'@method summary FDX
-#'@export
+#' @return
+#' `summary.FDX` computes and returns a list that includes all the
+#' data of an input `FDX`, plus
+#' \item{Table}{a `data.frame`, sorted by the raw p-values, that contains
+#'              the indices, that raw p-values themselves, their respective
+#'              critical values (if present), their adjusted p-values (if
+#'              present) and a logical column to indicate rejection.}
+#'              
+#' `print.summary.FDX` returns that object invisibly.
+#' 
+#' @template example
+#' @examples
+#' 
+#' DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' DGR.crit.summary <- summary(DGR.crit)
+#' print(DGR.crit.summary)
+#' 
+#' @method summary FDX
+#' @export
 ## S3 method for class 'FDX'
 summary.FDX <- function(object, ...){
   # include all data of x (FDX)
@@ -77,9 +78,9 @@ summary.FDX <- function(object, ...){
   return(out)
 }
 
-#'@rdname summary.FDX
-#'@method print summary.FDX
-#'@export
+#' @rdname summary.FDX
+#' @method print summary.FDX
+#' @export
 ## S3 method for class 'summary.FDX'
 print.summary.FDX <- function(x, max = NULL, ...){
   # determine number of tests

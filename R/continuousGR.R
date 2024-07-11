@@ -1,62 +1,64 @@
-#'@name continuous.GR
-#'@title Continuous Guo-Romano procedure
+#' @name continuous.GR
+#' 
+#' @title
+#' Continuous Guo-Romano procedure
+#' 
+#' @description
+#' Apply the usual continuous \[GR\] procedure, with or without computing the
+#' critical values, to a set of p-values. A non-adaptive version is available as
+#' well.
 #'
-#'@description
-#'Apply the usual continuous [GR] procedure, with or without computing the
-#'critical values, to a set of p-values. A non-adaptive version is available as
-#'well.
+#' @details
+#' `GR` and `NGR` are wrapper functions for `continuous.GR`. The
+#' first one simply passes all its parameters to `continuous.GR` with
+#' `adaptive = TRUE` and `NGR` does the same with
+#' `adaptive = FALSE`.
+#' 
+#' @seealso
+#' [`kernel`], [`FDX-package`], [`continuous.LR()`],
+#' [`discrete.LR()`], [`discrete.GR()`], 
+#' [`discrete.PB()`], [`weighted.LR()`], 
+#' [`weighted.GR()`], [`weighted.PB()`]
 #'
-#'@details
-#'\code{GR} and \code{NGR} are wrapper functions for \code{continuous.GR}. The
-#'first one simply passes all its parameters to \code{continuous.GR} with
-#'\code{adaptive = TRUE} and \code{NGR} does the same with
-#'\code{adaptive = FALSE}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-#'\code{\link{discrete.LR}}, \code{\link{discrete.GR}}, 
-#'\code{\link{discrete.PB}}, \code{\link{weighted.LR}}, 
-#'\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist FALSE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction FALSE
-#'@templateVar adaptive TRUE
-#'@templateVar critical.values TRUE
-#'@templateVar exact FALSE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights FALSE
-#'@templateVar weighting.method FALSE
-#'@template param 
-#'
-#'@template example
-#'@examples
-#'
-#'GR.fast <- GR(raw.pvalues)
-#'summary(GR.fast)
-#'
-#'GR.crit <- GR(raw.pvalues, critical.values = TRUE)
-#'summary(GR.crit)
-#'
-#'NGR.fast <- NGR(raw.pvalues)
-#'summary(NGR.fast)
-#'
-#'NGR.crit <- NGR(raw.pvalues, critical.values = TRUE)
-#'summary(NGR.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@templateVar Adaptive TRUE
-#'@templateVar Weighting FALSE
-#'@template return
-#'
-#'@importFrom stats qbeta pbinom
-#'@importFrom DiscreteFDR match.pvals
-#'@export
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist FALSE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction FALSE
+#' @templateVar adaptive TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact FALSE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights FALSE
+#' @templateVar weighting.method FALSE
+#' @template param 
+#' 
+#' @template example
+#' @examples
+#' 
+#' GR.fast <- GR(raw.pvalues)
+#' summary(GR.fast)
+#' 
+#' GR.crit <- GR(raw.pvalues, critical.values = TRUE)
+#' summary(GR.crit)
+#' 
+#' NGR.fast <- NGR(raw.pvalues)
+#' summary(NGR.fast)
+#' 
+#' NGR.crit <- NGR(raw.pvalues, critical.values = TRUE)
+#' summary(NGR.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @templateVar Adaptive TRUE
+#' @templateVar Weighting FALSE
+#' @template return
+#' 
+#' @importFrom stats qbeta pbinom
+#' @importFrom DiscreteFDR match.pvals
+#' @export
 continuous.GR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
@@ -141,14 +143,14 @@ continuous.GR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE
   return(output)
 }
 
-#'@rdname continuous.GR
-#'@export
+#' @rdname continuous.GR
+#' @export
 GR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(continuous.GR(raw.pvalues, alpha, zeta, TRUE, critical.values))
 }
 
-#'@rdname continuous.GR
-#'@export
+#' @rdname continuous.GR
+#' @export
 NGR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(continuous.GR(raw.pvalues, alpha, zeta, FALSE, critical.values))
 }

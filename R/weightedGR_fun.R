@@ -1,68 +1,69 @@
-#'@name weighted.GR
-#'
-#'@title Weighted Guo-Romano Procedure
-#'
-#'@description
-#'Apply the weighted [wGR] procedure, with or without computing the
-#'critical values, to a set of p-values. Both arithmetic and geometric
-#'weighting are available.
-#'
-#'@details
-#'\code{wGR.AM} and \code{wGR.GM} are wrapper functions for \code{weighted.GR}.
-#'The first one simply passes all its parameters to \code{weighted.GR} with
-#'\code{weighting.method = "AM"} and \code{wGR.GM} does the same with
-#'\code{weighting.method = "GM"}.
-#'
-#'@seealso
-#'\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-#'\code{\link{continuous.GR}}, \code{\link{discrete.LR}}, 
-#'\code{\link{discrete.GR}}, \code{\link{discrete.PB}}, 
-#'\code{\link{weighted.LR}}, \code{\link{weighted.PB}}
-#'
-#'@templateVar raw.pvalues TRUE
-#'@templateVar pCDFlist FALSE
-#'@templateVar alpha TRUE
-#'@templateVar zeta TRUE
-#'@templateVar direction FALSE
-#'@templateVar adaptive FALSE
-#'@templateVar critical.values TRUE
-#'@templateVar exact FALSE
-#'@templateVar pvalues FALSE
-#'@templateVar sorted_pv FALSE
-#'@templateVar stepUp FALSE
-#'@templateVar support FALSE
-#'@templateVar weights TRUE
-#'@templateVar weighting.method TRUE
-#'@template param
+#' @name weighted.GR
 #' 
-#'@section References:
-#' S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
-#' Heterogeneous Tests.
-#' \href{https://arxiv.org/abs/1912.04607v1}{arXiv:1912.04607v1}.
-#'
-#'@template exampleWeighted
-#'@examples
-#'
-#'wGR.AM.fast <- wGR.AM(raw.pvalues.weighted, weights)
-#'summary(wGR.AM.fast)
-#'
-#'wGR.AM.crit <- wGR.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
-#'summary(wGR.AM.crit)
-#'
-#'wGR.GM.fast <- wGR.GM(raw.pvalues.weighted, weights)
-#'summary(wGR.GM.fast)
-#'
-#'wGR.GM.crit <- wGR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
-#'summary(wGR.GM.crit)
-#'
-#'@templateVar Critical.values TRUE
-#'@templateVar Adaptive FALSE
-#'@templateVar Weighting TRUE
-#'@template return
-#'
-#'@importFrom pracma fzero
-#'@importFrom stats pbinom qbeta
-#'@export
+#' @title
+#' Weighted Guo-Romano Procedure
+#' 
+#' @description
+#' Apply the weighted \[wGR\] procedure, with or without computing the
+#' critical values, to a set of p-values. Both arithmetic and geometric
+#' weighting are available.
+#' 
+#' @details
+#' `wGR.AM` and `wGR.GM` are wrapper functions for `weighted.GR`.
+#' The first one simply passes all its parameters to `weighted.GR` with
+#' `weighting.method = "AM"` and `wGR.GM` does the same with
+#' `weighting.method = "GM"`.
+#' 
+#' @seealso
+#' [`kernel`], [`FDX`][`FDX-package`], [`continuous.LR()`],
+#' [`continuous.GR()`], [`discrete.LR()`], 
+#' [`discrete.GR()`], [`discrete.PB()`], 
+#' [`weighted.LR()`], [`weighted.PB()`]
+#' 
+#' @templateVar raw.pvalues TRUE
+#' @templateVar pCDFlist FALSE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction FALSE
+#' @templateVar adaptive FALSE
+#' @templateVar critical.values TRUE
+#' @templateVar exact FALSE
+#' @templateVar pvalues FALSE
+#' @templateVar sorted_pv FALSE
+#' @templateVar stepUp FALSE
+#' @templateVar support FALSE
+#' @templateVar weights TRUE
+#' @templateVar weighting.method TRUE
+#' @template param
+#' 
+#' @section References:
+#'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
+#'  Heterogeneous Tests.
+#'  [arXiv:1912.04607v1](https://arxiv.org/abs/1912.04607v1).
+#' 
+#' @template exampleWeighted
+#' @examples
+#' 
+#' wGR.AM.fast <- wGR.AM(raw.pvalues.weighted, weights)
+#' summary(wGR.AM.fast)
+#' 
+#' wGR.AM.crit <- wGR.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
+#' summary(wGR.AM.crit)
+#' 
+#' wGR.GM.fast <- wGR.GM(raw.pvalues.weighted, weights)
+#' summary(wGR.GM.fast)
+#' 
+#' wGR.GM.crit <- wGR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
+#' summary(wGR.GM.crit)
+#' 
+#' @templateVar Critical.values TRUE
+#' @templateVar Adaptive FALSE
+#' @templateVar Weighting TRUE
+#' @template return
+#' 
+#' @importFrom pracma fzero
+#' @importFrom stats pbinom qbeta
+#' @export
 weighted.GR <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, weighting.method = "AM", critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
@@ -172,14 +173,14 @@ weighted.GR <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, weightin
   return(output)
 }
 
-#'@rdname weighted.GR
-#'@export
+#' @rdname weighted.GR
+#' @export
 wGR.AM <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(weighted.GR(raw.pvalues, weights, alpha, zeta, "AM", critical.values))
 }
 
-#'@rdname weighted.GR
-#'@export
+#' @rdname weighted.GR
+#' @export
 wGR.GM <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
   return(weighted.GR(raw.pvalues, weights, alpha, zeta, "GM", critical.values))
 }

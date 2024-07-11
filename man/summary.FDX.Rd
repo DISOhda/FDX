@@ -25,17 +25,17 @@ is used.}
 \code{summary.FDX} computes and returns a list that includes all the
 data of an input \code{FDX}, plus
 \item{Table}{a \code{data.frame}, sorted by the raw p-values, that contains
-            the indices, that raw p-values themselves, their respective
-            critical values (if present), their adjusted p-values (if
-            present) and a logical column to indicate rejection.}
-            
+the indices, that raw p-values themselves, their respective
+critical values (if present), their adjusted p-values (if
+present) and a logical column to indicate rejection.}
+
 \code{print.summary.FDX} returns that object invisibly.
 }
 \description{
-\code{summary} method for class "\code{FDX}"
+\code{summary} method for class \code{FDX}
 }
 \details{
-\code{summary.FDX} objects include all data of an \code{FDX}
+\code{summary.FDX} objects include all data of an \code{FDX} class
 object, but also include an additional table which includes the raw p-values,
 their indices, the respective critical values (if present), the adjusted
 p-values (if present) and a logical column to indicate rejection. The table

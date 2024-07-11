@@ -44,7 +44,6 @@ A \code{FDX} S3 class object whose elements are:
 
 \item{Data$raw.pvalues}{The values of \code{raw.pvalues}.}
 
-
 \item{Data$data.name}{The respective variable names of \code{raw.pvalues} and \code{pCDFlist}.}
 }
 \description{
@@ -88,8 +87,8 @@ summary(NGR.crit)
 
 }
 \seealso{
-\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link{continuous.LR}},
-\code{\link{discrete.LR}}, \code{\link{discrete.GR}}, 
-\code{\link{discrete.PB}}, \code{\link{weighted.LR}}, 
-\code{\link{weighted.GR}}, \code{\link{weighted.PB}}
+\code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link[=continuous.LR]{continuous.LR()}},
+\code{\link[=discrete.LR]{discrete.LR()}}, \code{\link[=discrete.GR]{discrete.GR()}},
+\code{\link[=discrete.PB]{discrete.PB()}}, \code{\link[=weighted.LR]{weighted.LR()}},
+\code{\link[=weighted.GR]{weighted.GR()}}, \code{\link[=weighted.PB]{weighted.PB()}}
 }
