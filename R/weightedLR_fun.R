@@ -9,7 +9,7 @@
 #' 
 #' @details
 #' `wLR.AM` and `wLR.GM` are wrapper functions for `weighted.LR`.
-#' The first one simply passes all its parameters to `weighted.LR` with
+#' The first one simply passes all its arguments to `weighted.LR` with
 #' `weighting.method = "AM"` and `wLR.GM` does the same with
 #' `weighting.method = "GM"`.
 #' 

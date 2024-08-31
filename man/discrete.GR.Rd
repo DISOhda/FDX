@@ -57,7 +57,7 @@ available as well.
 }
 \details{
 \code{DGR} and \code{NDGR} are wrapper functions for \code{discrete.GR}.
-The first one simply passes all its parameters to \code{discrete.GR} with
+The first one simply passes all its arguments to \code{discrete.GR} with
 \code{adaptive = TRUE} and \code{NDGR} does the same with
 \code{adaptive = FALSE}.
 }

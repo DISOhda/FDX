@@ -73,7 +73,7 @@ procedures can be computed and non-adaptive versions are available as well.
 }
 \details{
 \code{DLR} and \code{NDLR} are wrapper functions for \code{discrete.LR}.
-The first one simply passes all its parameters to \code{discrete.LR} with
+The first one simply passes all its arguments to \code{discrete.LR} with
 \code{adaptive = TRUE} and \code{NDLR} does the same with
 \code{adaptive = FALSE}.
 }

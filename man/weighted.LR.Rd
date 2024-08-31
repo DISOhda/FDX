@@ -57,7 +57,7 @@ weighting are available.
 }
 \details{
 \code{wLR.AM} and \code{wLR.GM} are wrapper functions for \code{weighted.LR}.
-The first one simply passes all its parameters to \code{weighted.LR} with
+The first one simply passes all its arguments to \code{weighted.LR} with
 \code{weighting.method = "AM"} and \code{wLR.GM} does the same with
 \code{weighting.method = "GM"}.
 }

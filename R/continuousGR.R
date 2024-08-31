@@ -10,7 +10,7 @@
 #'
 #' @details
 #' `GR` and `NGR` are wrapper functions for `continuous.GR`. The
-#' first one simply passes all its parameters to `continuous.GR` with
+#' first one simply passes all its arguments to `continuous.GR` with
 #' `adaptive = TRUE` and `NGR` does the same with
 #' `adaptive = FALSE`.
 #' 

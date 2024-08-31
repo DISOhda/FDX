@@ -53,7 +53,7 @@ well.
 }
 \details{
 \code{GR} and \code{NGR} are wrapper functions for \code{continuous.GR}. The
-first one simply passes all its parameters to \code{continuous.GR} with
+first one simply passes all its arguments to \code{continuous.GR} with
 \code{adaptive = TRUE} and \code{NGR} does the same with
 \code{adaptive = FALSE}.
 }

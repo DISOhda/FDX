@@ -10,7 +10,7 @@
 #' 
 #' @details
 #' `DLR` and `NDLR` are wrapper functions for `discrete.LR`.
-#' The first one simply passes all its parameters to `discrete.LR` with
+#' The first one simply passes all its arguments to `discrete.LR` with
 #' `adaptive = TRUE` and `NDLR` does the same with
 #' `adaptive = FALSE`.
 #' 

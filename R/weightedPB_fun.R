@@ -12,7 +12,7 @@
 #' 
 #' @details
 #' `wPB.AM` and `wPB.GM` are wrapper functions for `weighted.PB`.
-#' The first one simply passes all its parameters to `weighted.PB` with
+#' The first one simply passes all its arguments to `weighted.PB` with
 #' `weighting.method = "AM"` and `wPB.GM` does the same with
 #' `weighting.method = "GM"`.
 #' 

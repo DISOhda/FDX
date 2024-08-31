@@ -10,7 +10,7 @@
 #' 
 #' @details
 #' `LR` and `NLR` are wrapper functions for `continuous.LR`. The
-#' first one simply passes all its parameters to `continuous.LR` with
+#' first one simply passes all its arguments to `continuous.LR` with
 #' `adaptive = TRUE` and `NLR` does the same with
 #' `adaptive = FALSE`.
 #'  

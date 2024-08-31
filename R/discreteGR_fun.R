@@ -10,7 +10,7 @@
 #' 
 #' @details
 #' `DGR` and `NDGR` are wrapper functions for `discrete.GR`.
-#' The first one simply passes all its parameters to `discrete.GR` with
+#' The first one simply passes all its arguments to `discrete.GR` with
 #' `adaptive = TRUE` and `NDGR` does the same with
 #' `adaptive = FALSE`.
 #' 

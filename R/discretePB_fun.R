@@ -4,15 +4,15 @@
 #' Discrete Poisson-Binomial procedure
 #' 
 #' @description
-#' Apply the \[DPB\] procedure, with or without computing the critical values, to
-#' a set of p-values and their discrete support. A non-adaptive version is
+#' Apply the \[DPB\] procedure, with or without computing the critical values,
+#' to a set of p-values and their discrete support. A non-adaptive version is
 #' available as well. Additionally, the user can choose between exact
 #' computation of the Poisson-Binomial distribution or a refined normal
 #' approximation.
 #' 
 #' @details
 #' `DPB` and `NDPB` are wrapper functions for `discrete.PB`.
-#' The first one simply passes all its parameters to `discrete.PB` with
+#' The first one simply passes all its arguments to `discrete.PB` with
 #' `adaptive = TRUE` and `NDPB` does the same with
 #' `adaptive = FALSE`.
 #' 

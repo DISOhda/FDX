@@ -57,7 +57,7 @@ weighting are available.
 }
 \details{
 \code{wGR.AM} and \code{wGR.GM} are wrapper functions for \code{weighted.GR}.
-The first one simply passes all its parameters to \code{weighted.GR} with
+The first one simply passes all its arguments to \code{weighted.GR} with
 \code{weighting.method = "AM"} and \code{wGR.GM} does the same with
 \code{weighting.method = "GM"}.
 }

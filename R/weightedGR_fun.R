@@ -10,7 +10,7 @@
 #' 
 #' @details
 #' `wGR.AM` and `wGR.GM` are wrapper functions for `weighted.GR`.
-#' The first one simply passes all its parameters to `weighted.GR` with
+#' The first one simply passes all its arguments to `weighted.GR` with
 #' `weighting.method = "AM"` and `wGR.GM` does the same with
 #' `weighting.method = "GM"`.
 #' 

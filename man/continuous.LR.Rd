@@ -53,7 +53,7 @@ well.
 }
 \details{
 \code{LR} and \code{NLR} are wrapper functions for \code{continuous.LR}. The
-first one simply passes all its parameters to \code{continuous.LR} with
+first one simply passes all its arguments to \code{continuous.LR} with
 \code{adaptive = TRUE} and \code{NLR} does the same with
 \code{adaptive = FALSE}.
 }

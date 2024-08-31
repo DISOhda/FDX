@@ -67,15 +67,15 @@ A \code{FDX} S3 class object whose elements are:
 \item{Data$data.name}{The respective variable names of \code{raw.pvalues} and \code{pCDFlist}.}
 }
 \description{
-Apply the [DPB] procedure, with or without computing the critical values, to
-a set of p-values and their discrete support. A non-adaptive version is
+Apply the [DPB] procedure, with or without computing the critical values,
+to a set of p-values and their discrete support. A non-adaptive version is
 available as well. Additionally, the user can choose between exact
 computation of the Poisson-Binomial distribution or a refined normal
 approximation.
 }
 \details{
 \code{DPB} and \code{NDPB} are wrapper functions for \code{discrete.PB}.
-The first one simply passes all its parameters to \code{discrete.PB} with
+The first one simply passes all its arguments to \code{discrete.PB} with
 \code{adaptive = TRUE} and \code{NDPB} does the same with
 \code{adaptive = FALSE}.
 }

@@ -62,7 +62,7 @@ approximation.
 }
 \details{
 \code{wPB.AM} and \code{wPB.GM} are wrapper functions for \code{weighted.PB}.
-The first one simply passes all its parameters to \code{weighted.PB} with
+The first one simply passes all its arguments to \code{weighted.PB} with
 \code{weighting.method = "AM"} and \code{wPB.GM} does the same with
 \code{weighting.method = "GM"}.
 }
