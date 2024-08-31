@@ -7,7 +7,10 @@ NumericVector poibinom_int(NumericVector probs, int method, int max_q, bool lowe
   int n = probs.length();
   // vector of all probabilities
   NumericVector res;
-  if(max_q >= 0) res = NumericVector(std::min<int>(max_q, n) + 1, 1 - (double)lower_tail); else res = NumericVector(n + 1, 1 - (double)lower_tail);
+  if(max_q >= 0) 
+    res = NumericVector(std::min<int>(max_q, n) + 1, 1 - (double)lower_tail);
+  else 
+    res = NumericVector(n + 1, 1 - (double)lower_tail);
   
   // actual size of results vector
   int size = res.length();
@@ -96,7 +99,15 @@ NumericVector dpbinom(IntegerVector obs, NumericVector probs, int method = 1){
 }
 */
 
-NumericVector ppbinom(IntegerVector obs, NumericVector probs, int method, bool lower_tail){
+double ppbinom(double obs, NumericVector probs, int method, bool lower_tail){
+  // vector of results;
+  NumericVector res = poibinom_int(probs, method, obs, lower_tail);
+  
+  // return results
+  return res[obs];
+}
+
+NumericVector ppbinom_vec(IntegerVector obs, NumericVector probs, int method, bool lower_tail){
   // largest quantile (last element, because 'obs' is sorted in ascending order)
   int max_q = std::max<int>(0, obs[obs.length() - 1]);
   // vector of results;

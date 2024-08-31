@@ -1,4 +1,4 @@
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 using namespace Rcpp;
 
 #include <PoissonBinomial.h>
@@ -8,4 +8,5 @@ NumericVector poibinom_int(NumericVector probs, int method, int max_q, bool lowe
 
 //NumericVector dpbinom(IntegerVector obs, NumericVector probs, int method);
 
-NumericVector ppbinom(IntegerVector obs, NumericVector probs, int method = 1, bool lower_tail = true);
+double ppbinom(double obs, NumericVector probs, int method = 1, bool lower_tail = true);
+NumericVector ppbinom_vec(IntegerVector obs, NumericVector probs, int method = 1, bool lower_tail = true);
