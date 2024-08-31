@@ -1,8 +1,8 @@
 #include "dist_fun.h"
+#include "helper.h"
 
 //' @title Kernel functions
-//' @name
-//' kernel
+//' @name kernel
 //' 
 //' @description
 //' Kernel functions transform observed p-values or their support according to
@@ -69,111 +69,8 @@
 //' and transformed p-values (`$pval.transf`).
 //' 
 
-// fast step function evaluation
-// step function is represented by a single numeric vector under the conditions
-// a) f(x) = x and b) 'x' and 'sfun' are sorted in ASCENDING order
-// this is much faster than passing and evaluating R step function objects
-NumericVector stepfun(const NumericVector &x, const NumericVector &sfun){
-  // index variables and vector lengths
-  int pos = 0, size = sfun.length(), len = x.length();
-  // output vector of the same length as 'x'
-  NumericVector out(len);
-  
-  // computing results
-  for(int i = 0; i < len; i++){
-    while(pos < size - 1 && sfun[pos] < x[i]) pos++;
-    if(sfun[pos] == x[i]) out[i] = sfun[pos];
-    else if(pos) out[i] = sfun[pos - 1]; else out[i] = 0;
-  }
-  
-  return out;
-}
-
-// fast step function evaluation
-// step function is represented by a single numeric vector under the conditions
-// a) f(x) = x and b) 'x' and 'sfun' are sorted in DESCENDING order
-// this is much faster than passing and evaluating R step function objects
-NumericVector stepfun_leq(const NumericVector &x, const NumericVector &sfun){
-  // index variables and vector lengths
-  int size = sfun.length(), len = x.length(), pos = 0;
-  // output vector of the same length as 'x'
-  NumericVector out(len);
-  
-  // computing results
-  for(int i = 0; i < len; i++){
-    while(sfun[pos] > x[i] && pos < size) pos++;
-    if(sfun[pos] == x[i]) out[i] = sfun[pos];
-    else if(pos) out[i] = sfun[pos - 1]; else out[i] = 0;
-  }
-  
-  return out;
-}
-
-// shortcut function that eliminates all values of a SORTED vector that
-// are < limit, except the largest value <= limit
-NumericVector short_eff(const NumericVector &x, const double limit){
-  // length of the vector
-  int len = x.length();
-  // identify values <= limit
-  NumericVector out = x[x <= limit];
-  // eliminate values, but keep their maximum
-  out = x[Range(which_max(out), len - 1)];
-  
-  return out;
-}
-
-// function that binds two vectors, sorts it and eliminates duplications 
-NumericVector sort_combine(const NumericVector &x, const NumericVector &y){
-  // vector lengths
-  int lenA = x.length(), lenB = y.length();
-  // output vector of the combined lengths of 'x' and 'y'
-  NumericVector out(lenA + lenB);
-  
-  // bind vectors 'x' and 'y'
-  for(int i = 0; i < lenA; i++) out[i] = x[i];
-  for(int i = 0; i < lenB; i++) out[lenA + i] = y[i];
-  // sort and eliminate duplicates
-  out = sort_unique(out);
-  
-  return out;
-}
-
-// sort columns of a matrix in DESCENDING order
-// using an intermediate numeric vector is necessary, because "in-column"
-// sorting does not always work as expected, especially for large columns
-void colsortdec(NumericMatrix &mat){
-  // intermediate vector to store column values (necessary!)
-  NumericVector vec;
-  for(int i = 0; i < mat.ncol(); i++){
-    // store values in a vector
-    vec = NumericVector(mat(_, i));
-    // sort values in DESCENDING order
-    std::sort(vec.begin(), vec.end(), std::greater<double>());
-    // write sorted values back to column
-    mat(_, i) = vec;
-  }
-}
-
-// sort columns of a matrix in ASCENDING order
-// using an intermediate numeric vector is necessary, because "in-column"
-// sorting does not always work as expected, especially for large columns
-void colsortasc(NumericMatrix &mat){
-  // intermediate vector to store column values (necessary!)
-  NumericVector vec;
-  for(int i = 0; i < mat.ncol(); i++){
-    // store values in a vector
-    vec = NumericVector(mat(_, i));
-    // sort values in ASCENDING order
-    std::sort(vec.begin(), vec.end());
-    // write sorted values back to column
-    mat(_, i) = vec;
-  }
-}
-
-double DLR_su_tau_m(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5) {
-  // number of tests
-  int numTests = pCDFlist.length();
-  // "k" for tau.m (see 16)
+double DLR_su_tau_m2(const List &pCDFlist, const int numTests, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5) {
+  // "m(l)" for tau_m (see 16)
   int a = (int)std::floor(alpha * numTests) + 1;
   
   // number of p-values to be transformed
@@ -240,14 +137,12 @@ double DLR_su_tau_m(const List &pCDFlist, const NumericVector &pvalues, const bo
     // if search is stopped, there is need for further chunk computations
     if(stop) break;
   }
-  
+  //Rcout << pv_list[idx_tau] << "\n";
   return pv_list[idx_tau];
 }
 
-//'@rdname kernel
-//'@export
 // [[Rcpp::export]]
-NumericVector kernel_DLR_fast(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05, const bool stepUp = false, const double zeta = 0.5, const NumericVector &support = 0) {
+NumericVector kernel_DLR_fast2(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05, const bool stepUp = false, const double zeta = 0.5, const NumericVector &support = 0) {
   // number of tests
   int numTests = pCDFlist.length();
   // seqence 1 ... m
@@ -266,8 +161,8 @@ NumericVector kernel_DLR_fast(const List &pCDFlist, const NumericVector &pvalues
     pv_list = pvalues;
   }else{
     // SU case, see (16, 17)
-    // compute tau.m
-    double tau_m = DLR_su_tau_m(pCDFlist, support, adaptive, alpha, zeta);
+    // compute tau_m
+    double tau_m = DLR_su_tau_m2(pCDFlist, numTests, support, adaptive, alpha, zeta);
     // search the values of the vector <= numTests * alpha
     // restrict attention to these values, because tau.k needs to be <= tau.m
     pv_list = pvalues[pvalues <= tau_m];
@@ -327,10 +222,8 @@ NumericVector kernel_DLR_fast(const List &pCDFlist, const NumericVector &pvalues
   return pval_transf;
 }
 
-//'@rdname kernel
-//'@export
 // [[Rcpp::export]]
-List kernel_DLR_crit(const List &pCDFlist, const NumericVector &pvalues, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool stepUp = false){
+List kernel_DLR_crit2(const List &pCDFlist, const NumericVector &pvalues, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool stepUp = false){
   // number of tests
   int numTests = pCDFlist.length();
   // seqence 1 ... m
@@ -362,7 +255,7 @@ List kernel_DLR_crit(const List &pCDFlist, const NumericVector &pvalues, const N
   else{
     // SU case, see (16, 17)
     // compute tau.m
-    double tau_m = DLR_su_tau_m(pCDFlist, pvalues, adaptive, alpha, zeta);
+    double tau_m = DLR_su_tau_m2(pCDFlist, numTests, pvalues, adaptive, alpha, zeta);
     // search the values of the vector <= numTests * alpha
     // restrict attention to these values, because tau.k needs to be <= tau.m
     pv_list = pvalues[pvalues <= tau_m];
@@ -467,10 +360,8 @@ List kernel_DLR_crit(const List &pCDFlist, const NumericVector &pvalues, const N
     return List::create(Named("crit.consts") = pv_list[crit], Named("pval.transf") = pval_transf);
 }
 
-//'@rdname kernel
-//'@export
 // [[Rcpp::export]]
-List kernel_DGR_fast(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05) {
+List kernel_DGR_fast2(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05) {
   // number of tests
   int numTests = pCDFlist.length();
   // form logarithms of pCDFlist
@@ -543,15 +434,13 @@ List kernel_DGR_fast(const List &pCDFlist, const NumericVector &pvalues, const b
   return List::create(Named("pval.transf") = pval_transf, Named("bin.probs") = probs);//pval_transf;
 }
 
-//'@rdname kernel
-//'@export
 // [[Rcpp::export]]
-List kernel_DGR_crit(const List &pCDFlist, const NumericVector &pvalues, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5) {
+List kernel_DGR_crit2(const List &pCDFlist, const NumericVector &pvalues, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5) {
   // number of tests
   int numTests = pCDFlist.length();
   // form logarithms of pCDFlist
-  List logCDFs(numTests);
-  for(int i = 0; i < numTests; i++) logCDFs[i] = NumericVector(log(1 - as<NumericVector>(pCDFlist[i])));
+  List log_sfuns(numTests);
+  for(int i = 0; i < numTests; i++) log_sfuns[i] = NumericVector(log(1 - as<NumericVector>(pCDFlist[i])));
   // seqence 1 ... m
   IntegerVector seq_m = IntegerVector(seq_len(numTests));
   // sequence 1 * alpha ... m * alpha for adaptive procedure
@@ -611,7 +500,7 @@ List kernel_DGR_crit(const List &pCDFlist, const NumericVector &pvalues, const N
     NumericMatrix mat(numTests, len);
     // compute columns \sum_{j=1}^numTests F_j(pv)
     for(int j = 0; j < numTests; j++)
-      mat(j, _) = rev(stepfun_leq(rev(pv), as<NumericVector>(logCDFs[j])));
+      mat(j, _) = rev(stepfun_leq(rev(pv), as<NumericVector>(log_sfuns[j])));
     // sort columns in ascending order
     if(adaptive) colsortasc(mat);//colsortdec(mat);
     
@@ -659,10 +548,8 @@ List kernel_DGR_crit(const List &pCDFlist, const NumericVector &pvalues, const N
   return List::create(Named("crit.consts") = pv_list[crit], Named("pval.transf") = pval_transf);
 }
 
-//'@rdname kernel
-//'@export
 // [[Rcpp::export]]
-NumericVector kernel_DPB_fast(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05, const bool exact = true) {
+NumericVector kernel_DPB_fast2(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive, const double alpha, const bool exact) {
   // number of tests
   int numTests = pCDFlist.length();
   // seqence 1 ... m
@@ -709,10 +596,10 @@ NumericVector kernel_DPB_fast(const List &pCDFlist, const NumericVector &pvalues
       // compute transformation
       if(adaptive){
         //NumericVector temp = ppbinom(a, pv[Range(0, numTests - idx_pval + a[idx_pval] - 1)], method, false);
-        pval_transf[idx_pval] = ppbinom(a, pv[Range(0, numTests - idx_pval + a[idx_pval] - 1)], method, false)[idx_pval];
+        pval_transf[idx_pval] = ppbinom_vec(a, pv[Range(0, numTests - idx_pval + a[idx_pval] - 1)], method, false)[idx_pval];
       }else{
         //NumericVector temp = ppbinom(a, pv, method, false);
-        pval_transf[idx_pval] = ppbinom(a, pv, method, false)[idx_pval];
+        pval_transf[idx_pval] = ppbinom_vec(a, pv, method, false)[idx_pval];
       }
       // go to next p-value
       idx_pval++;
@@ -723,10 +610,8 @@ NumericVector kernel_DPB_fast(const List &pCDFlist, const NumericVector &pvalues
   return pval_transf;
 }
 
-//'@rdname kernel
-//'@export
 // [[Rcpp::export]]
-List kernel_DPB_crit(const List &pCDFlist, const NumericVector &pvalues, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool exact = true) {
+List kernel_DPB_crit2(const List &pCDFlist, const NumericVector &pvalues, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool exact = true) {
   // number of tests
   int numTests = pCDFlist.length();
   // seqence 1 ... m
@@ -752,7 +637,7 @@ List kernel_DPB_crit(const List &pCDFlist, const NumericVector &pvalues, const N
   IntegerVector crit(numTests);// = match(crit_GRstar, pv_list) - 1;
   // GR* critical values
   if(exact){
-    NumericVector crit_GRstar = as<NumericVector>(kernel_DGR_crit(pCDFlist, pvalues, sorted_pv, adaptive, alpha, zeta)["crit.consts"]);
+    NumericVector crit_GRstar = as<NumericVector>(kernel_DGR_crit2(pCDFlist, pvalues, sorted_pv, adaptive, alpha, zeta)["crit.consts"]);
     crit = match(crit_GRstar, pv_list) - 1;
   }
   
@@ -807,11 +692,11 @@ List kernel_DPB_crit(const List &pCDFlist, const NumericVector &pvalues, const N
       NumericVector temp = NumericVector(mat(_, j));
       // performance shortcut for non-adaptive procedure
       if(!adaptive && ((idx_crit < numTests && idx_pval > crit[idx_crit]) || raw_transf))
-        s = ppbinom(a, temp, method, false);
+        s = ppbinom_vec(a, temp, method, false);
       // is it still necessary to search for critical values?
       if(idx_crit < numTests && idx_pval > crit[idx_crit]){
         if(adaptive)
-          s = ppbinom(a, temp[Range(0, numTests - idx_crit + a[idx_crit] - 1)], method, false);
+          s = ppbinom_vec(a, temp[Range(0, numTests - idx_crit + a[idx_crit] - 1)], method, false);
         
         if(s[idx_crit] <= zeta){
           // current p-value satisfies condition
@@ -829,7 +714,7 @@ List kernel_DPB_crit(const List &pCDFlist, const NumericVector &pvalues, const N
       // one equal to current support p-value
       while(raw_transf && (pv_list[idx_pval] == sorted_pv[idx_transf])){
         if(adaptive)
-          s = ppbinom(a, temp[Range(0, numTests - idx_transf + a[idx_transf] - 1)], method, false);
+          s = ppbinom_vec(a, temp[Range(0, numTests - idx_transf + a[idx_transf] - 1)], method, false);
         
         pval_transf[idx_transf] = s[idx_transf];
         if(++idx_transf == numTests) raw_transf = false;
@@ -845,131 +730,4 @@ List kernel_DPB_crit(const List &pCDFlist, const NumericVector &pvalues, const N
   
   // output
   return List::create(Named("crit.consts") = pv_list[crit], Named("pval.transf") = pval_transf);
-}
-
-// geometric weighting fuction
-// [[Rcpp::export]]
-NumericVector geom_weight(const NumericVector &pvalues, const NumericVector &weights){
-  // length of input vectors (equal)
-  int len = pvalues.length();
-  // results vector
-  NumericVector res(len);
-  // perform geometric weighting
-  ////// does not work on older compilers (e.g. win_oldrelease)
-  //std::transform(res.begin(), res.end(), weights.begin(), res.begin(), [](double x, double a){return std::pow(x, a);});
-  //res = 1 - res;
-  //////
-  for(int i = 0; i < len; i++){
-    res[i] = 1 - std::pow(1 - pvalues[i], weights[i]);
-    // was the i-th value rounded off to zero?
-    if(res[i] <= 0) 
-      // replace zero with first-order Taylor approximation
-      res[i] = pvalues[i] * weights[i]; 
-  }
-  
-  // return results
-  return res;
-}
-
-//'@rdname kernel
-//'@export
-// [[Rcpp::export]]
-NumericVector kernel_wLR_fast(const NumericVector &qvalues, const NumericVector &weights, double alpha = 0.05, bool geom_weighting = false){
-  // length of input vectors (equal)
-  int numTests = qvalues.length();
-  // seqence 1 ... m
-  IntegerVector seq_m = IntegerVector(seq_len(numTests));
-  // sequence 1 * alpha ... m * alpha for adaptive procedure
-  NumericVector seq_alpha = NumericVector(seq_m) * alpha;
-  // sequence floor(1 * alpha) ... floor(m * alpha) for adaptive procedure
-  IntegerVector a = IntegerVector(NumericVector(floor(seq_alpha)));
-  // length of index sets for weighting
-  IntegerVector numWeights = numTests - seq_m + a + 1;
-  
-  // compute transformations
-  NumericVector pval_transf(numTests);
-  for(int i = 0; i < numTests; i++){
-    // vector of probbilities
-    NumericVector probs;
-    if(geom_weighting)
-      probs = geom_weight(NumericVector(numWeights[i], qvalues[i]), weights[Range(0, numWeights[i] - 1)]);
-    else{
-      probs = qvalues[i] * clone(weights)[Range(0, numWeights[i] - 1)];
-    }
-    // transformed values
-    pval_transf[i] = sum(probs)/(a[i] + 1);
-  }
-  
-  // output
-  return pval_transf;
-}
-
-//'@rdname kernel
-//'@export
-// [[Rcpp::export]]
-NumericVector kernel_wGR_fast(const NumericVector &qvalues, const NumericVector &weights, double alpha = 0.05, bool geom_weighting = false){
-  // length of input vectors (equal)
-  int numTests = qvalues.length();
-  // seqence 1 ... m
-  IntegerVector seq_m = IntegerVector(seq_len(numTests));
-  // sequence 1 * alpha ... m * alpha for adaptive procedure
-  NumericVector seq_alpha = NumericVector(seq_m) * alpha;
-  // sequence floor(1 * alpha) ... floor(m * alpha) for adaptive procedure
-  IntegerVector a = IntegerVector(NumericVector(floor(seq_alpha)));
-  // length of index sets for weighting
-  IntegerVector numWeights = numTests - seq_m + a + 1;
-  
-  // compute transformations
-  NumericVector pval_transf(numTests);
-  if(geom_weighting){
-    NumericVector running_weights = NumericVector(cumsum(weights)) / NumericVector(seq_m);
-    running_weights = running_weights[numWeights - 1];
-    NumericVector probs = geom_weight(qvalues, running_weights);
-    for(int i = 0; i < numTests; i++){
-      //Rcout << running_weights[i] << " " << probs[i] << "\n";
-      pval_transf[i] = R::pbinom(a[i], numWeights[i], probs[i], 0, 0);
-    }
-  }else{
-    for(int i = 0; i < numTests; i++){
-      NumericVector probs = qvalues[i] * clone(weights)[Range(0, numWeights[i] - 1)];
-      pval_transf[i] = ppbinom(a, probs, 2, false)[i];
-    }
-  }
-  
-  // output
-  return pval_transf;
-}
-
-//'@rdname kernel
-//'@export
-// [[Rcpp::export]]
-NumericVector kernel_wPB_fast(const NumericVector &qvalues, const NumericVector &weights, double alpha = 0.05, bool geom_weighting = false, bool exact = true){
-  // length of input vectors (equal)
-  int numTests = qvalues.length();
-  // seqence 1 ... m
-  IntegerVector seq_m = IntegerVector(seq_len(numTests));
-  // sequence 1 * alpha ... m * alpha for adaptive procedure
-  NumericVector seq_alpha = NumericVector(seq_m) * alpha;
-  // sequence floor(1 * alpha) ... floor(m * alpha) for adaptive procedure
-  IntegerVector a = IntegerVector(NumericVector(floor(seq_alpha)));
-  // length of index sets for weighting
-  IntegerVector numWeights = numTests - seq_m + a + 1;
-  
-  // compute transformations
-  NumericVector pval_transf(numTests);
-  for(int i = 0; i < numTests; i++){
-    // vector of probbilities
-    NumericVector probs;
-    if(geom_weighting)
-      probs = geom_weight(NumericVector(numWeights[i], qvalues[i]), weights[Range(0, numWeights[i] - 1)]);
-    else{
-      probs = qvalues[i] * clone(weights)[Range(0, numWeights[i] - 1)];
-      probs = pmin(probs, NumericVector(numTests, 1.0));
-    }
-    // transformed values
-    pval_transf[i] = ppbinom(a, probs, int(exact), false)[i];
-  }
-  
-  // output
-  return pval_transf;
 }
