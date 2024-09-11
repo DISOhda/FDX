@@ -45,36 +45,74 @@
 #' @export
 ## S3 method for class 'FDX'
 summary.FDX <- function(object, ...){
-  # include all data of x (FDX)
-  out <- object
+  if(!("FDX" %in% class(object)))
+    return(summary(object))
+  
+  # determine if selection was performed
+  select <- exists('Select', object)
+  if(select) m <- object$Select$Number
+  
+  # determine if weighting was performed
+  weight <- grepl("Weighted", object$Data$Method)
   
   # number of tests
-  m <- length(object$Data$raw.pvalues)
-  # determine order of raw p-values
-  o <- order(object$Data$raw.pvalues)
+  n <- length(object$Data$Raw.pvalues)
   # ordered indices
-  i <- (1:m)[o]
-  # sort raw p-values
-  y <- object$Data$raw.pvalues[o]
+  i <- seq_len(n)
   # determine for each p-value if its corresponding null hypothesis is rejected
-  r <- ((1:m) %in% object$Indices)[o]
+  r <- i %in% object$Indices
   
   # create summary table
-  out <- c(out, list(Table = data.frame('P.value' = y, 'Index' = i)))
-  if(grepl("Weighted", out$Method)) out$Table <- data.frame(out$Table, 'Weights' = out$Data$weights[o], 'Weighted' = out$Weighted[o])
-  if(exists('Critical.values', where = object)){
-    if(grepl("Weighted", out$Method))
-      out$Table <- data.frame(out$Table, 'Critical.value' = object$Critical.values[order(order(out$Weighted))][o])
-    else
-      out$Table <- data.frame(out$Table, 'Critical.value' = object$Critical.values)
+  out <- c(object, list(Table = data.frame(
+    'P.value' = object$Data$Raw.pvalues,
+    'Index' = i
+  )))
+  
+  # add selection (T/F) and scaled p-values
+  if(select){
+    out$Table$Selected <- i %in% object$Select$Indices
+    out$Table$Scaled <- NA
+    out$Table$Scaled[out$Table$Selected] <- object$Select$Scaled
   }
-  if(exists('Adjusted', where = object)){
-    out$Table <- data.frame(out$Table, 'Adjusted' = object$Adjusted[o])
+  
+  # add weights and weighted p-values; determine order
+  if(weight) {
+    # add weights and weighted p-values
+    out$Table <- data.frame(
+      out$Table,
+      'Weights' = out$Data$Weights,
+      'Weighted' = out$Weighted
+    )
+    # determine order of weighted p-values
+    o <- order(out$Table$Weighted, object$Data$Raw.pvalues)
+  } else {
+    if(select) {
+      # determine order of scaled selected p-values
+      o <- order(out$Table$Scaled, object$Data$Raw.pvalues)
+    } else
+      # determine order of raw p-values
+      o <- order(object$Data$Raw.pvalues)
   }
-  out$Table <- data.frame(out$Table, 'Rejected' = r)
+  
+  # sort rows in ascending order
+  out$Table <- out$Table[o, ]
+  
+  # add critical constants (if present)
+  if(exists('Critical.values', where = object)) {
+    out$Table$Critical.value <- object$Critical.values
+  }
+  
+  # add adjusted p-values (if present)
+  if(exists('Adjusted', where = object)) {
+    out$Table$Adjusted <- object$Adjusted[o]
+  }
+  
+  # add rejection decisions
+  out$Table <- data.frame(out$Table, 'Rejected' = r[o])
+  rownames(out$Table) <- i
   
   # return output object
-  class(out) <- "summary.FDX" # basically a 'FDX' object, but with a summary table (just like 'lm' and 'summary.lm' classes)
+  class(out) <- c("summary.FDX", class(object)) # basically a 'FDX' object, but with a summary table (just like 'lm' and 'summary.lm' classes)
   return(out)
 }
 
@@ -83,14 +121,17 @@ summary.FDX <- function(object, ...){
 #' @export
 ## S3 method for class 'summary.FDX'
 print.summary.FDX <- function(x, max = NULL, ...){
+  if(!("summary.FDX" %in% class(x)))
+    return(print(x))
+  
   # determine number of tests
-  m <- length(x$Data$raw.pvalues)
+  m <- ncol(x$Table)
   
   # print 'FDX' part of the object
   print.FDX(x)
   
   # rows to print: number of rejections + 5 (if not requested otherwise)
-  max <- if(!is.null(max)) ncol(x$Table) * max else getOption("max.print")
+  max <- if(!is.null(max)) m * max else getOption("max.print")
   
   # print additional summary table
   print(x$Table, max = max, ...)

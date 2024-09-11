@@ -22,39 +22,66 @@
 #' @export
 ## S3 method for class 'FDX'
 print.FDX <- function(x, ...){
-  m <- length(x$Data$raw.pvalues)
+  if(!any(c("FDX", "summary.FDX") %in% class(x)))
+    return(print(x))
+  
+  # determine if selection was performed
+  select <- exists('Select', x)
+  if(select) m <- x$Select$Number
+  
+  # number of tests
+  n <- length(x$Data$Raw.pvalues)
+  # number of rejected null hypotheses
   k <- x$Num.rejected
-  if(grepl("Lehmann", x$Method)){
-    n <- continuous.LR(x$Data$raw.pvalues, x$FDP.threshold, x$Exceedance.probability, TRUE, FALSE)$Num.rejected
+  
+  if(grepl("Lehmann", x$Data$Method)) {
+    k.o <- continuous.LR(
+      x$Data$Raw.pvalues,
+      x$Data$FDP.threshold,
+      x$Data$Exceedance.probability,
+      TRUE,
+      FALSE
+    )$Num.rejected
     orig <- "Lehmann-Romano"
-  }
-  else{
-    n <- continuous.GR(x$Data$raw.pvalues, x$FDP.threshold, x$Exceedance.probability, TRUE, FALSE)$Num.rejected
+  } else {
+    k.o <- continuous.GR(
+      x$Data$Raw.pvalues,
+      x$Data$FDP.threshold,
+      x$Data$Exceedance.probability,
+      TRUE,
+      FALSE
+    )$Num.rejected
     orig <- "Guo-Romano"
   }
   
   # print title (i.e. algorithm)
   cat("\n")
-  cat("\t", x$Method, "\n")
+  cat("\t", x$Data$Method, "\n")
   
   # print dataset name(s)
   cat("\n")
-  cat("Data: ", x$Data$data.name, "\n")
+  cat("Data: ", x$Data$Data.name, "\n")
   
   # print short results overview
-  cat("Number of tests =", m, "\n")
-  cat("Number of rejections = ", k, " when controlling FDP at level ", x$FDP.threshold, " with probability ",
-      x$Exceedance.probability, ",\n", paste(rep(" ", 24 + nchar(as.character(k))), collapse = ""),
-      "i.e. P(FDP > ", x$FDP.threshold, ") <= ", x$Exceedance.probability, "\n", sep = "")
+  if(!select) {
+    cat("Number of tests =", n, "\n")
+  } else {
+    cat("Number of selected tests =", m, "out of", n, "\n")
+    cat("Selection threshold =", x$Select$Threshold, "\n")
+  }
+    
+  cat("Number of rejections = ", k, " when controlling FDP at level ", x$Data$FDP.threshold, " with probability ",
+      x$Data$Exceedance.probability, ",\n", paste(rep(" ", 24 + nchar(as.character(k))), collapse = ""),
+      "i.e. P(FDP > ", x$Data$FDP.threshold, ") <= ", x$Data$Exceedance.probability, "\n", sep = "")
   
-  if(!grepl("Continuous", x$Method))
-    cat("Original", orig, "rejections =", n, "\n")
+  if(!grepl("Continuous", x$Data$Method))
+    cat("Original", orig, "rejections =", k.o, "\n")
   
-  cat("Original Benjamini-Hochberg rejections =", sum(p.adjust(x$Data$raw.pvalues, "BH") <= x$FDP.threshold),
-      "at level", x$FDP.threshold, "\n")
+  cat("Original Benjamini-Hochberg rejections =", sum(p.adjust(x$Data$Raw.pvalues, "BH") <= x$Data$FDP.threshold),
+      "at global FDR level", x$Data$FDP.threshold, "\n")
   
-  if(k){
-    if(!grepl("Weighted", x$Method))
+  if(k && !select) {
+    if(!grepl("Weighted", x$Data$Method))
       cat("Largest rejected p value: ", max(x$Rejected), "\n")
     else
       cat("Largest rejected weighted p value: ", max(x$Weighted[x$Indices]), "\n")
