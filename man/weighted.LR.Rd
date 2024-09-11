@@ -2,11 +2,22 @@
 % Please edit documentation in R/weightedLR_fun.R
 \name{weighted.LR}
 \alias{weighted.LR}
+\alias{weighted.LR2}
 \alias{wLR.AM}
 \alias{wLR.GM}
 \title{Weighted Lehmann-Romano Procedure}
 \usage{
 weighted.LR(
+  test.results,
+  weights = NULL,
+  alpha = 0.05,
+  zeta = 0.5,
+  weighting.method = c("AM", "GM"),
+  critical.values = FALSE,
+  select.threshold = 1
+)
+
+weighted.LR2(
   raw.pvalues,
   weights,
   alpha = 0.05,
@@ -15,13 +26,25 @@ weighted.LR(
   critical.values = FALSE
 )
 
-wLR.AM(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+wLR.AM(
+  test.results,
+  weights,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1
+)
 
-wLR.GM(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+wLR.GM(
+  test.results,
+  weights,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1
+)
 }
 \arguments{
-\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
-
 \item{weights}{a numeric vector. Contains the weights of the p-values.}
 
 \item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
@@ -31,6 +54,8 @@ wLR.GM(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
 \item{weighting.method}{a character string specifying whether to conduct arithmetic (\code{direction="AM"}, the default) or geometric weighting (\code{direction="GM"}) of p-values.}
 
 \item{critical.values}{a boolean. If \code{TRUE}, critical constants are computed and returned (this is computationally intensive).}
+
+\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:

@@ -2,11 +2,42 @@
 % Please edit documentation in R/discreteGR_fun.R
 \name{discrete.GR}
 \alias{discrete.GR}
+\alias{discrete.GR.default}
+\alias{discrete.GR.DiscreteTestResults}
+\alias{discrete.GR2}
 \alias{DGR}
+\alias{DGR.default}
+\alias{DGR.DiscreteTestResults}
 \alias{NDGR}
+\alias{NDGR.default}
+\alias{NDGR.DiscreteTestResults}
 \title{Discrete Guo-Romano procedure}
 \usage{
-discrete.GR(
+discrete.GR(test.results, ...)
+
+\method{discrete.GR}{default}(
+  test.results,
+  pCDFlist,
+  alpha = 0.05,
+  zeta = 0.5,
+  adaptive = TRUE,
+  critical.values = FALSE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
+)
+
+\method{discrete.GR}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  adaptive = TRUE,
+  critical.values = FALSE,
+  select.threshold = 1,
+  ...
+)
+
+discrete.GR2(
   raw.pvalues,
   pCDFlist,
   alpha = 0.05,
@@ -15,13 +46,51 @@ discrete.GR(
   critical.values = FALSE
 )
 
-DGR(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+DGR(test.results, ...)
 
-NDGR(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+\method{DGR}{default}(
+  test.results,
+  pCDFlist,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
+)
+
+\method{DGR}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1,
+  ...
+)
+
+NDGR(test.results, ...)
+
+\method{NDGR}{default}(
+  test.results,
+  pCDFlist,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
+)
+
+\method{NDGR}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1,
+  ...
+)
 }
 \arguments{
-\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
-
 \item{pCDFlist}{a list of the supports of the CDFs of the p-values. Each support is represented by a vector that must be in increasing order.}
 
 \item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
@@ -31,6 +100,8 @@ NDGR(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
 \item{adaptive}{a boolean specifying whether to conduct an adaptive procedure or not.}
 
 \item{critical.values}{a boolean. If \code{TRUE}, critical constants are computed and returned (this is computationally intensive).}
+
+\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:

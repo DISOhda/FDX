@@ -41,7 +41,7 @@ fast.Discrete.GR(
 each line representing a 2 x 2 contingency table to
 test. The number of columns and what they must contain
 depend on the value of the \code{input} argument, see
-Details of \code{\link[=fisher.pvalues.support]{fisher.pvalues.support()}}.}
+Details of \code{\link[DiscreteFDR:fisher.pvalues.support]{DiscreteFDR::fisher.pvalues.support()}}.}
 
 \item{alternative}{same argument as in \code{\link[=fisher.test]{fisher.test()}}. The three
 possible values are \code{"greater"} (default),

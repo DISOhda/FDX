@@ -2,11 +2,44 @@
 % Please edit documentation in R/discreteLR_fun.R
 \name{discrete.LR}
 \alias{discrete.LR}
+\alias{discrete.LR.default}
+\alias{discrete.LR.DiscreteTestResults}
+\alias{discrete.LR2}
 \alias{DLR}
+\alias{DLR.default}
+\alias{DLR.DiscreteTestResults}
 \alias{NDLR}
+\alias{NDLR.default}
+\alias{NDLR.DiscreteTestResults}
 \title{Discrete Lehmann-Romano procedure}
 \usage{
-discrete.LR(
+discrete.LR(test.results, ...)
+
+\method{discrete.LR}{default}(
+  test.results,
+  pCDFlist,
+  alpha = 0.05,
+  zeta = 0.5,
+  direction = "sd",
+  adaptive = TRUE,
+  critical.values = FALSE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
+)
+
+\method{discrete.LR}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  direction = "sd",
+  adaptive = TRUE,
+  critical.values = FALSE,
+  select.threshold = 1,
+  ...
+)
+
+discrete.LR2(
   raw.pvalues,
   pCDFlist,
   alpha = 0.05,
@@ -16,27 +49,55 @@ discrete.LR(
   critical.values = FALSE
 )
 
-DLR(
-  raw.pvalues,
+DLR(test.results, ...)
+
+\method{DLR}{default}(
+  test.results,
   pCDFlist,
   alpha = 0.05,
   zeta = 0.5,
   direction = "sd",
-  critical.values = FALSE
+  critical.values = FALSE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
 )
 
-NDLR(
-  raw.pvalues,
+\method{DLR}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  direction = "sd",
+  critical.values = FALSE,
+  select.threshold = 1,
+  ...
+)
+
+NDLR(test.results, ...)
+
+\method{NDLR}{default}(
+  test.results,
   pCDFlist,
   alpha = 0.05,
   zeta = 0.5,
   direction = "sd",
-  critical.values = FALSE
+  critical.values = FALSE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
+)
+
+\method{NDLR}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  direction = "sd",
+  critical.values = FALSE,
+  select.threshold = 1,
+  ...
 )
 }
 \arguments{
-\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
-
 \item{pCDFlist}{a list of the supports of the CDFs of the p-values. Each support is represented by a vector that must be in increasing order.}
 
 \item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
@@ -48,6 +109,8 @@ NDLR(
 \item{adaptive}{a boolean specifying whether to conduct an adaptive procedure or not.}
 
 \item{critical.values}{a boolean. If \code{TRUE}, critical constants are computed and returned (this is computationally intensive).}
+
+\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:

@@ -59,7 +59,7 @@ kernel_wGR_fast(qvalues, weights, alpha = 0.05, geom_weighting = FALSE)
 
 kernel_DPB_fast(
   pCDFlist,
-  pvalues,
+  sorted_pv,
   adaptive = TRUE,
   alpha = 0.05,
   exact = TRUE,
@@ -68,7 +68,7 @@ kernel_DPB_fast(
 
 kernel_DPB_crit(
   pCDFlist,
-  pvalues,
+  support,
   sorted_pv,
   adaptive = TRUE,
   alpha = 0.05,
@@ -108,9 +108,9 @@ kernel_wPB_fast(
 (\code{TRUE}) or arithmetic (\code{FALSE})
 weighting.}
 
-\item{pvalues}{a numeric vector. Contains all values of the p-values supports if we search for the critical constants. If not, contains only the observed p-values. Must be sorted in increasing order!}
-
 \item{exact}{a boolean specifying whether to compute the Poisson-Binomial distribution exactly or by a normal approximation.}
+
+\item{pvalues}{a numeric vector. Contains all values of the p-values supports if we search for the critical constants. If not, contains only the observed p-values. Must be sorted in increasing order!}
 }
 \value{
 For ".fast" kernels, a vector of transformed p-values is returned; ".crit"

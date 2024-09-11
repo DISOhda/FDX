@@ -2,11 +2,44 @@
 % Please edit documentation in R/discretePB_fun.R
 \name{discrete.PB}
 \alias{discrete.PB}
+\alias{discrete.PB.default}
+\alias{discrete.PB.DiscreteTestResults}
+\alias{discrete.PB2}
 \alias{DPB}
+\alias{DPB.default}
+\alias{DPB.DiscreteTestResults}
 \alias{NDPB}
+\alias{NDPB.default}
+\alias{NDPB.DiscreteTestResults}
 \title{Discrete Poisson-Binomial procedure}
 \usage{
-discrete.PB(
+discrete.PB(test.results, ...)
+
+\method{discrete.PB}{default}(
+  test.results,
+  pCDFlist,
+  alpha = 0.05,
+  zeta = 0.5,
+  adaptive = TRUE,
+  critical.values = FALSE,
+  exact = TRUE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
+)
+
+\method{discrete.PB}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  adaptive = TRUE,
+  critical.values = FALSE,
+  exact = TRUE,
+  select.threshold = 1,
+  ...
+)
+
+discrete.PB2(
   raw.pvalues,
   pCDFlist,
   alpha = 0.05,
@@ -16,27 +49,55 @@ discrete.PB(
   exact = TRUE
 )
 
-DPB(
-  raw.pvalues,
+DPB(test.results, ...)
+
+\method{DPB}{default}(
+  test.results,
   pCDFlist,
   alpha = 0.05,
   zeta = 0.5,
   critical.values = FALSE,
-  exact = TRUE
+  exact = TRUE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
 )
 
-NDPB(
-  raw.pvalues,
+\method{DPB}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  exact = TRUE,
+  select.threshold = 1,
+  ...
+)
+
+NDPB(test.results, ...)
+
+\method{NDPB}{default}(
+  test.results,
   pCDFlist,
   alpha = 0.05,
   zeta = 0.5,
   critical.values = FALSE,
-  exact = TRUE
+  exact = TRUE,
+  select.threshold = 1,
+  pCDFlist.indices = NULL,
+  ...
+)
+
+\method{NDPB}{DiscreteTestResults}(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  exact = TRUE,
+  select.threshold = 1,
+  ...
 )
 }
 \arguments{
-\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
-
 \item{pCDFlist}{a list of the supports of the CDFs of the p-values. Each support is represented by a vector that must be in increasing order.}
 
 \item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
@@ -48,6 +109,8 @@ NDPB(
 \item{critical.values}{a boolean. If \code{TRUE}, critical constants are computed and returned (this is computationally intensive).}
 
 \item{exact}{a boolean specifying whether to compute the Poisson-Binomial distribution exactly or by a normal approximation.}
+
+\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:

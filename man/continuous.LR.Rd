@@ -2,11 +2,21 @@
 % Please edit documentation in R/continuousLR.R
 \name{continuous.LR}
 \alias{continuous.LR}
+\alias{continuous.LR2}
 \alias{LR}
 \alias{NLR}
 \title{Continuous Lehmann-Romano procedure}
 \usage{
 continuous.LR(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  adaptive = TRUE,
+  critical.values = FALSE,
+  select.threshold = 1
+)
+
+continuous.LR2(
   raw.pvalues,
   alpha = 0.05,
   zeta = 0.5,
@@ -14,13 +24,23 @@ continuous.LR(
   critical.values = FALSE
 )
 
-LR(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+LR(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1
+)
 
-NLR(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+NLR(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1
+)
 }
 \arguments{
-\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
-
 \item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
 
 \item{zeta}{the target probability of not exceeding the desired FDP, a number strictly between 0 and 1. If \code{zeta=NULL} (the default), then \code{zeta} is chosen equal to \code{alpha}.}
@@ -28,6 +48,8 @@ NLR(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
 \item{adaptive}{a boolean specifying whether to conduct an adaptive procedure or not.}
 
 \item{critical.values}{a boolean. If \code{TRUE}, critical constants are computed and returned (this is computationally intensive).}
+
+\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:

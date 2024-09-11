@@ -7,8 +7,9 @@
 \method{plot}{FDX}(
   x,
   col = c(2, 4, 1),
-  pch = c(1, 1, 1),
-  lwd = c(1, 1, 1),
+  pch = c(20, 20, 17),
+  lwd = rep(par()$lwd, 3),
+  cex = rep(par()$cex, 3),
   type.crit = "b",
   legend = NULL,
   ...

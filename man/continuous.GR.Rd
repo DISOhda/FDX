@@ -2,11 +2,21 @@
 % Please edit documentation in R/continuousGR.R
 \name{continuous.GR}
 \alias{continuous.GR}
+\alias{continuous.GR2}
 \alias{GR}
 \alias{NGR}
 \title{Continuous Guo-Romano procedure}
 \usage{
 continuous.GR(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  adaptive = TRUE,
+  critical.values = FALSE,
+  select.threshold = 1
+)
+
+continuous.GR2(
   raw.pvalues,
   alpha = 0.05,
   zeta = 0.5,
@@ -14,13 +24,23 @@ continuous.GR(
   critical.values = FALSE
 )
 
-GR(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+GR(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1
+)
 
-NGR(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
+NGR(
+  test.results,
+  alpha = 0.05,
+  zeta = 0.5,
+  critical.values = FALSE,
+  select.threshold = 1
+)
 }
 \arguments{
-\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
-
 \item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
 
 \item{zeta}{the target probability of not exceeding the desired FDP, a number strictly between 0 and 1. If \code{zeta=NULL} (the default), then \code{zeta} is chosen equal to \code{alpha}.}
@@ -28,6 +48,8 @@ NGR(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE)
 \item{adaptive}{a boolean specifying whether to conduct an adaptive procedure or not.}
 
 \item{critical.values}{a boolean. If \code{TRUE}, critical constants are computed and returned (this is computationally intensive).}
+
+\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:

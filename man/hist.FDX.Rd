@@ -4,21 +4,13 @@
 \alias{hist.FDX}
 \title{Histogram of Raw p-Values}
 \usage{
-\method{hist}{FDX}(x, breaks = "FD", main = NULL, xlab = NULL, ylab = NULL, plot = TRUE, ...)
+\method{hist}{FDX}(x, breaks = "FD", mode = c("raw", "selected", "weighted"), ...)
 }
 \arguments{
 \item{x}{object of class \code{FDX}.}
 
 \item{breaks}{as in \code{\link[graphics:hist]{graphics::hist()}}; here, the Friedman-Diaconis
 algorithm (\code{"FD"}) is used as default.}
-
-\item{main}{main title; if \code{NULL} (default), a description string
-is used.}
-
-\item{xlab, ylab}{labels for x and y axis.}
-
-\item{plot}{boolean; if \code{TRUE} (the default), a histogram is plotted,
-otherwise a list of breaks and counts is returned.}
 
 \item{...}{further arguments to \code{\link[graphics:hist]{graphics::hist()}} or
 \code{\link[graphics:plothistogram]{graphics::plot.histogram()}}, respectively.}
