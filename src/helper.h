@@ -27,7 +27,7 @@ inline void eval_pv_rev(double &eval, double val, const NumericVector &vec, int 
 
 inline void eval_pv_rev_nolim(double &eval, double val, const NumericVector &vec, int &pos){
   //if(val < 1){
-  while(pos > 0 && vec[pos] > val) pos--;
+  while(pos > 0 && (vec[pos] > val)) pos--;
   if(vec[pos] <= val) eval = vec[pos];
   else eval = 0;
   //} else eval = 1;

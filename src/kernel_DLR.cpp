@@ -195,23 +195,33 @@ NumericVector kernel_DLR_fast(const List &pCDFlist, const NumericVector &sorted_
         pv = NumericVector(mat(_, j));
         
         // compute sum
-        if(adaptive){
-          // get order
-          if(pCDFcounts.isNull()){
-            std::sort(pv.begin(), pv.end(), std::greater<double>());
-            ord = IntegerVector(Range(0, numCDF - 1));
-          } else ord = order(pv, true);
+        if(adaptive) {
           // number of remaining needed values
           rem = numTests - idx_pval + a[idx_pval];
-          // compute weighted sum
-          for(k = 0; k < numCDF && CDFcounts[ord[k]] < rem; k++) {
-            pval_transf[idx_pval] += CDFcounts[ord[k]] * pv[ord[k]];
-            rem -= CDFcounts[ord[k]];
+          
+          if(pCDFcounts.isNull()) {
+            // sort F_i evaluations for current p-value
+            std::sort(pv.begin(), pv.end(), std::greater<double>());
+            // compute weighted sum
+            for(k = 0; k < rem; k++)
+              pval_transf[idx_pval] += pv[k];
+          } else {
+            // get order
+            ord = order(pv, true);
+            // compute weighted sum
+            for(k = 0; k < numCDF && CDFcounts[ord[k]] < rem; k++) {
+              pval_transf[idx_pval] += CDFcounts[ord[k]] * pv[ord[k]];
+              rem -= CDFcounts[ord[k]];
+            }
+            pval_transf[idx_pval] += rem * pv[ord[k]];
           }
-          pval_transf[idx_pval] += rem * pv[ord[k]];
         } else {
-          // compute weighted sum
-          pval_transf[idx_pval] = sum(NumericVector(CDFcounts) * pv);
+          if(pCDFcounts.isNull()) {
+            for(k = 0; k < numCDF; k++)
+              pval_transf[idx_pval] += pv[k];
+          } else
+            // compute weighted sum
+            pval_transf[idx_pval] = sum(NumericVector(CDFcounts) * pv);
         }
         // increase index of current p-value in pv_list(!)
         idx_pval++;
@@ -359,24 +369,33 @@ List kernel_DLR_crit(const List &pCDFlist, const NumericVector &support, const N
         s = 0;
         if(adaptive) {
           // get order
-          if(pCDFcounts.isNull()){
+          if(pCDFcounts.isNull()) {
             std::sort(temp.begin(), temp.end(), std::greater<double>());
-            ord = IntegerVector(Range(0, numCDF - 1));
+            //ord = IntegerVector(Range(0, numCDF - 1));
           } else ord = order(temp, true);
           
           if((!stepUp && idx_crit < numTests) || (stepUp && idx_crit < numTests - 1)) {
             // number of remaining needed values
             rem = numTests - idx_crit + a[idx_crit];
             // compute weighted sum
-            for(k = 0; k < numCDF && CDFcounts[ord[k]] < rem && s <= zeta * (a[idx_crit] + 1); k++) {
-              s += CDFcounts[ord[k]] * temp[ord[k]];
-              rem -= CDFcounts[ord[k]];
+            if(pCDFcounts.isNull()) {
+              for(k = 0; k < rem && s <= zeta * (a[idx_crit] + 1); k++)
+                s+= temp[k];
+            } else {
+              for(k = 0; k < numCDF && CDFcounts[ord[k]] < rem && s <= zeta * (a[idx_crit] + 1); k++) {
+                s += CDFcounts[ord[k]] * temp[ord[k]];
+                rem -= CDFcounts[ord[k]];
+              }
+              s += rem * temp[ord[k]];
             }
-            s += rem * temp[ord[k]];
           }
         } else {
           // compute weighted sum
-          s = sum(NumericVector(CDFcounts) * temp);
+          if(pCDFcounts.isNull()) {
+            s = sum(temp);
+          } else {
+            s = sum(NumericVector(CDFcounts) * temp);
+          }
         }
         
         if((!stepUp && idx_crit < numTests) || (stepUp && idx_crit < numTests - 1)) {
@@ -406,11 +425,16 @@ List kernel_DLR_crit(const List &pCDFlist, const NumericVector &support, const N
               // number of remaining needed values
               rem = numTests - idx_transf + a[idx_transf];
               // compute weighted sum
-              for(k = 0; k < numCDF && CDFcounts[ord[k]] < rem; k++) {
-                pval_transf[idx_transf] += CDFcounts[ord[k]] * temp[ord[k]];
-                rem -= CDFcounts[ord[k]];
+              if(pCDFcounts.isNull()) {
+                for(k = 0; k < rem; k++)
+                  pval_transf[idx_transf] += temp[k];
+              } else {
+                for(k = 0; k < numCDF && CDFcounts[ord[k]] < rem; k++) {
+                  pval_transf[idx_transf] += CDFcounts[ord[k]] * temp[ord[k]];
+                  rem -= CDFcounts[ord[k]];
+                }
+                pval_transf[idx_transf] += rem * temp[ord[k]];
               }
-              pval_transf[idx_transf] += rem * temp[ord[k]];
             } else {
               pval_transf[idx_transf] = s;
             }

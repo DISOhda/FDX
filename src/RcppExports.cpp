@@ -108,36 +108,36 @@ BEGIN_RCPP
 END_RCPP
 }
 // kernel_DPB_fast
-NumericVector kernel_DPB_fast(const List& pCDFlist, const NumericVector& pvalues, const bool adaptive, const double alpha, const bool exact, const Nullable<IntegerVector>& pCDFcounts);
-RcppExport SEXP _FDX_kernel_DPB_fast(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP exactSEXP, SEXP pCDFcountsSEXP) {
+NumericVector kernel_DPB_fast(const List& pCDFlist, const NumericVector& sorted_pv, const bool adaptive, const double alpha, const bool exact, const Nullable<IntegerVector>& pCDFcounts);
+RcppExport SEXP _FDX_kernel_DPB_fast(SEXP pCDFlistSEXP, SEXP sorted_pvSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP exactSEXP, SEXP pCDFcountsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sorted_pv(sorted_pvSEXP);
     Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
     Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const bool >::type exact(exactSEXP);
     Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type pCDFcounts(pCDFcountsSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DPB_fast(pCDFlist, pvalues, adaptive, alpha, exact, pCDFcounts));
+    rcpp_result_gen = Rcpp::wrap(kernel_DPB_fast(pCDFlist, sorted_pv, adaptive, alpha, exact, pCDFcounts));
     return rcpp_result_gen;
 END_RCPP
 }
 // kernel_DPB_crit
-List kernel_DPB_crit(const List& pCDFlist, const NumericVector& pvalues, const NumericVector& sorted_pv, const bool adaptive, const double alpha, const double zeta, const bool exact, const Nullable<IntegerVector>& pCDFcounts);
-RcppExport SEXP _FDX_kernel_DPB_crit(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP sorted_pvSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP zetaSEXP, SEXP exactSEXP, SEXP pCDFcountsSEXP) {
+List kernel_DPB_crit(const List& pCDFlist, const NumericVector& support, const NumericVector& sorted_pv, const bool adaptive, const double alpha, const double zeta, const bool exact, const Nullable<IntegerVector>& pCDFcounts);
+RcppExport SEXP _FDX_kernel_DPB_crit(SEXP pCDFlistSEXP, SEXP supportSEXP, SEXP sorted_pvSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP zetaSEXP, SEXP exactSEXP, SEXP pCDFcountsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type support(supportSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sorted_pv(sorted_pvSEXP);
     Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
     Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const double >::type zeta(zetaSEXP);
     Rcpp::traits::input_parameter< const bool >::type exact(exactSEXP);
     Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type pCDFcounts(pCDFcountsSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DPB_crit(pCDFlist, pvalues, sorted_pv, adaptive, alpha, zeta, exact, pCDFcounts));
+    rcpp_result_gen = Rcpp::wrap(kernel_DPB_crit(pCDFlist, support, sorted_pv, adaptive, alpha, zeta, exact, pCDFcounts));
     return rcpp_result_gen;
 END_RCPP
 }

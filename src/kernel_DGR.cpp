@@ -141,8 +141,14 @@ List kernel_DGR_crit(const List &pCDFlist, const NumericVector &support, const N
   int* pos = new int[numCDF]();
   // gather CDFs and their lengths and starting positions
   for(int i = 0; i < numCDF; i++) {
-    log_sfuns[i] = NumericVector(-log(1 - as<NumericVector>(pCDFlist[i])));
+    //log_sfuns[i] = NumericVector(-log(1 - as<NumericVector>(pCDFlist[i])));
+    //pos[i] = log_sfuns[i].length() - 1;
+    log_sfuns[i] = as<NumericVector>(pCDFlist[i]);
     pos[i] = log_sfuns[i].length() - 1;
+    while(pos[i] > 0 && log_sfuns[i][pos[i]] > 1) pos[i]--;
+    log_sfuns[i] = log_sfuns[i][Range(0, pos[i])];
+    for(int j = pos[i]; j >= 0; j--)
+      log_sfuns[i][j] = -std::log(1 - log_sfuns[i][j]);
   }
   
   // vector to store critical values indices

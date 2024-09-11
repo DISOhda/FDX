@@ -39,14 +39,14 @@ kernel_wGR_fast <- function(qvalues, weights, alpha = 0.05, geom_weighting = FAL
 
 #' @rdname kernel
 #' @export
-kernel_DPB_fast <- function(pCDFlist, pvalues, adaptive = TRUE, alpha = 0.05, exact = TRUE, pCDFcounts = NULL) {
-    .Call('_FDX_kernel_DPB_fast', PACKAGE = 'FDX', pCDFlist, pvalues, adaptive, alpha, exact, pCDFcounts)
+kernel_DPB_fast <- function(pCDFlist, sorted_pv, adaptive = TRUE, alpha = 0.05, exact = TRUE, pCDFcounts = NULL) {
+    .Call('_FDX_kernel_DPB_fast', PACKAGE = 'FDX', pCDFlist, sorted_pv, adaptive, alpha, exact, pCDFcounts)
 }
 
 #' @rdname kernel
 #' @export
-kernel_DPB_crit <- function(pCDFlist, pvalues, sorted_pv, adaptive = TRUE, alpha = 0.05, zeta = 0.5, exact = TRUE, pCDFcounts = NULL) {
-    .Call('_FDX_kernel_DPB_crit', PACKAGE = 'FDX', pCDFlist, pvalues, sorted_pv, adaptive, alpha, zeta, exact, pCDFcounts)
+kernel_DPB_crit <- function(pCDFlist, support, sorted_pv, adaptive = TRUE, alpha = 0.05, zeta = 0.5, exact = TRUE, pCDFcounts = NULL) {
+    .Call('_FDX_kernel_DPB_crit', PACKAGE = 'FDX', pCDFlist, support, sorted_pv, adaptive, alpha, zeta, exact, pCDFcounts)
 }
 
 #' @rdname kernel

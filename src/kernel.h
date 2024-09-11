@@ -54,12 +54,12 @@ NumericVector kernel_wGR_fast(const NumericVector &qvalues, const NumericVector 
 //' @rdname kernel
 //' @export
 // [[Rcpp::export]]
-NumericVector kernel_DPB_fast(const List &pCDFlist, const NumericVector &pvalues, const bool adaptive = true, const double alpha = 0.05, const bool exact = true, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);//, const Nullable<List> &pCDFindices = R_NilValue);
+NumericVector kernel_DPB_fast(const List &pCDFlist, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const bool exact = true, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);//, const Nullable<List> &pCDFindices = R_NilValue);
 
 //' @rdname kernel
 //' @export
 // [[Rcpp::export]]
-List kernel_DPB_crit(const List &pCDFlist, const NumericVector &pvalues, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool exact = true, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);//, const Nullable<List> &pCDFindices = R_NilValue);
+List kernel_DPB_crit(const List &pCDFlist, const NumericVector &support, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool exact = true, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);//, const Nullable<List> &pCDFindices = R_NilValue);
 
 
 ////////// Weighted Poisson-Binomial

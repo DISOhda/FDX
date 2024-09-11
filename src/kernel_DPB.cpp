@@ -154,19 +154,10 @@ List kernel_DPB_crit(const List &pCDFlist, const NumericVector &support, const N
   
   // number of unique p-value distributions
   int numCDF = pCDFlist.length();
-  // array of unique p-value CDF indices
-  //IntegerVector* sfuns_idx = nullptr;
   // get count of each unique p-value distribution
   IntegerVector CDFcounts;
-  //if(pCDFcounts.isNull()) CDFcounts = IntegerVector(numCDF, 1);
-  //else CDFcounts = pCDFcounts;
   if(pCDFcounts.isNotNull()) {
     CDFcounts = pCDFcounts;
-    //if(!adaptive) {
-    //  sfuns_idx = new IntegerVector[numCDF];
-    //  for(int i = 0; i < numCDF; i++)
-    //    sfuns_idx[i] = as<IntegerVector>(List(pCDFindices)[i]);
-    //}
   }
   
   // array of p-value CDF vectors
@@ -253,7 +244,7 @@ List kernel_DPB_crit(const List &pCDFlist, const NumericVector &support, const N
     // start with first p-value of the current chunk
     j = 0;
     // boolean to indicate if transformation of a raw p-value is to be computed
-    bool raw_transf;
+    bool raw_transf = false;
     // stop loop, when either the last p-value of the chunk is reached or the
     // last critical value is found
     while(j < numPV && (idx_transf < numTests || idx_crit < numTests)){
