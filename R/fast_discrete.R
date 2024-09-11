@@ -12,12 +12,12 @@
 #'                      each line representing a 2 x 2 contingency table to
 #'                      test. The number of columns and what they must contain
 #'                      depend on the value of the `input` argument, see
-#'                      Details of [fisher.pvalues.support()].
-#' @param alternative   same argument as in [fisher.test()]. The three
+#'                      Details of [`DiscreteFDR::fisher.pvalues.support()`].
+#' @param alternative   same argument as in [`fisher.test()`]. The three
 #'                      possible values are `"greater"` (default),
 #'                      `"two.sided"` or `"less"`; may be abbreviated.
 #' @param input         the format of the input data frame, see Details of
-#'                      [DiscreteFDR::fisher.pvalues.support()]. The
+#'                      [`DiscreteFDR::fisher.pvalues.support()`]. The
 #'                      three possible values are `"noassoc"` (default),
 #'                      `"marginal"` or `"HG2011"`; may be 
 #'                      abbreviated.
@@ -83,8 +83,11 @@
 #' @template return
 #' 
 #' @importFrom DiscreteFDR fisher.pvalues.support
+#' @importFrom lifecycle deprecate_soft
 #' @export
 fast.Discrete.LR <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, direction = "sd", adaptive = TRUE){
+  deprecate_soft("2.0.0", "fast.Discrete.LR()", "direct.discrete.LR()")
+  
   data.formatted <- fisher.pvalues.support(counts, alternative, input)
   raw.pvalues <- data.formatted$raw
   pCDFlist <- data.formatted$support
@@ -98,6 +101,8 @@ fast.Discrete.LR <- function(counts, alternative = "greater", input = "noassoc",
 #'@rdname fast.Discrete
 #'@export
 fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, adaptive = TRUE, exact = FALSE){
+  deprecate_soft("2.0.0", "fast.Discrete.PB()", "direct.discrete.PB()")
+  
   data.formatted <- fisher.pvalues.support(counts, alternative, input)
   raw.pvalues <- data.formatted$raw
   pCDFlist <- data.formatted$support
@@ -111,12 +116,162 @@ fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc",
 #'@rdname fast.Discrete
 #'@export
 fast.Discrete.GR <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, adaptive = TRUE){
+  deprecate_soft("2.0.0", "fast.Discrete.GR()", "direct.discrete.GR()")
+  
   data.formatted <- fisher.pvalues.support(counts, alternative, input)
   raw.pvalues <- data.formatted$raw
   pCDFlist <- data.formatted$support
   
   out <- discrete.GR(raw.pvalues, pCDFlist, alpha, zeta, adaptive, FALSE)
   out$Data$data.name <- deparse(substitute(counts)) 
+  
+  return(out)
+}
+
+#' @name direct.Discrete
+#' 
+#' @title 
+#' Direct Application of Multiple Testing Procedures to Dataset
+#' 
+#' @description
+#' Apply the \[HSU\], \[HSD\], \[AHSU\] or \[AHSD\] procedure, with or without
+#' computing the critical constants,
+#' to a data set of 2x2 contingency tables using Fisher's exact tests which
+#' may have to be transformed before computing p-values.
+#' 
+#' @templateVar dat TRUE
+#' @templateVar test.fun TRUE
+#' @templateVar test.args TRUE
+#' @templateVar alpha TRUE
+#' @templateVar direction TRUE
+#' @templateVar adaptive TRUE
+#' @templateVar ret.crit.consts TRUE
+#' @templateVar select.threshold TRUE
+#' @templateVar preprocess.fun TRUE
+#' @templateVar preprocess.args TRUE
+#' @templateVar weights FALSE
+#' @template param
+#' 
+#' @template example
+#' @examples
+#' DLR.sd <- direct.discrete.LR(df, "fisher")
+#' summary(DLR.sd)
+#' 
+#' NDLR.su <- direct.discrete.LR(df, "fisher", direction = "su", adaptive = FALSE)
+#' NDLR.su$Adjusted
+#' summary(NDLR.su)
+#' 
+#' ADBH.su <- direct.discrete.BH(df, "fisher", direction = "su", adaptive = TRUE)
+#' summary(ADBH.su)
+#' 
+#' ADBH.sd <- direct.discrete.BH(df, "fisher", direction = "sd", adaptive = TRUE)
+#' ADBH.sd$Adjusted
+#' summary(ADBH.sd)
+#' 
+#' @importFrom DiscreteFDR generate.pvalues
+#' @export
+direct.discrete.LR <- function(
+    dat,
+    test.fun, 
+    test.args = NULL,
+    alpha = 0.05,
+    zeta = 0.5,
+    direction = "su",
+    adaptive = FALSE,
+    critical.values = FALSE,
+    select.threshold = 1,
+    preprocess.fun = NULL, 
+    preprocess.args = NULL
+) {
+  out <- discrete.LR.DiscreteTestResults(
+    test.results = generate.pvalues(
+      dat             = dat,
+      test.fun        = test.fun,
+      test.args       = test.args,
+      preprocess.fun  = preprocess.fun,
+      preprocess.args = preprocess.args
+    ),
+    alpha            = alpha,
+    zeta             = zeta,
+    direction        = direction,
+    adaptive         = adaptive,
+    critical.values  = critical.values,
+    select.threshold = select.threshold
+  )
+  
+  out$Data$Data.name <- deparse(substitute(dat))
+  
+  return(out)
+}
+
+#' @name direct.Discrete
+#' @importFrom DiscreteFDR generate.pvalues
+#' @export
+direct.discrete.GR <- function(
+    dat,
+    test.fun, 
+    test.args = NULL,
+    alpha = 0.05,
+    zeta = 0.5,
+    adaptive = FALSE,
+    critical.values = FALSE,
+    select.threshold = 1,
+    preprocess.fun = NULL, 
+    preprocess.args = NULL
+) {
+  out <- discrete.GR.DiscreteTestResults(
+    test.results = generate.pvalues(
+      dat             = dat,
+      test.fun        = test.fun,
+      test.args       = test.args,
+      preprocess.fun  = preprocess.fun,
+      preprocess.args = preprocess.args
+    ),
+    alpha            = alpha,
+    zeta             = zeta,
+    adaptive         = adaptive,
+    critical.values  = critical.values,
+    select.threshold = select.threshold
+  )
+  
+  out$Data$Data.name <- deparse(substitute(dat))
+  
+  return(out)
+}
+
+#' @name direct.Discrete
+#' @importFrom DiscreteFDR generate.pvalues
+#' @export
+direct.discrete.PB <- function(
+    dat,
+    test.fun, 
+    test.args        = NULL,
+    alpha            = 0.05,
+    zeta             = 0.5,
+    adaptive         = FALSE,
+    critical.values  = FALSE,
+    exact            = TRUE,
+    select.threshold = 1,
+    preprocess.fun   = NULL, 
+    preprocess.args  = NULL
+) {
+  out <- discrete.PB.DiscreteTestResults(
+    test.results = generate.pvalues(
+      dat             = dat,
+      test.fun        = test.fun,
+      test.args       = test.args,
+      preprocess.fun  = preprocess.fun,
+      preprocess.args = preprocess.args
+    ),
+    alpha            = alpha,
+    zeta             = zeta,
+    adaptive         = adaptive,
+    critical.values  = critical.values,
+    exact            = exact,
+    select.threshold = select.threshold
+  )
+  
+  out$Data$Data.name <- deparse(substitute(dat))
   
   return(out)
 }
