@@ -56,9 +56,73 @@
 #' @templateVar Weighting FALSE
 #' @template return
 #' 
-#' @importFrom DiscreteFDR match.pvals
+#' @importFrom checkmate assert check_numeric check_r6 qassert
 #' @export
-continuous.LR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE){
+continuous.LR <- function(
+    test.results,
+    alpha = 0.05,
+    zeta = 0.5,
+    adaptive = TRUE,
+    critical.values = FALSE,
+    select.threshold = 1
+) {
+  #----------------------------------------------------
+  #       check arguments
+  #----------------------------------------------------
+  # test results (p-values)
+  assert(
+    check_numeric(
+      x = test.results,
+      lower = 0,
+      upper = 1,
+      any.missing = FALSE,
+      min.len = 1
+    ),
+    check_r6(
+      x = test.results,
+      classes = "DiscreteTestResults",
+      public = c("get_pvalues", "get_pvalue_supports", "get_support_indices")
+    )
+  )
+  pvals <- if(is.numeric(test.results))
+    test.results else
+      test.results$get_pvalues()
+  
+  # FDP level
+  qassert(x = alpha, rules = "N1[0, 1]")
+  
+  # Exceedance probability
+  qassert(x = zeta, rules = "N1[0, 1]")
+  
+  # adaptiveness
+  qassert(adaptive, "B1")
+  
+  # compute and return critical values?
+  qassert(critical.values, "B1")
+  
+  # selection threshold
+  qassert(x = select.threshold, rules = "N1(0, 1]")
+  
+  #----------------------------------------------------
+  #       execute computations
+  #----------------------------------------------------
+  output <- FDX:::continuous.fdx.int(
+    pvec        = pvals,
+    method      = "LR",
+    alpha       = alpha,
+    zeta        = zeta,
+    adaptive    = adaptive,
+    crit.consts = critical.values,
+    threshold   = select.threshold,
+    data.name   = deparse(substitute(test.results))
+  )
+  
+  return(output)
+}
+
+#' @rdname continuous.LR 
+#' @export
+continuous.LR2 <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
   #--------------------------------------------
@@ -144,12 +208,34 @@ continuous.LR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE
 
 #' @rdname continuous.LR
 #' @export
-LR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
-  return(continuous.LR(raw.pvalues, alpha, zeta, TRUE, critical.values))
+LR <- function(
+    test.results,
+    alpha = 0.05,
+    zeta = 0.5,
+    critical.values = FALSE,
+    select.threshold = 1
+) {
+  out <- continuous.LR(test.results, alpha, zeta, TRUE, 
+                       critical.values, select.threshold)
+  
+  out$Data$Data.name <- deparse(substitute(test.results))
+  
+  return(out)
 }
 
 #' @rdname continuous.LR
 #' @export
-NLR <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, critical.values = FALSE){
-  return(continuous.LR(raw.pvalues, alpha, zeta, FALSE, critical.values))
+NLR <- function(
+    test.results,
+    alpha = 0.05,
+    zeta = 0.5,
+    critical.values = FALSE,
+    select.threshold = 1
+) {
+  out <- continuous.LR(test.results, alpha, zeta, FALSE, 
+                       critical.values, select.threshold)
+  
+  out$Data$Data.name <- deparse(substitute(test.results))
+  
+  return(out)
 }
