@@ -66,8 +66,8 @@ summary.FDX <- function(object, ...){
   
   # create summary table
   out <- c(object, list(Table = data.frame(
-    'P.value' = object$Data$Raw.pvalues,
-    'Index' = i
+    'Index' = i,
+    'P.value' = object$Data$Raw.pvalues
   )))
   
   # add selection (T/F) and scaled p-values
