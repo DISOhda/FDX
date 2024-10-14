@@ -34,9 +34,18 @@
 #' [`DiscreteFDR::fisher.pvalues.support()`] and [`discrete.LR()`],
 #' [`discrete.GR()`] and [`discrete.PB()`], respectively, which allow to apply
 #' discrete procedures directly to a data set of contingency tables.
-#'  
-#' @section References:
-#'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
-#'  Heterogeneous Tests.
-#'  [arXiv:1912.04607v1](https://arxiv.org/abs/1912.04607v1).
+#' 
+#' @references
+#' Döhler, S. & Roquain, E. (2020). Controlling False Discovery Exceedance for
+#'   Heterogeneous Tests. *Electronic Journal of Statistics*, *14*(2),
+#'   pp. 4244-4272. \doi{10.1214/20-EJS1771}
+#'   
+#' Lehmann, E. L. & Romano, J. P. (2005). Generalizations of the familywise
+#'   error rate. *The Annals of Statistics*, *33*(3), pp. 1138-1154.
+#'   \doi{10.1214/009053605000000084}
+#'   
+#' Guo, W. & Romano, J. P. (2007). A generalized Sidak-Holm procedure and
+#'   control of generalized error rates under independence.
+#'   *Statistical Applications in Genetics and Molecular Biology*, *6*(1),
+#'   Art. 3, 35 pp. (eletronic). \doi{10.2202/1544-6115.1247}
 "_PACKAGE"
