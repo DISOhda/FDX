@@ -146,6 +146,33 @@ fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc",
 #' @templateVar weights FALSE
 #' @template param
 #' 
+#' @param dat               input data; must be suitable for the first parameter
+#'                          of the provided `preprocess.fun` function or, if
+#'                          `preprocess.fun = NULL`, for the first parameter of
+#'                          the `test.fun` function.
+#' @param test.fun          function **from package
+#'                          [`DiscreteTests`][DiscreteTests::DiscreteTests-package]**,
+#'                          i.e. one whose name ends with `*_test_pv` and which
+#'                          performs hypothesis tests and provides an object
+#'                          with p-values and their support sets; can be
+#'                          specified by a single character string (which is
+#'                          automatically checked for being a suitable function
+#'                          **from that package** and may be abbreviated) or a
+#'                          single function object.
+#' @param test.args         optional named list with arguments for `test.fun`;
+#'                          the names of the list fields must match the test
+#'                          function's parameter names. The first parameter of
+#'                          the test function (i.e. the data) **MUST NOT** be
+#'                          included!
+#' @param preprocess.fun    optional function for pre-processing the input
+#'                          `data`; its result must be suitable for the first
+#'                          parameter of the `test.fun` function.
+#' @param preprocess.args   optional named list with arguments for
+#'                          `preprocess.fun`; the names of the list fields must
+#'                          match the pre-processing function's parameter names.
+#'                          The first parameter of the test function (i.e. the
+#'                          data) **MUST NOT** be included!
+#' 
 #' @template example
 #' @examples
 #' DLR.sd <- direct.discrete.LR(df, "fisher")
