@@ -36,8 +36,11 @@
 #' @template example
 #' @examples
 #' 
-#' DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' # DGR with critical values; using test results object
+#' DGR.crit <- DGR(test.results, critical.values = TRUE)
+#' # create summary
 #' DGR.crit.summary <- summary(DGR.crit)
+#' # print summary
 #' print(DGR.crit.summary)
 #' 
 #' @method summary FDX

@@ -35,7 +35,9 @@ test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
 
-DPB.crit <- DPB(raw.pvalues, pCDFlist, critical.values = TRUE)
+# DPB with critical values; using test results object
+DPB.crit <- DPB(test.results, critical.values = TRUE)
+# print results
 print(DPB.crit)
 
 }

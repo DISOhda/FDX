@@ -115,21 +115,28 @@ library(DiscreteTests)  # for Fisher's exact test
 test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
+
+# DLR
 DLR.sd <- direct.discrete.LR(df, "fisher")
 summary(DLR.sd)
 
+# Non-adaptive DLR (step-up variant; adjusted p-values do not exist here!)
 NDLR.su <- direct.discrete.LR(df, "fisher", direction = "su", adaptive = FALSE)
 summary(NDLR.su)
 
+# DGR
 DGR <- direct.discrete.GR(df, "fisher")
 summary(DGR)
 
+# Non-adaptive DGR
 NDGR <- direct.discrete.GR(df, "fisher", adaptive = FALSE)
 summary(NDGR)
 
+# DPB (normal approximation)
 PB.approx <- direct.discrete.PB(df, "fisher", exact = FALSE)
 summary(DGR)
 
+# Non-adaptive DPB
 NPB.exact <- direct.discrete.GR(df, "fisher", adaptive = FALSE)
 summary(NDGR)
 

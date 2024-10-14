@@ -93,15 +93,19 @@ raw.pvalues.weighted <- c(0.7389727, 0.1882310, 0.1302457, 0.9513677,
 weights <- c(0.7947122, 1.2633867, 2.8097858, 2.2112801,
              2.3878654, 1.2389620, 2.3878654, 0.7947122)
 
+# arithmetic-weighted Guo-Romano procedure without critical values
 wGR.AM.fast <- wGR.AM(raw.pvalues.weighted, weights)
 summary(wGR.AM.fast)
 
+# arithmetic-weighted Guo-Romano procedure with critical values
 wGR.AM.crit <- wGR.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wGR.AM.crit)
 
+# geometric-weighted Guo-Romano procedure without critical values
 wGR.GM.fast <- wGR.GM(raw.pvalues.weighted, weights)
 summary(wGR.GM.fast)
 
+# geometric-weighted Guo-Romano procedure with critical values
 wGR.GM.crit <- wGR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wGR.GM.crit)
 

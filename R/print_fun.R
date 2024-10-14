@@ -17,7 +17,9 @@
 #' @template example
 #' @examples
 #' 
-#' DPB.crit <- DPB(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' # DPB with critical values; using test results object
+#' DPB.crit <- DPB(test.results, critical.values = TRUE)
+#' # print results
 #' print(DPB.crit)
 #' 
 #' @method print FDX
@@ -80,8 +82,8 @@ print.FDX <- function(x, ...){
   if(!grepl("Continuous", x$Data$Method))
     cat("Original", orig, "rejections =", k.o, "\n")
   
-  cat("Original Benjamini-Hochberg rejections =", sum(p.adjust(x$Data$Raw.pvalues, "BH") <= x$Data$FDP.threshold),
-      "at global FDR level", x$Data$FDP.threshold, "\n")
+  cat("(Benjamini-Hochberg rejections =", sum(p.adjust(x$Data$Raw.pvalues, "BH") <= x$Data$FDP.threshold),
+      "at global FDR level", x$Data$FDP.threshold, ")\n")
   
   if(k && !select) {
     if(!grepl("Weighted", x$Data$Method))

@@ -100,15 +100,19 @@ raw.pvalues.weighted <- c(0.7389727, 0.1882310, 0.1302457, 0.9513677,
 weights <- c(0.7947122, 1.2633867, 2.8097858, 2.2112801,
              2.3878654, 1.2389620, 2.3878654, 0.7947122)
 
+# arithmetic-weighted Poisson-binomial procedure without critical values
 wPB.AM.fast <- wPB.AM(raw.pvalues.weighted, weights)
 summary(wPB.AM.fast)
 
+# arithmetic-weighted Poisson-binomial procedure with critical values
 wPB.AM.crit <- wPB.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wPB.AM.crit)
 
+# geometric-weighted Poisson-binomial procedure without critical values
 wPB.GM.fast <- wPB.GM(raw.pvalues.weighted, weights)
 summary(wPB.GM.fast)
 
+# geometric-weighted Poisson-binomial procedure with critical values
 wPB.GM.crit <- wPB.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wPB.GM.crit)
 

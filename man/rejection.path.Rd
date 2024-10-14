@@ -75,10 +75,14 @@ test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
 
+# DLR without critical values; using extracted p-values and supports
 DLR <- DLR(raw.pvalues, pCDFlist)
-NDLR <- NDLR(raw.pvalues, pCDFlist)
-
+# plot number of rejections dependent on the exceedance probability zeta
 rejection.path(DLR, xlim = c(0, 1), ref.show = TRUE, ref.col = "green", ref.lty = 4)
+
+# None-adaptive DLR without critical values; using test results object
+NDLR <- NDLR(test.results)#' 
+# add plot for non-adaptive procedure (in red)
 rejection.path(NDLR, col = "red", add = TRUE)
 
 }

@@ -36,15 +36,19 @@
 #' @template exampleWeighted
 #' @examples
 #' 
+#' # arithmetic-weighted Lehmann-Romano procedure without critical values
 #' wLR.AM.fast <- wLR.AM(raw.pvalues.weighted, weights)
 #' summary(wLR.AM.fast)
 #' 
+#' # arithmetic-weighted Lehmann-Romano procedure with critical values
 #' wLR.AM.crit <- wLR.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
 #' summary(wLR.AM.crit)
 #' 
+#' # geometric-weighted Lehmann-Romano procedure without critical values
 #' wLR.GM.fast <- wLR.GM(raw.pvalues.weighted, weights)
 #' summary(wLR.GM.fast)
 #' 
+#' # geometric-weighted Lehmann-Romano procedure with critical values
 #' wLR.GM.crit <- wLR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
 #' summary(wLR.GM.crit)
 #' 

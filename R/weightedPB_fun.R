@@ -40,15 +40,19 @@
 #' @template exampleWeighted
 #' @examples
 #' 
+#' # arithmetic-weighted Poisson-binomial procedure without critical values
 #' wPB.AM.fast <- wPB.AM(raw.pvalues.weighted, weights)
 #' summary(wPB.AM.fast)
 #' 
+#' # arithmetic-weighted Poisson-binomial procedure with critical values
 #' wPB.AM.crit <- wPB.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
 #' summary(wPB.AM.crit)
 #' 
+#' # geometric-weighted Poisson-binomial procedure without critical values
 #' wPB.GM.fast <- wPB.GM(raw.pvalues.weighted, weights)
 #' summary(wPB.GM.fast)
 #' 
+#' # geometric-weighted Poisson-binomial procedure with critical values
 #' wPB.GM.crit <- wPB.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
 #' summary(wPB.GM.crit)
 #' 

@@ -6,7 +6,7 @@
 #' @description
 #' `r lifecycle::badge('deprecated')`
 #' 
-#' Applies the \[DLR\], \[DGR\] or \[DPB\] procedures, without computing the
+#' Applies the \[DLR\], \[DGR\] or \[DPB\] procedures, **without** computing the
 #' critical values, to a data set of 2 x 2 contingency tables using Fisher's
 #' exact test.
 #' 
@@ -54,32 +54,36 @@
 #' df <- data.frame(X1, Y1, X2, Y2)
 #' df
 #' 
+#' # DLR
 #' DLR.sd <- fast.Discrete.LR(counts = df, input = "noassoc")
-#' DLR.sd$Adjusted
 #' summary(DLR.sd)
+#' 
+#' # DLR
 #' DLR.su <- fast.Discrete.LR(counts = df, input = "noassoc", direction = "su")
 #' summary(DLR.su)
 #' 
+#' # Non-adaptive DLR
 #' NDLR.sd <- fast.Discrete.LR(counts = df, input = "noassoc", adaptive = FALSE)
-#' NDLR.sd$Adjusted
 #' summary(NDLR.sd)
+#' 
+#' # Non-adaptive DLR
 #' NDLR.su <- fast.Discrete.LR(counts = df, input = "noassoc", direction = "su", adaptive = FALSE)
 #' summary(NDLR.su)
 #' 
+#' # DGR
 #' DGR <- fast.Discrete.GR(counts = df, input = "noassoc")
-#' DGR$Adjusted
 #' summary(DGR)
 #' 
+#' # Non-adaptive DGR
 #' NDGR <- fast.Discrete.GR(counts = df, input = "noassoc", adaptive = FALSE)
-#' NDGR$Adjusted
 #' summary(NDGR)
 #' 
+#' # DPB
 #' DPB <- fast.Discrete.PB(counts = df, input = "noassoc")
-#' DPB$Adjusted
 #' summary(DPB)
 #' 
+#' # Non-adaptive DPB
 #' NDPB <- fast.Discrete.PB(counts = df, input = "noassoc", adaptive = FALSE)
-#' NDPB$Adjusted
 #' summary(NDPB)
 #' 
 #' @templateVar Critical.values FALSE
@@ -188,21 +192,28 @@ fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc",
 #' 
 #' @template example
 #' @examples
+#' 
+#' # DLR
 #' DLR.sd <- direct.discrete.LR(df, "fisher")
 #' summary(DLR.sd)
 #' 
+#' # Non-adaptive DLR (step-up variant; adjusted p-values do not exist here!)
 #' NDLR.su <- direct.discrete.LR(df, "fisher", direction = "su", adaptive = FALSE)
 #' summary(NDLR.su)
 #' 
+#' # DGR
 #' DGR <- direct.discrete.GR(df, "fisher")
 #' summary(DGR)
 #' 
+#' # Non-adaptive DGR
 #' NDGR <- direct.discrete.GR(df, "fisher", adaptive = FALSE)
 #' summary(NDGR)
 #' 
+#' # DPB (normal approximation)
 #' PB.approx <- direct.discrete.PB(df, "fisher", exact = FALSE)
 #' summary(DGR)
 #' 
+#' # Non-adaptive DPB
 #' NPB.exact <- direct.discrete.GR(df, "fisher", adaptive = FALSE)
 #' summary(NDGR)
 #' 

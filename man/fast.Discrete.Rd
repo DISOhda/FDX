@@ -91,7 +91,7 @@ A \code{FDX} S3 class object whose elements are:
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-Applies the [DLR], [DGR] or [DPB] procedures, without computing the
+Applies the [DLR], [DGR] or [DPB] procedures, \strong{without} computing the
 critical values, to a data set of 2 x 2 contingency tables using Fisher's
 exact test.
 
@@ -117,32 +117,36 @@ Y2 <- N2 - X2
 df <- data.frame(X1, Y1, X2, Y2)
 df
 
+# DLR
 DLR.sd <- fast.Discrete.LR(counts = df, input = "noassoc")
-DLR.sd$Adjusted
 summary(DLR.sd)
+
+# DLR
 DLR.su <- fast.Discrete.LR(counts = df, input = "noassoc", direction = "su")
 summary(DLR.su)
 
+# Non-adaptive DLR
 NDLR.sd <- fast.Discrete.LR(counts = df, input = "noassoc", adaptive = FALSE)
-NDLR.sd$Adjusted
 summary(NDLR.sd)
+
+# Non-adaptive DLR
 NDLR.su <- fast.Discrete.LR(counts = df, input = "noassoc", direction = "su", adaptive = FALSE)
 summary(NDLR.su)
 
+# DGR
 DGR <- fast.Discrete.GR(counts = df, input = "noassoc")
-DGR$Adjusted
 summary(DGR)
 
+# Non-adaptive DGR
 NDGR <- fast.Discrete.GR(counts = df, input = "noassoc", adaptive = FALSE)
-NDGR$Adjusted
 summary(NDGR)
 
+# DPB
 DPB <- fast.Discrete.PB(counts = df, input = "noassoc")
-DPB$Adjusted
 summary(DPB)
 
+# Non-adaptive DPB
 NDPB <- fast.Discrete.PB(counts = df, input = "noassoc", adaptive = FALSE)
-NDPB$Adjusted
 summary(NDPB)
 
 }

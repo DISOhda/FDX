@@ -96,15 +96,19 @@ test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
 
+# LR without critical values; using extracted p-values
 LR.fast <- LR(raw.pvalues)
 summary(LR.fast)
 
-LR.crit <- LR(raw.pvalues, critical.values = TRUE)
+# LR with critical values; using test results object
+LR.crit <- LR(test.results, critical.values = TRUE)
 summary(LR.crit)
 
-NLR.fast <- NLR(raw.pvalues)
+# Non-adaptive LR without critical values; using test results object
+NLR.fast <- NLR(test.results)
 summary(NLR.fast)
 
+# Non-adaptive LR with critical values; using extracted p-values
 NLR.crit <- NLR(raw.pvalues, critical.values = TRUE)
 summary(NLR.crit)
 

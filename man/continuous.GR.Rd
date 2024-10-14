@@ -96,15 +96,19 @@ test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
 
+# GR without critical values; using extracted p-values
 GR.fast <- GR(raw.pvalues)
 summary(GR.fast)
 
-GR.crit <- GR(raw.pvalues, critical.values = TRUE)
+# LR with critical values; using test results object
+GR.crit <- GR(test.results, critical.values = TRUE)
 summary(GR.crit)
 
-NGR.fast <- NGR(raw.pvalues)
+# Non-adaptive GR without critical values; using test results object
+NGR.fast <- NGR(test.results)
 summary(NGR.fast)
 
+# Non-adaptive GR with critical values; using extracted p-values
 NGR.crit <- NGR(raw.pvalues, critical.values = TRUE)
 summary(NGR.crit)
 

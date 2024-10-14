@@ -45,7 +45,16 @@ test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
 
+# DGR
 DGR <- DGR(raw.pvalues, pCDFlist)
+# histogram of raw p-values
 hist(DGR)
+
+# arithmetic-weighted GR (using 1 - raw.pvalues as weights)
+wGR <- wGR.AM(raw.pvalues, 1 - raw.pvalues)
+# histogram of raw p-values
+hist(DGR)
+# histogram of weighted p-values
+hist(DGR, mode = "weighted")
 
 }

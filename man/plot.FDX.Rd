@@ -80,15 +80,25 @@ test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
 
+# DLR without critical values; using extracted p-values and supports
 DLR.sd.fast <- DLR(raw.pvalues, pCDFlist)
-DLR.sd.crit <- DLR(raw.pvalues, pCDFlist, critical.values = TRUE)
-DLR.su.fast <- DLR(raw.pvalues, pCDFlist, direction = "su")
-DLR.su.crit <- DLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
+# plot with default settings
+plot(DLR.sd.fast)
 
-plot(DLR.su.fast)
+# DLR (step-up) with critical values; using test results object
+DLR.su.crit <- DLR(test.results, direction = "su", critical.values = TRUE)
+# limited plot range
 plot(DLR.su.crit, xlim = c(1, 5), ylim = c(0, 0.4))
-plot(DLR.sd.fast, col = c(2, 4), pch = c(2, 3), lwd = c(2, 2), 
+
+# DPB without critical values; using test results object
+DPB.fast <- DPB(test.results)
+# limited plot range, custom colors, line widths and point symbols, top-left legend 
+plot(DPB.fast, col = c(2, 4), pch = c(2, 3), lwd = c(2, 2), 
      legend = "topleft", xlim = c(1, 5), ylim = c(0, 0.4))
+
+# DGR with critical values; using extracted p-values and supports
+DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+# additional customized plot parameters
 plot(DLR.sd.crit, col = c(2, 4, 1), pch = c(1, 1, 4), lwd = c(1, 1, 2), 
      type.crit = 'o', legend = c(1, 0.4), lty = 1, xlim = c(1, 5), 
      ylim = c(0, 0.4), cex = c(3, 3, 2))

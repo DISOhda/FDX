@@ -93,15 +93,19 @@ raw.pvalues.weighted <- c(0.7389727, 0.1882310, 0.1302457, 0.9513677,
 weights <- c(0.7947122, 1.2633867, 2.8097858, 2.2112801,
              2.3878654, 1.2389620, 2.3878654, 0.7947122)
 
+# arithmetic-weighted Lehmann-Romano procedure without critical values
 wLR.AM.fast <- wLR.AM(raw.pvalues.weighted, weights)
 summary(wLR.AM.fast)
 
+# arithmetic-weighted Lehmann-Romano procedure with critical values
 wLR.AM.crit <- wLR.AM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wLR.AM.crit)
 
+# geometric-weighted Lehmann-Romano procedure without critical values
 wLR.GM.fast <- wLR.GM(raw.pvalues.weighted, weights)
 summary(wLR.GM.fast)
 
+# geometric-weighted Lehmann-Romano procedure with critical values
 wLR.GM.crit <- wLR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wLR.GM.crit)
 

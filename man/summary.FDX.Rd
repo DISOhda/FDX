@@ -59,8 +59,11 @@ test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
 
-DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+# DGR with critical values; using test results object
+DGR.crit <- DGR(test.results, critical.values = TRUE)
+# create summary
 DGR.crit.summary <- summary(DGR.crit)
+# print summary
 print(DGR.crit.summary)
 
 }
