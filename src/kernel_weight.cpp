@@ -25,9 +25,9 @@ NumericVector geom_weight(const NumericVector &pvalues, const NumericVector &wei
   return res;
 }
 
-NumericVector kernel_wLR_fast(const NumericVector &qvalues, const NumericVector &weights, double alpha, bool geom_weighting) {
+NumericVector kernel_wLR_fast(const NumericVector &sorted_w_pv, const NumericVector &weights, double alpha, bool geom_weighting) {
   // length of input vectors (equal)
-  int numTests = qvalues.length();
+  int numTests = sorted_w_pv.length();
   // seqence 1 ... m
   IntegerVector seq_m = IntegerVector(seq_len(numTests));
   // sequence 1 * alpha ... m * alpha for adaptive procedure
@@ -43,9 +43,9 @@ NumericVector kernel_wLR_fast(const NumericVector &qvalues, const NumericVector 
     // vector of probbilities
     NumericVector probs;
     if(geom_weighting)
-      probs = geom_weight(NumericVector(numWeights[i], qvalues[i]), weights[Range(0, numWeights[i] - 1)]);
+      probs = geom_weight(NumericVector(numWeights[i], sorted_w_pv[i]), weights[Range(0, numWeights[i] - 1)]);
     else {
-      probs = qvalues[i] * clone(weights)[Range(0, numWeights[i] - 1)];
+      probs = sorted_w_pv[i] * clone(weights)[Range(0, numWeights[i] - 1)];
     }
     // transformed values
     pval_transf[i] = sum(probs)/(a[i] + 1);
@@ -55,9 +55,9 @@ NumericVector kernel_wLR_fast(const NumericVector &qvalues, const NumericVector 
   return pval_transf;
 }
  
-NumericVector kernel_wGR_fast(const NumericVector &qvalues, const NumericVector &weights, double alpha, bool geom_weighting) {
+NumericVector kernel_wGR_fast(const NumericVector &sorted_w_pv, const NumericVector &weights, double alpha, bool geom_weighting) {
   // length of input vectors (equal)
-  int numTests = qvalues.length();
+  int numTests = sorted_w_pv.length();
   // seqence 1 ... m
   IntegerVector seq_m = IntegerVector(seq_len(numTests));
   // sequence 1 * alpha ... m * alpha for adaptive procedure
@@ -72,14 +72,13 @@ NumericVector kernel_wGR_fast(const NumericVector &qvalues, const NumericVector 
   if(geom_weighting) {
     NumericVector running_weights = NumericVector(cumsum(weights)) / NumericVector(seq_m);
     running_weights = running_weights[numWeights - 1];
-    NumericVector probs = geom_weight(qvalues, running_weights);
+    NumericVector probs = geom_weight(sorted_w_pv, running_weights);
     for(int i = 0; i < numTests; i++) {
-      //Rcout << running_weights[i] << " " << probs[i] << "\n";
       pval_transf[i] = R::pbinom(a[i], numWeights[i], probs[i], 0, 0);
     }
   } else {
     for(int i = 0; i < numTests; i++) {
-      NumericVector probs = qvalues[i] * clone(weights)[Range(0, numWeights[i] - 1)];
+      NumericVector probs = sorted_w_pv[i] * clone(weights)[Range(0, numWeights[i] - 1)];
       pval_transf[i] = ppbinom_vec(a, probs, 2, false)[i];
     }
   }
@@ -88,9 +87,9 @@ NumericVector kernel_wGR_fast(const NumericVector &qvalues, const NumericVector 
   return pval_transf;
 }
  
-NumericVector kernel_wPB_fast(const NumericVector &qvalues, const NumericVector &weights, double alpha, bool geom_weighting, bool exact) {
+NumericVector kernel_wPB_fast(const NumericVector &sorted_w_pv, const NumericVector &weights, double alpha, bool geom_weighting, bool exact) {
   // length of input vectors (equal)
-  int numTests = qvalues.length();
+  int numTests = sorted_w_pv.length();
   // seqence 1 ... m
   IntegerVector seq_m = IntegerVector(seq_len(numTests));
   // sequence 1 * alpha ... m * alpha for adaptive procedure
@@ -106,9 +105,9 @@ NumericVector kernel_wPB_fast(const NumericVector &qvalues, const NumericVector 
     // vector of probbilities
     NumericVector probs;
     if(geom_weighting)
-      probs = geom_weight(NumericVector(numWeights[i], qvalues[i]), weights[Range(0, numWeights[i] - 1)]);
+      probs = geom_weight(NumericVector(numWeights[i], sorted_w_pv[i]), weights[Range(0, numWeights[i] - 1)]);
     else {
-      probs = qvalues[i] * clone(weights)[Range(0, numWeights[i] - 1)];
+      probs = sorted_w_pv[i] * clone(weights)[Range(0, numWeights[i] - 1)];
       probs = pmin(probs, NumericVector(numTests, 1.0));
     }
     // transformed values
