@@ -8,6 +8,15 @@
 #' critical values, to a set of p-values. Both arithmetic and geometric
 #' weighting are available.
 #' 
+#' @templateVar test.results TRUE
+#' @templateVar weights TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar weighting.method TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar select.threshold TRUE
+#' @template param
+#' 
 #' @details
 #' `wGR.AM` and `wGR.GM` are wrapper functions for `weighted.GR`.
 #' The first one simply passes all its arguments to `weighted.GR` with
@@ -19,22 +28,6 @@
 #' [`continuous.GR()`], [`discrete.LR()`], 
 #' [`discrete.GR()`], [`discrete.PB()`], 
 #' [`weighted.LR()`], [`weighted.PB()`]
-#' 
-#' @templateVar raw.pvalues TRUE
-#' @templateVar pCDFlist FALSE
-#' @templateVar alpha TRUE
-#' @templateVar zeta TRUE
-#' @templateVar direction FALSE
-#' @templateVar adaptive FALSE
-#' @templateVar critical.values TRUE
-#' @templateVar exact FALSE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
-#' @templateVar weights TRUE
-#' @templateVar weighting.method TRUE
-#' @template param
 #' 
 #' @section References:
 #'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
@@ -144,10 +137,8 @@ weighted.GR <- function(
   return(output)
 }
 
-#' @rdname weighted.GR
 #' @importFrom pracma fzero
 #' @importFrom stats qbeta
-#' @export
 weighted.GR2 <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, weighting.method = "AM", critical.values = FALSE){
   #--------------------------------------------
   #       check arguments

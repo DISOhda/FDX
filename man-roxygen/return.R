@@ -1,17 +1,25 @@
 #' @return
 #' A \code{FDX} S3 class object whose elements are:
-#' \item{Rejected}{Rejected raw p-values.}
-#' \item{Indices}{Indices of rejected hypotheses.}
-#' \item{Num.rejected}{Number of rejections.}
-#' \item{Adjusted}{Adjusted p-values (only for step-down direction).}
-#' <%=ifelse(exists("Weighting") && Weighting, "\\item{Weighted}{Weighted p-values.}","") %>
-#' <%=ifelse(exists("Critical.values") && Critical.values, "\\item{Critical.values}{Critical values (if requested).}","") %>
-#' \item{Method}{A character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
-#' \item{FDP.threshold}{FDP threshold \code{alpha}.}
-#' \item{Exceedance.probability}{Probability \code{zeta} of FDP exceeding \code{alpha}; thus, FDP is being controlled at level \code{alpha} with confidence \code{1 - zeta}.}
-#' <%=ifelse(exists("Adaptive") && Adaptive, "\\item{Adaptive}{A boolean specifying whether an adaptive procedure was conducted or not.}","") %>
-#' <%=ifelse(exists("Weighting") && Weighting, "\\item{Weighting}{A character string describing the weighting method.}","") %>
-#' \item{Data$raw.pvalues}{The values of \code{raw.pvalues}.}
-#' <%=ifelse(exists("pCDFlist") && pCDFlist, "\\item{Data$pCDFlist}{The values of \\code{pCDFlist}.}","") %>
-#' <%=ifelse(exists("weights") && weights, "\\item{Data$weights}{The values of \\code{weights}.}","") %>
-#' \item{Data$data.name}{The respective variable names of \code{raw.pvalues} and \code{pCDFlist}.}
+#' \item{Rejected}{rejected raw \eqn{p}-values.}
+#' \item{Indices}{indices of rejected \eqn{p}-values.}
+#' \item{Num.rejected}{number of rejections.}
+#' <%=ifelse(exists("Weighting") && Weighting, "\\item{Weighted}{weighted \\eqn{p}-values.}","") %>
+#' \item{Adjusted}{adjusted \eqn{p}-values<%=ifelse(exists("direction") && direction, " (only for step-down direction)", "")%>.}
+#' \item{Critical.values}{critical values (only exists if computations where performed with `critical.values = TRUE`).}
+#' \item{Select}{list with data related to \eqn{p}-value selection.}
+#' \item{Select$Threshold}{\eqn{p}-value selection `threshold` (only exists if `threshold < 1`).}
+#' \item{Select$Effective.Thresholds}{results of each \eqn{p}-value CDF evaluated at the selection threshold (only exists if `threshold < 1`).}
+#' \item{Select$Pvalues}{selected \eqn{p}-values that are \eqn{\leq} selection `threshold` (only exists if `threshold < 1`).}
+#' \item{Select$Indices}{indices of \eqn{p}-values \eqn{\leq} selection `threshold` (only exists if `threshold < 1`).}
+#' \item{Select$Scaled}{scaled selected \eqn{p}-values (only exists if `threshold < 1`).}
+#' \item{Select$Number}{number of selected \eqn{p}-values \eqn{\leq} `threshold` (only exists if `threshold < 1`).}
+#' \item{Data}{list with input data.}
+#' \item{Data$Method}{character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
+#' \item{Data$Raw.pvalues}{all observed raw \eqn{p}-values.}
+#' <%=ifelse(exists("weights") && weights, "\\item{Data$Weights}{the weights for the raw \\eqn{p}-values.}","") %>
+#' <%=ifelse(exists("pCDFlist") && pCDFlist, "\\item{Data$pCDFlist}{list of the \\eqn{p}-value supports.}","") %>
+#' \item{Data$FDP.threshold}{FDP threshold \code{alpha}.}
+#' \item{Data$Exceedance.probability}{probability `zeta` of FDP exceeding `alpha`; thus, FDP is being controlled at level `alpha` with confidence 1 - `zeta`.}
+#' <%=ifelse(exists("Adaptive") && Adaptive, "\\item{Data$Adaptive}{boolean indicating whether an adaptive procedure was conducted or not.}","") %>
+#' <%=ifelse(exists("Weighting") && Weighting, "\\item{Data$Weighting}{character string describing the weighting method.}","") %>
+#' \item{Data$Data.name}{the respective variable name(s) of the input data.}

@@ -18,37 +18,46 @@
 \arguments{
 \item{x}{an object of class "\code{FDX}".}
 
-\item{col}{a numeric or character vector of length 3 indicating the
+\item{col}{numeric or character vector of length 3 indicating the
 colors of the \enumerate{
-\item rejected p-values
-\item accepted p-values
+\item rejected $p$-values
+\item non-rejected $p$-values
 \item critical values (if present).
 }}
 
-\item{pch}{a numeric or character vector of length 3 indicating the
+\item{pch}{numeric or character vector of length 3 indicating the
 point characters of the \enumerate{
-\item rejected p-values
-\item accepted p-values
+\item rejected $p$-values
+\item non-rejected $p$-values
 \item critical values (if present and \code{type.crit}
 is a plot type like \code{'p'}, \code{'b'} etc.).
 }}
 
-\item{lwd}{a numeric vector of length 3 indicating the thickness of
-the points and lines.}
+\item{lwd}{numeric vector of length 3 indicating the thickness of the
+points and lines; defaults to current \code{par()$lwd} setting
+for all components.}
+
+\item{cex}{numeric vector of length 3 indicating the size of point
+characters or lines of the \enumerate{
+\item rejected p-values
+\item accepted p-values
+\item critical values (if present).
+}
+defaults to current \code{par()$cex} setting for all components.}
 
 \item{type.crit}{single character giving the type of plot desired for the
 critical values (e.g.: \code{'p'}, \code{'l'} etc; see
 \code{\link[graphics:plot.default]{graphics::plot.default()}}).}
 
-\item{legend}{if NULL, no legend is plotted; otherwise expecting a
-character string like "topleft" etc. or a numeric vector
+\item{legend}{if \code{NULL}, no legend is plotted; otherwise expecting a
+character string like \code{"topleft"} etc. or a numeric vector
 of two elements indicating (x, y) coordinates.}
 
 \item{...}{further arguments to \code{\link[graphics:plot.default]{graphics::plot.default()}}.}
 }
 \description{
-Plots raw p-values of a \code{FDX} object and highlights rejected and
-accepted p-values. If present, the critical values are plotted, too.
+Plots raw $p$-values of a \code{FDX} object and highlights rejected and
+non-rejected $p$-values. If present, the critical values are plotted, too.
 }
 \details{
 If \code{x} contains results of a weighted approach, the Y-axis of the plot
@@ -65,11 +74,11 @@ Y2 <- N2 - X2
 df <- data.frame(X1, Y1, X2, Y2)
 df
 
-# Construction of the p-values and their supports (fisher.pvalues.support
-# is from 'DiscreteFDR' package!)
-df.formatted <- fisher.pvalues.support(counts = df, input = "noassoc")
-raw.pvalues <- df.formatted$raw
-pCDFlist <- df.formatted$support
+# Construction of the p-values and their supports with Fisher's exact test
+library(DiscreteTests)  # for Fisher's exact test
+test.results <- fisher_test_pv(df)
+raw.pvalues <- test.results$get_pvalues()
+pCDFlist <- test.results$get_pvalue_supports()
 
 DLR.sd.fast <- DLR(raw.pvalues, pCDFlist)
 DLR.sd.crit <- DLR(raw.pvalues, pCDFlist, critical.values = TRUE)
@@ -82,6 +91,6 @@ plot(DLR.sd.fast, col = c(2, 4), pch = c(2, 3), lwd = c(2, 2),
      legend = "topleft", xlim = c(1, 5), ylim = c(0, 0.4))
 plot(DLR.sd.crit, col = c(2, 4, 1), pch = c(1, 1, 4), lwd = c(1, 1, 2), 
      type.crit = 'o', legend = c(1, 0.4), lty = 1, xlim = c(1, 5), 
-     ylim = c(0, 0.4))
+     ylim = c(0, 0.4), cex = c(3, 3, 2))
 
 }

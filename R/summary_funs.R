@@ -6,12 +6,11 @@
 #' @description
 #' `summary` method for class `FDX`
 #'
-#' @param object       an object of class "`FDX`".
-#' @param x            an object of class "`summary.FDX`".
-#' @param max          numeric or `NULL`, specifying the maximal number of
-#'                     *rows* of the p-value table to be printed. By
-#'                     default, when `NULL`, `getOption("max.print")`
-#'                     is used.
+#' @param object       object of class "`FDX`".
+#' @param x            object of class "`summary.FDX`".
+#' @param max          numeric or `NULL`, specifying the maximum number of
+#'                     *rows* of the p-value table to be printed; if `NULL`
+#'                     (the default), `getOption("max.print")` is used.
 #' @param ...          further arguments passed to or from other methods.
 #' 
 #' @details

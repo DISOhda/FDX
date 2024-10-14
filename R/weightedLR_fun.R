@@ -7,6 +7,15 @@
 #' critical values, to a set of p-values. Both arithmetic and geometric
 #' weighting are available.
 #' 
+#' @templateVar test.results TRUE
+#' @templateVar weights TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar weighting.method TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar select.threshold TRUE
+#' @template param
+#' 
 #' @details
 #' `wLR.AM` and `wLR.GM` are wrapper functions for `weighted.LR`.
 #' The first one simply passes all its arguments to `weighted.LR` with
@@ -18,22 +27,6 @@
 #' [`continuous.GR()`], [`discrete.LR()`], 
 #' [`discrete.GR()`], [`discrete.PB()`], 
 #' [`weighted.GR()`], [`weighted.PB()`]
-#' 
-#' @templateVar raw.pvalues TRUE
-#' @templateVar pCDFlist FALSE
-#' @templateVar alpha TRUE
-#' @templateVar zeta TRUE
-#' @templateVar direction FALSE
-#' @templateVar adaptive FALSE
-#' @templateVar critical.values TRUE
-#' @templateVar exact FALSE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
-#' @templateVar weights TRUE
-#' @templateVar weighting.method TRUE
-#' @template param 
 #' 
 #' @template exampleWeighted
 #' @examples
@@ -138,9 +131,7 @@ weighted.LR <- function(
   return(output)
 }
 
-#' @rdname weighted.LR
 #' @importFrom pracma fzero
-#' @export
 weighted.LR2 <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.5, weighting.method = "AM", critical.values = FALSE){
   #--------------------------------------------
   #       check arguments

@@ -10,6 +10,16 @@
 #' computation of the Poisson-Binomial distribution or a refined normal
 #' approximation.
 #' 
+#' @templateVar test.results TRUE
+#' @templateVar weights TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar weighting.method TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact TRUE
+#' @templateVar select.threshold TRUE
+#' @template param
+#' 
 #' @details
 #' `wPB.AM` and `wPB.GM` are wrapper functions for `weighted.PB`.
 #' The first one simply passes all its arguments to `weighted.PB` with
@@ -21,22 +31,6 @@
 #' [`continuous.GR()`], [`discrete.LR()`], 
 #' [`discrete.GR()`], [`discrete.PB()`], 
 #' [`weighted.LR()`], [`weighted.GR()`]
-#' 
-#' @templateVar raw.pvalues TRUE
-#' @templateVar pCDFlist FALSE
-#' @templateVar alpha TRUE
-#' @templateVar zeta TRUE
-#' @templateVar direction FALSE
-#' @templateVar adaptive FALSE
-#' @templateVar critical.values TRUE
-#' @templateVar exact TRUE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
-#' @templateVar weights TRUE
-#' @templateVar weighting.method TRUE
-#' @template param 
 #' 
 #' @template exampleWeighted
 #' @examples
@@ -146,10 +140,8 @@ weighted.PB <- function(
   return(output)
 }
 
-#' @rdname weighted.PB
 #' @importFrom pracma fzero
 #' @importFrom PoissonBinomial ppbinom
-#' @export
 weighted.PB2 <- function(raw.pvalues, weights, alpha = 0.05, zeta = 0.05, weighting.method = "AM", critical.values = FALSE, exact = TRUE){
   #--------------------------------------------
   #       check arguments

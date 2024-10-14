@@ -4,9 +4,17 @@
 #' Fast application of discrete procedures
 #' 
 #' @description
-#' Applies the \[DLR\], \[DGR\] or \[DPB\] procedures, without computing the critical
-#' values, to a data set of 2 x 2 contingency tables using Fisher's exact test.
+#' Applies the \[DLR\], \[DGR\] or \[DPB\] procedures, without computing the
+#' critical values, to a data set of 2 x 2 contingency tables using Fisher's
+#' exact test.
 #' 
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar direction TRUE
+#' @templateVar adaptive TRUE
+#' @templateVar exact TRUE
+#' @templateVar weights FALSE
+#' @template param
 #' 
 #' @param counts        a data frame of 2 or 4 columns and any number of lines,
 #'                      each line representing a 2 x 2 contingency table to
@@ -21,22 +29,6 @@
 #'                      three possible values are `"noassoc"` (default),
 #'                      `"marginal"` or `"HG2011"`; may be 
 #'                      abbreviated.
-#' 
-#' @templateVar raw.pvalues FALSE
-#' @templateVar pCDFlist FALSE
-#' @templateVar alpha TRUE
-#' @templateVar zeta TRUE
-#' @templateVar direction TRUE
-#' @templateVar adaptive TRUE
-#' @templateVar critical.values FALSE
-#' @templateVar exact TRUE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
-#' @templateVar weights FALSE
-#' @templateVar weighting.method FALSE
-#' @template param
 #' 
 #' @examples
 #' 
@@ -98,23 +90,8 @@ fast.Discrete.LR <- function(counts, alternative = "greater", input = "noassoc",
   return(out)
 }
 
-#'@rdname fast.Discrete
-#'@export
-fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, adaptive = TRUE, exact = FALSE){
-  deprecate_soft("2.0.0", "fast.Discrete.PB()", "direct.discrete.PB()")
-  
-  data.formatted <- fisher.pvalues.support(counts, alternative, input)
-  raw.pvalues <- data.formatted$raw
-  pCDFlist <- data.formatted$support
-  
-  out <- discrete.PB(raw.pvalues, pCDFlist, alpha, zeta, adaptive, FALSE, exact)
-  out$Data$data.name <- deparse(substitute(counts)) 
-  
-  return(out)
-}
-
-#'@rdname fast.Discrete
-#'@export
+#' @rdname fast.Discrete
+#' @export
 fast.Discrete.GR <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, adaptive = TRUE){
   deprecate_soft("2.0.0", "fast.Discrete.GR()", "direct.discrete.GR()")
   
@@ -128,24 +105,41 @@ fast.Discrete.GR <- function(counts, alternative = "greater", input = "noassoc",
   return(out)
 }
 
+#' @rdname fast.Discrete
+#' @export
+fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, adaptive = TRUE, exact = FALSE){
+  deprecate_soft("2.0.0", "fast.Discrete.PB()", "direct.discrete.PB()")
+  
+  data.formatted <- fisher.pvalues.support(counts, alternative, input)
+  raw.pvalues <- data.formatted$raw
+  pCDFlist <- data.formatted$support
+  
+  out <- discrete.PB(raw.pvalues, pCDFlist, alpha, zeta, adaptive, FALSE, exact)
+  out$Data$data.name <- deparse(substitute(counts)) 
+  
+  return(out)
+}
+
 #' @name direct.Discrete
 #' 
 #' @title 
 #' Direct Application of Multiple Testing Procedures to Dataset
 #' 
 #' @description
-#' Apply the \[HSU\], \[HSD\], \[AHSU\] or \[AHSD\] procedure, with or without
-#' computing the critical constants,
-#' to a data set of 2x2 contingency tables using Fisher's exact tests which
-#' may have to be transformed before computing p-values.
+#' Apply the \[DLR\], \[NDLR\], \[DGR\], \[NDGR\], \[PB\] or \[NPB\] procedure,
+#' with or without computing the critical constants, to a data set of 2x2
+#' contingency tables using a hypothesis test function from package
+#' [DiscreteTests][DiscreteTests::DiscreteTests-package].
 #' 
 #' @templateVar dat TRUE
 #' @templateVar test.fun TRUE
 #' @templateVar test.args TRUE
 #' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
 #' @templateVar direction TRUE
 #' @templateVar adaptive TRUE
-#' @templateVar ret.crit.consts TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact TRUE
 #' @templateVar select.threshold TRUE
 #' @templateVar preprocess.fun TRUE
 #' @templateVar preprocess.args TRUE
@@ -158,15 +152,19 @@ fast.Discrete.GR <- function(counts, alternative = "greater", input = "noassoc",
 #' summary(DLR.sd)
 #' 
 #' NDLR.su <- direct.discrete.LR(df, "fisher", direction = "su", adaptive = FALSE)
-#' NDLR.su$Adjusted
 #' summary(NDLR.su)
 #' 
-#' ADBH.su <- direct.discrete.BH(df, "fisher", direction = "su", adaptive = TRUE)
-#' summary(ADBH.su)
+#' DGR <- direct.discrete.GR(df, "fisher")
+#' summary(DGR)
 #' 
-#' ADBH.sd <- direct.discrete.BH(df, "fisher", direction = "sd", adaptive = TRUE)
-#' ADBH.sd$Adjusted
-#' summary(ADBH.sd)
+#' NDGR <- direct.discrete.GR(df, "fisher", adaptive = FALSE)
+#' summary(NDGR)
+#' 
+#' PB.approx <- direct.discrete.PB(df, "fisher", exact = FALSE)
+#' summary(DGR)
+#' 
+#' NPB.exact <- direct.discrete.GR(df, "fisher", adaptive = FALSE)
+#' summary(NDGR)
 #' 
 #' @importFrom DiscreteFDR generate.pvalues
 #' @export

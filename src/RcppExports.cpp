@@ -48,16 +48,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // kernel_wLR_fast
-NumericVector kernel_wLR_fast(const NumericVector& qvalues, const NumericVector& weights, double alpha, bool geom_weighting);
-RcppExport SEXP _FDX_kernel_wLR_fast(SEXP qvaluesSEXP, SEXP weightsSEXP, SEXP alphaSEXP, SEXP geom_weightingSEXP) {
+NumericVector kernel_wLR_fast(const NumericVector& sorted_w_pv, const NumericVector& weights, double alpha, bool geom_weighting);
+RcppExport SEXP _FDX_kernel_wLR_fast(SEXP sorted_w_pvSEXP, SEXP weightsSEXP, SEXP alphaSEXP, SEXP geom_weightingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type qvalues(qvaluesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sorted_w_pv(sorted_w_pvSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type weights(weightsSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< bool >::type geom_weighting(geom_weightingSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_wLR_fast(qvalues, weights, alpha, geom_weighting));
+    rcpp_result_gen = Rcpp::wrap(kernel_wLR_fast(sorted_w_pv, weights, alpha, geom_weighting));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -94,16 +94,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // kernel_wGR_fast
-NumericVector kernel_wGR_fast(const NumericVector& qvalues, const NumericVector& weights, double alpha, bool geom_weighting);
-RcppExport SEXP _FDX_kernel_wGR_fast(SEXP qvaluesSEXP, SEXP weightsSEXP, SEXP alphaSEXP, SEXP geom_weightingSEXP) {
+NumericVector kernel_wGR_fast(const NumericVector& sorted_w_pv, const NumericVector& weights, double alpha, bool geom_weighting);
+RcppExport SEXP _FDX_kernel_wGR_fast(SEXP sorted_w_pvSEXP, SEXP weightsSEXP, SEXP alphaSEXP, SEXP geom_weightingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type qvalues(qvaluesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sorted_w_pv(sorted_w_pvSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type weights(weightsSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< bool >::type geom_weighting(geom_weightingSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_wGR_fast(qvalues, weights, alpha, geom_weighting));
+    rcpp_result_gen = Rcpp::wrap(kernel_wGR_fast(sorted_w_pv, weights, alpha, geom_weighting));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -142,17 +142,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // kernel_wPB_fast
-NumericVector kernel_wPB_fast(const NumericVector& qvalues, const NumericVector& weights, double alpha, bool geom_weighting, bool exact);
-RcppExport SEXP _FDX_kernel_wPB_fast(SEXP qvaluesSEXP, SEXP weightsSEXP, SEXP alphaSEXP, SEXP geom_weightingSEXP, SEXP exactSEXP) {
+NumericVector kernel_wPB_fast(const NumericVector& sorted_w_pv, const NumericVector& weights, double alpha, bool geom_weighting, bool exact);
+RcppExport SEXP _FDX_kernel_wPB_fast(SEXP sorted_w_pvSEXP, SEXP weightsSEXP, SEXP alphaSEXP, SEXP geom_weightingSEXP, SEXP exactSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type qvalues(qvaluesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sorted_w_pv(sorted_w_pvSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type weights(weightsSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< bool >::type geom_weighting(geom_weightingSEXP);
     Rcpp::traits::input_parameter< bool >::type exact(exactSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_wPB_fast(qvalues, weights, alpha, geom_weighting, exact));
+    rcpp_result_gen = Rcpp::wrap(kernel_wPB_fast(sorted_w_pv, weights, alpha, geom_weighting, exact));
     return rcpp_result_gen;
 END_RCPP
 }

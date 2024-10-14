@@ -1,15 +1,18 @@
-#' @title Printing FDX results
+#' @name print.FDX
+#' 
+#' @title
+#' Printing FDX results
 #' 
 #' @description
 #' Prints the results of discrete FDX analysis, stored in a `FDX`
 #' S3 class object.
 #' 
-#' @return
-#' The respective input object is invisibly returned via `invisible(x)`. 
-#' 
 #' @param x          object of class `FDX`.
 #' @param ...        further arguments to be passed to or from other methods.
 #'                   They are ignored in this function.
+#' 
+#' @return
+#' The respective input object is invisibly returned via `invisible(x)`. 
 #' 
 #' @template example
 #' @examples

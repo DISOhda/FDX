@@ -10,16 +10,15 @@
 \method{print}{summary.FDX}(x, max = NULL, ...)
 }
 \arguments{
-\item{object}{an object of class "\code{FDX}".}
+\item{object}{object of class "\code{FDX}".}
 
 \item{...}{further arguments passed to or from other methods.}
 
-\item{x}{an object of class "\code{summary.FDX}".}
+\item{x}{object of class "\code{summary.FDX}".}
 
-\item{max}{numeric or \code{NULL}, specifying the maximal number of
-\emph{rows} of the p-value table to be printed. By
-default, when \code{NULL}, \code{getOption("max.print")}
-is used.}
+\item{max}{numeric or \code{NULL}, specifying the maximum number of
+\emph{rows} of the p-value table to be printed; if \code{NULL}
+(the default), \code{getOption("max.print")} is used.}
 }
 \value{
 \code{summary.FDX} computes and returns a list that includes all the
@@ -54,11 +53,11 @@ Y2 <- N2 - X2
 df <- data.frame(X1, Y1, X2, Y2)
 df
 
-# Construction of the p-values and their supports (fisher.pvalues.support
-# is from 'DiscreteFDR' package!)
-df.formatted <- fisher.pvalues.support(counts = df, input = "noassoc")
-raw.pvalues <- df.formatted$raw
-pCDFlist <- df.formatted$support
+# Construction of the p-values and their supports with Fisher's exact test
+library(DiscreteTests)  # for Fisher's exact test
+test.results <- fisher_test_pv(df)
+raw.pvalues <- test.results$get_pvalues()
+pCDFlist <- test.results$get_pvalue_supports()
 
 DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
 DGR.crit.summary <- summary(DGR.crit)

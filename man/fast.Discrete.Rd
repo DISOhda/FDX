@@ -3,8 +3,8 @@
 \name{fast.Discrete}
 \alias{fast.Discrete}
 \alias{fast.Discrete.LR}
-\alias{fast.Discrete.PB}
 \alias{fast.Discrete.GR}
+\alias{fast.Discrete.PB}
 \title{Fast application of discrete procedures}
 \usage{
 fast.Discrete.LR(
@@ -17,6 +17,15 @@ fast.Discrete.LR(
   adaptive = TRUE
 )
 
+fast.Discrete.GR(
+  counts,
+  alternative = "greater",
+  input = "noassoc",
+  alpha = 0.05,
+  zeta = 0.5,
+  adaptive = TRUE
+)
+
 fast.Discrete.PB(
   counts,
   alternative = "greater",
@@ -25,15 +34,6 @@ fast.Discrete.PB(
   zeta = 0.5,
   adaptive = TRUE,
   exact = FALSE
-)
-
-fast.Discrete.GR(
-  counts,
-  alternative = "greater",
-  input = "noassoc",
-  alpha = 0.05,
-  zeta = 0.5,
-  adaptive = TRUE
 )
 }
 \arguments{
@@ -53,35 +53,45 @@ three possible values are \code{"noassoc"} (default),
 \code{"marginal"} or \code{"HG2011"}; may be
 abbreviated.}
 
-\item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
+\item{alpha}{single real number strictly between 0 and 1 specifying the target FDP.}
 
-\item{zeta}{the target probability of not exceeding the desired FDP, a number strictly between 0 and 1. If \code{zeta=NULL} (the default), then \code{zeta} is chosen equal to \code{alpha}.}
+\item{zeta}{single real number strictly between 0 and 1 specifying the target probability of not exceeding the desired FDP. If \code{zeta = NULL} (the default), then \code{zeta} is chosen equal to \code{alpha}.}
 
-\item{direction}{a character string specifying whether to conduct a step-up (\code{direction="su"}, the default) or step-down procedure (\code{direction="sd"}).}
+\item{direction}{single character string specifying whether to perform the step-up (\verb{"su}) or step-down (\code{"sd"}; the default) version of the Lehmann-Romano procedure.}
 
-\item{adaptive}{a boolean specifying whether to conduct an adaptive procedure or not.}
+\item{adaptive}{single boolean indicating whether to conduct an adaptive procedure or not.}
 
-\item{exact}{a boolean specifying whether to compute the Poisson-Binomial distribution exactly or by a normal approximation.}
+\item{exact}{single boolean indicating whether to compute the Poisson-Binomial distribution exactly or by normal approximation.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:
-\item{Rejected}{Rejected raw p-values.}
-\item{Indices}{Indices of rejected hypotheses.}
-\item{Num.rejected}{Number of rejections.}
-\item{Adjusted}{Adjusted p-values (only for step-down direction).}
+\item{Rejected}{rejected raw \eqn{p}-values.}
+\item{Indices}{indices of rejected \eqn{p}-values.}
+\item{Num.rejected}{number of rejections.}
 
-\item{Method}{A character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
-\item{FDP.threshold}{FDP threshold \code{alpha}.}
-\item{Exceedance.probability}{Probability \code{zeta} of FDP exceeding \code{alpha}; thus, FDP is being controlled at level \code{alpha} with confidence \code{1 - zeta}.}
-\item{Adaptive}{A boolean specifying whether an adaptive procedure was conducted or not.}
+\item{Adjusted}{adjusted \eqn{p}-values (only for step-down direction).}
+\item{Critical.values}{critical values (only exists if computations where performed with \code{critical.values = TRUE}).}
+\item{Select}{list with data related to \eqn{p}-value selection.}
+\item{Select$Threshold}{\eqn{p}-value selection \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Select$Effective.Thresholds}{results of each \eqn{p}-value CDF evaluated at the selection threshold (only exists if \code{threshold < 1}).}
+\item{Select$Pvalues}{selected \eqn{p}-values that are \eqn{\leq} selection \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Select$Indices}{indices of \eqn{p}-values \eqn{\leq} selection \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Select$Scaled}{scaled selected \eqn{p}-values (only exists if \code{threshold < 1}).}
+\item{Select$Number}{number of selected \eqn{p}-values \eqn{\leq} \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Data}{list with input data.}
+\item{Data$Method}{character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
+\item{Data$Raw.pvalues}{all observed raw \eqn{p}-values.}
 
-\item{Data$raw.pvalues}{The values of \code{raw.pvalues}.}
+\item{Data$FDP.threshold}{FDP threshold \code{alpha}.}
+\item{Data$Exceedance.probability}{probability \code{zeta} of FDP exceeding \code{alpha}; thus, FDP is being controlled at level \code{alpha} with confidence 1 - \code{zeta}.}
+\item{Data$Adaptive}{boolean indicating whether an adaptive procedure was conducted or not.}
 
-\item{Data$data.name}{The respective variable names of \code{raw.pvalues} and \code{pCDFlist}.}
+\item{Data$Data.name}{the respective variable name(s) of the input data.}
 }
 \description{
-Applies the [DLR], [DGR] or [DPB] procedures, without computing the critical
-values, to a data set of 2 x 2 contingency tables using Fisher's exact test.
+Applies the [DLR], [DGR] or [DPB] procedures, without computing the
+critical values, to a data set of 2 x 2 contingency tables using Fisher's
+exact test.
 }
 \examples{
 
