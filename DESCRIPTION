@@ -1,8 +1,8 @@
 Package: FDX
 Type: Package
 Title: False Discovery Exceedance Controlling Multiple Testing Procedures
-Version: 1.0.8-240910
-Date: 2024-09-10
+Version: 1.0.8-241014
+Date: 2024-10-14
 Authors@R: c(
     person("Sebastian", "Döhler", role = "aut"),
     person("Florian","Junge", role = c("aut", "cre"), 
@@ -21,8 +21,9 @@ License: GPL-3
 Language: en-US
 Encoding: UTF-8
 Depends: R (>= 3.00)
-Imports: Rcpp (>= 1.0.12), methods, PoissonBinomial (>= 1.2.0), pracma, 
-    DiscreteFDR (>= 2.0.0), checkmate, DiscreteTests
+Imports: Rcpp (>= 1.0.12), PoissonBinomial (>= 1.2.0), pracma, 
+    DiscreteFDR (>= 2.0.0), checkmate, lifecycle, methods
+Suggests: DiscreteTests
 LinkingTo: Rcpp, RcppArmadillo, PoissonBinomial
 URL: https://github.com/DISOhda/FDX
 BugReports: https://github.com/DISOhda/FDX/issues
