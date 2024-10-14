@@ -53,8 +53,8 @@ hist(DGR)
 # arithmetic-weighted GR (using 1 - raw.pvalues as weights)
 wGR <- wGR.AM(raw.pvalues, 1 - raw.pvalues)
 # histogram of raw p-values
-hist(DGR)
+hist(wGR)
 # histogram of weighted p-values
-hist(DGR, mode = "weighted")
+hist(wGR, mode = "weighted")
 
 }
