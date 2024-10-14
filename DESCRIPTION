@@ -10,7 +10,7 @@ Authors@R: c(
     person("Etienne", "Roquain", role = "ctb")
   )
 Description: Multiple testing procedures for heterogeneous and discrete tests as
-    described in Döhler and Roquain (2019) <arXiv:1912.04607v1>. The main 
+    described in Döhler and Roquain (2020) <doi:10.1214/20-EJS1771>. The main 
     algorithms of the paper are available as continuous, discrete and weighted
     versions. They take as input the results of a test procedure from package
     'DiscreteTests', or a set of observed p-values and their discrete support
