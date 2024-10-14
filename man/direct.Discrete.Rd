@@ -49,11 +49,26 @@ direct.discrete.PB(
 )
 }
 \arguments{
-\item{dat}{input data; must be suitable for the first parameter of the provided \code{preprocess.fun} function or, if \code{preprocess.fun} is \code{NULL}, for the first parameter of the \code{test.fun} function.}
+\item{dat}{input data; must be suitable for the first parameter
+of the provided \code{preprocess.fun} function or, if
+\code{preprocess.fun = NULL}, for the first parameter of
+the \code{test.fun} function.}
 
-\item{test.fun}{function \strong{from package \code{\link[DiscreteTests:DiscreteTests-package]{DiscreteTests}}}, i.e. one whose name ends with \verb{*_test_pv} and which performs hypothesis tests and provides an object with p-values and their support sets; can be specified by a single character string (which is automatically checked for being a suitable function \strong{from that package} and may be abbreviated) or a single function object.}
+\item{test.fun}{function \strong{from package
+\code{\link[DiscreteTests:DiscreteTests-package]{DiscreteTests}}},
+i.e. one whose name ends with \verb{*_test_pv} and which
+performs hypothesis tests and provides an object
+with p-values and their support sets; can be
+specified by a single character string (which is
+automatically checked for being a suitable function
+\strong{from that package} and may be abbreviated) or a
+single function object.}
 
-\item{test.args}{optional named list with arguments for \code{test.fun}; the names of the list fields must match the test function's parameter names. The first parameter of the test function MUST NOT be included!}
+\item{test.args}{optional named list with arguments for \code{test.fun};
+the names of the list fields must match the test
+function's parameter names. The first parameter of
+the test function (i.e. the data) \strong{MUST NOT} be
+included!}
 
 \item{alpha}{single real number strictly between 0 and 1 specifying the target FDP.}
 
@@ -67,9 +82,15 @@ direct.discrete.PB(
 
 \item{select.threshold}{single real number strictly between 0 and 1 indicating the largest raw p-value to be considered, i.e. only p-values below this threshold are considered and the procedures are adjusted in order to take this selection effect into account; if \code{threshold = 1} (the default), all raw p-values are selected.}
 
-\item{preprocess.fun}{optional function for pre-processing the input \code{data}; its result must be suitable for the first parameter of the \code{test.fun} function.}
+\item{preprocess.fun}{optional function for pre-processing the input
+\code{data}; its result must be suitable for the first
+parameter of the \code{test.fun} function.}
 
-\item{preprocess.args}{optional named list with arguments for \code{preprocess.fun}; the names of the list fields must match the pre-processing function's parameter names. The first parameter of the test function MUST NOT be included!}
+\item{preprocess.args}{optional named list with arguments for
+\code{preprocess.fun}; the names of the list fields must
+match the pre-processing function's parameter names.
+The first parameter of the test function (i.e. the
+data) \strong{MUST NOT} be included!}
 
 \item{exact}{single boolean indicating whether to compute the Poisson-Binomial distribution exactly or by normal approximation.}
 }

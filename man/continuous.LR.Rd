@@ -109,6 +109,11 @@ NLR.crit <- NLR(raw.pvalues, critical.values = TRUE)
 summary(NLR.crit)
 
 }
+\references{
+Lehmann, E. L. & Romano, J. P. (2005). Generalizations of the familywise
+error rate. \emph{The Annals of Statistics}, \emph{33}(3), pp. 1138-1154.
+\doi{10.1214/009053605000000084}
+}
 \seealso{
 \code{\link[=kernel]{kernel()}}, \code{\link[=FDX-package]{FDX}}, \code{\link[=continuous.GR]{continuous.GR()}},
 \code{\link[=discrete.LR]{discrete.LR()}}, \code{\link[=discrete.GR]{discrete.GR()}},

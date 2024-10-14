@@ -102,13 +102,6 @@ The first one simply passes all its arguments to \code{discrete.PB} with
 \code{adaptive = TRUE} and \code{NDPB} does the same with
 \code{adaptive = FALSE}.
 }
-\section{References}{
-
-S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
-Heterogeneous Tests.
-\href{https://arxiv.org/abs/1912.04607v1}{arXiv:1912.04607v1}.
-}
-
 \examples{
 X1 <- c(4, 2, 2, 14, 6, 9, 4, 0, 1)
 X2 <- c(0, 0, 1, 3, 2, 1, 2, 2, 2)
@@ -161,6 +154,11 @@ NDPB.norm.crit <- discrete.PB(test.results, adaptive = FALSE,
                               critical.values = TRUE, exact = FALSE)
 summary(NDPB.norm.crit)
 
+}
+\references{
+Döhler, S. & Roquain, E. (2020). Controlling False Discovery Exceedance for
+Heterogeneous Tests. \emph{Electronic Journal of Statistics}, \emph{14}(2),
+pp. 4244-4272. \doi{10.1214/20-EJS1771}
 }
 \seealso{
 \code{\link{kernel}}, \code{\link[=FDX-package]{FDX}}, \code{\link[=continuous.LR]{continuous.LR()}},

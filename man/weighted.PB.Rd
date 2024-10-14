@@ -113,6 +113,11 @@ wPB.GM.crit <- wPB.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wPB.GM.crit)
 
 }
+\references{
+Döhler, S. & Roquain, E. (2020). Controlling False Discovery Exceedance for
+Heterogeneous Tests. \emph{Electronic Journal of Statistics}, \emph{14}(2),
+pp. 4244-4272. \doi{10.1214/20-EJS1771}
+}
 \seealso{
 \code{\link{kernel}}, \code{\link[=FDX-package]{FDX}}, \code{\link[=continuous.LR]{continuous.LR()}},
 \code{\link[=continuous.GR]{continuous.GR()}}, \code{\link[=discrete.LR]{discrete.LR()}},

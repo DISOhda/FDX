@@ -86,13 +86,6 @@ The first one simply passes all its arguments to \code{weighted.GR} with
 \code{weighting.method = "AM"} and \code{wGR.GM} does the same with
 \code{weighting.method = "GM"}.
 }
-\section{References}{
-
-S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
-Heterogeneous Tests.
-\href{https://arxiv.org/abs/1912.04607v1}{arXiv:1912.04607v1}.
-}
-
 \examples{
 # Construction of the p-values and their supports for weighted methods
 raw.pvalues.weighted <- c(0.7389727, 0.1882310, 0.1302457, 0.9513677,
@@ -112,6 +105,11 @@ summary(wGR.GM.fast)
 wGR.GM.crit <- wGR.GM(raw.pvalues.weighted, weights, critical.values = TRUE)
 summary(wGR.GM.crit)
 
+}
+\references{
+Döhler, S. & Roquain, E. (2020). Controlling False Discovery Exceedance for
+Heterogeneous Tests. \emph{Electronic Journal of Statistics}, \emph{14}(2),
+pp. 4244-4272. \doi{10.1214/20-EJS1771}
 }
 \seealso{
 \code{\link{kernel}}, \code{\link[=FDX-package]{FDX}}, \code{\link[=continuous.LR]{continuous.LR()}},
