@@ -28,6 +28,11 @@
 #' [`discrete.GR()`], [`discrete.PB()`], 
 #' [`weighted.GR()`], [`weighted.PB()`]
 #' 
+#' @references
+#' Döhler, S. & Roquain, E. (2020). Controlling False Discovery Exceedance for
+#'   Heterogeneous Tests. *Electronic Journal of Statistics*, *14*(2),
+#'   pp. 4244-4272. \doi{10.1214/20-EJS1771}
+#'   
 #' @template exampleWeighted
 #' @examples
 #' 

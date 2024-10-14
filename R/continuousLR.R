@@ -29,6 +29,11 @@
 #' [`discrete.PB()`], [`weighted.LR()`], 
 #' [`weighted.GR()`], [`weighted.PB()`]
 #' 
+#' @references
+#' Lehmann, E. L. & Romano, J. P. (2005). Generalizations of the familywise
+#'   error rate. *The Annals of Statistics*, *33*(3), pp. 1138-1154.
+#'   \doi{10.1214/009053605000000084}
+#'   
 #' @template example
 #' @examples
 #' 

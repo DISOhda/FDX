@@ -29,6 +29,12 @@
 #' [`discrete.PB()`], [`weighted.LR()`], 
 #' [`weighted.GR()`], [`weighted.PB()`]
 #'
+#' @references
+#' Guo, W. & Romano, J. P. (2007). A generalized Sidak-Holm procedure and
+#'   control of generalized error rates under independence.
+#'   *Statistical Applications in Genetics and Molecular Biology*, *6*(1),
+#'   Art. 3, 35 pp. (eletronic). \doi{10.2202/1544-6115.1247}
+#'   
 #' @template example
 #' @examples
 #' 
