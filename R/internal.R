@@ -27,8 +27,8 @@
 #' @seealso
 #' [`discrete.GR()`], [`discrete.LR()`], [`discrete.PB()`]
 #'
+#' @templateVar test.results TRUE
 #' @templateVar pCDFlist TRUE
-#' @templateVar raw.pvalues TRUE
 #' @templateVar pCDFlist.indices TRUE
 #' @templateVar weights FALSE
 #' @template param
@@ -36,17 +36,17 @@
 #' @examples \dontrun{
 #' toyList <- list(c(0.3,0.7,1),c(0.1,0.65,1))
 #' toyRaw1 <- c(0.3,0.65)
-#' match.pvals(toyList,toyRaw1)
+#' match.pvals(toyRaw1, toyList)
 #' toyRaw2 <- c(0.31,0.6)
-#' match.pvals(toyList,toyRaw2)
+#' match.pvals(toyRaw2, toyList)
 #' }
 #'
 #' @return
 #' A vector where each raw p-value has been replaced by its nearest neighbor, if
 #' necessary.
 #'
-match.pvals <- function(pCDFlist, raw.pvalues, pCDFlist.indices = NULL){
-  m <- length(raw.pvalues)
+match.pvals <- function(test.results, pCDFlist, pCDFlist.indices = NULL){
+  m <- length(test.results)
   if(!is.null(pCDFlist.indices)){
     idx <- unlist(pCDFlist.indices)
     counts <- sapply(pCDFlist.indices, length)
@@ -54,7 +54,7 @@ match.pvals <- function(pCDFlist, raw.pvalues, pCDFlist.indices = NULL){
   }
   n <- length(pCDFlist)
   if(m > 0 && m == n){
-    pvec <- raw.pvalues
+    pvec <- test.results
     in.CDF <- numeric(m)
     for (k in seq_len(m)) {
       in.CDF[k] <- match(pvec[k], pCDFlist[[k]])
@@ -66,14 +66,14 @@ match.pvals <- function(pCDFlist, raw.pvalues, pCDFlist.indices = NULL){
         if (k%%10==2) ordinal <- "nd"
         if (k%%10==3) ordinal <- "rd"
         if (k%%100-k%%10==10) ordinal <- "th"
-        warning("Since ", raw.pvalues[k], 
+        warning("Since ", test.results[k], 
                 " is not a value of the CDF of the ",k,ordinal ," p-value,\n  the p-value is rounded to be ", 
                 pCDFlist[[k]][in.CDF[k]], call. = F)
       }
     }
     return(pvec)
   }else{
-    stop("'pCDFlist' and 'raw.pvalues' must have the same non-zero length")
+    stop("'pCDFlist' and 'test.results' must have the same non-zero length")
   }
 }
 
@@ -403,7 +403,7 @@ continuous.fdx.int <- function(
   #--------------------------------------------
   # compute transformed sorted p-values
   switch(
-    EXP = method,
+    EXPR = method,
     GR =  {
       res <- if(adaptive) {
         cummax(pbinom(a - 1, m - seq_len(m) + a, pmin(1, sorted.pvals), lower.tail = FALSE))
@@ -712,12 +712,12 @@ weighted.fdx.int <- function(
   
   # add adjusted p-values and weighted q-values to output list
   ro <- order(o)
-  output$Adjusted          <- numeric(n)
-  output$Adjusted[select]  <- res[ro]
-  output$Adjusted[-select] <- NA
   output$Weighted          <- numeric(n)
   output$Weighted[select]  <- qvalues
   output$Weighted[-select] <- NA
+  output$Adjusted          <- numeric(n)
+  output$Adjusted[select]  <- res[ro]
+  output$Adjusted[-select] <- NA
   
   # add critical values to output list
   if(crit.consts) 
