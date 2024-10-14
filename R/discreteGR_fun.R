@@ -8,59 +8,53 @@
 #' a set of p-values and their discrete support. A non-adaptive version is
 #' available as well.
 #' 
-#' @details
-#' `DGR` and `NDGR` are wrapper functions for `discrete.GR`.
-#' The first one simply passes all its arguments to `discrete.GR` with
-#' `adaptive = TRUE` and `NDGR` does the same with
-#' `adaptive = FALSE`.
-#' 
-#' @seealso
-#' [`kernel`], [`FDX`][FDX-package], [`continuous.LR()`],
-#' [`continuous.GR()`], [`discrete.LR()`], 
-#' [`discrete.PB()`], [`weighted.LR()`],
-#' [`weighted.GR()`], [`weighted.PB()`]
-#' 
-#' @templateVar raw.pvalues TRUE
+#' @templateVar test.results TRUE
 #' @templateVar pCDFlist TRUE
 #' @templateVar alpha TRUE
 #' @templateVar zeta TRUE
-#' @templateVar direction FALSE
 #' @templateVar adaptive TRUE
 #' @templateVar critical.values TRUE
-#' @templateVar exact FALSE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
+#' @templateVar select.threshold TRUE
+#' @templateVar pCDFlist.indices TRUE
+#' @templateVar triple.dots TRUE
 #' @templateVar weights FALSE
-#' @templateVar weighting.method FALSE
 #' @template param
 #'  
-#' @section References:
+#' @template details_crit
+#' 
+#' @templateVar Adaptive TRUE
+#' @templateVar Weighting FALSE
+#' @template return
+#' 
+#' @seealso
+#' [`FDX`][FDX-package], [`discrete.LR()`], [`discrete.PB()`], 
+#' [`continuous.LR()`], [`continuous.GR()`], [`weighted.LR()`],
+#' [`weighted.GR()`], [`weighted.PB()`]
+#' 
+#' @references
 #'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
 #'  Heterogeneous Tests.
 #'  [arXiv:1912.04607v1](https://arxiv.org/abs/1912.04607v1).
 #' 
 #' @template example
-#' @examples
+#' @examples 
 #' 
-#' DGR.fast <- DGR(raw.pvalues, pCDFlist)
+#' # DGR without critical values; using test results object
+#' DGR.fast <- discrete.GR(test.results)
 #' summary(DGR.fast)
 #' 
-#' DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' # DGR with critical values; using extracted p-values and supports
+#' DGR.crit <- discrete.GR(raw.pvalues, pCDFlist, critical.values = TRUE)
 #' summary(DGR.crit)
 #' 
-#' NDGR.fast <- NDGR(raw.pvalues, pCDFlist)
+#' # Non-Adaptive DGR without critical values; using extracted p-values and supports
+#' NDGR.fast <- discrete.GR(raw.pvalues, pCDFlist, adaptive = FALSE)
 #' summary(NDGR.fast)
 #' 
-#' NDGR.crit <- NDGR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' # Non-Adaptive DGR without critical values; using test results object
+#' NDGR.crit <- discrete.GR(test.results, adaptive = FALSE, critical.values = TRUE)
 #' summary(NDGR.crit)
 #' 
-#' @templateVar Critical.values TRUE
-#' @templateVar Adaptive TRUE
-#' @templateVar Weighting FALSE
-#' @template return
-#'
 #' @export
 discrete.GR <- function(test.results, ...) UseMethod("discrete.GR")
 
@@ -168,7 +162,7 @@ discrete.GR.default <- function(
   #----------------------------------------------------
   #       check and prepare p-values for processing
   #----------------------------------------------------
-  pvec <- match.pvals(pCDFlist, test.results, pCDFlist.indices)
+  pvec <- match.pvals(test.results, pCDFlist, pCDFlist.indices)
   
   #----------------------------------------------------
   #       execute computations
@@ -249,8 +243,6 @@ discrete.GR.DiscreteTestResults <- function(
   return(output)
 }
 
-#' @rdname discrete.GR
-#' @export
 discrete.GR2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE) {
   #--------------------------------------------
   #       check arguments
@@ -266,7 +258,7 @@ discrete.GR2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adapti
   #--------------------------------------------
   #       prepare p-values for processing
   #--------------------------------------------
-  pvec <- match.pvals(pCDFlist, raw.pvalues)
+  pvec <- match.pvals(raw.pvalues, pCDFlist)
   #--------------------------------------------
   #       Determine sort order and do sorting
   #--------------------------------------------
@@ -342,127 +334,4 @@ discrete.GR2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adapti
   
   class(output) <- "FDX"
   return(output)
-}
-
-#' @rdname discrete.GR
-#' @export
-DGR <- function(test.results, ...) UseMethod("DGR")
-
-#' @rdname discrete.GR
-#' @export
-DGR.default <- function(
-    test.results,
-    pCDFlist,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    select.threshold = 1,
-    pCDFlist.indices = NULL,
-    ...
-){
-  out <- discrete.GR.default(
-    test.results     = test.results,
-    pCDFlist         = pCDFlist,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = TRUE,
-    critical.values  = critical.values,
-    pCDFlist.indices = pCDFlist.indices,
-    ...
-  )
-  
-  out$Data$Data.name <- paste(
-    deparse(substitute(test.results)),
-    "and",
-    deparse(substitute(pCDFlist))
-  )
-  
-  return(out)
-}
-
-#' @rdname discrete.GR
-#' @export
-DGR.DiscreteTestResults <- function(
-    test.results,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    select.threshold = 1,
-    ...
-) {
-  out <- discrete.GR.DiscreteTestResults(
-    test.results     = test.results,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = TRUE,
-    critical.values  = critical.values,
-    select.threshold = select.threshold,
-    ...
-  )
-  
-  out$Data$Data.name <- deparse(substitute(test.results))
-  
-  return(out)
-}
-
-#' @rdname discrete.GR
-#' @export
-NDGR <- function(test.results, ...) UseMethod("NDGR")
-
-#' @rdname discrete.GR
-#' @export
-NDGR.default <- function(
-    test.results,
-    pCDFlist,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    select.threshold = 1,
-    pCDFlist.indices = NULL,
-    ...
-){
-  out <- discrete.GR.default(
-    test.results     = test.results,
-    pCDFlist         = pCDFlist,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = FALSE,
-    critical.values  = critical.values,
-    select.threshold = select.threshold,
-    pCDFlist.indices = pCDFlist.indices,
-    ...
-  )
-  
-  out$Data$Data.name <- paste(
-    deparse(substitute(test.results)),
-    "and",
-    deparse(substitute(pCDFlist))
-  )
-  
-  return(out)
-}
-
-#' @rdname discrete.GR
-#' @export
-NDGR.DiscreteTestResults <- function(
-    test.results,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    select.threshold = 1,
-    ...
-) {
-  out <- discrete.GR.DiscreteTestResults(
-    test.results     = test.results,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = FALSE,
-    critical.values  = critical.values,
-    select.threshold = select.threshold,
-    ...
-  )
-  
-  out$Data$Data.name <- deparse(substitute(test.results))
-  
-  return(out)
 }

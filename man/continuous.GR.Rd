@@ -2,7 +2,6 @@
 % Please edit documentation in R/continuousGR.R
 \name{continuous.GR}
 \alias{continuous.GR}
-\alias{continuous.GR2}
 \alias{GR}
 \alias{NGR}
 \title{Continuous Guo-Romano procedure}
@@ -14,14 +13,6 @@ continuous.GR(
   adaptive = TRUE,
   critical.values = FALSE,
   select.threshold = 1
-)
-
-continuous.GR2(
-  raw.pvalues,
-  alpha = 0.05,
-  zeta = 0.5,
-  adaptive = TRUE,
-  critical.values = FALSE
 )
 
 GR(
@@ -41,32 +32,42 @@ NGR(
 )
 }
 \arguments{
-\item{alpha}{the target FDP, a number strictly between 0 and 1. For \code{*.fast} kernels, it is only necessary, if \code{stepUp = TRUE}.}
+\item{test.results}{either a numeric vector with p-values or an R6 object of class \code{\link[DiscreteTests]{DiscreteTestResults}} from package \code{\link[DiscreteTests:DiscreteTests-package]{DiscreteTests}} for which a discrete FDR procedure is to be performed.}
 
-\item{zeta}{the target probability of not exceeding the desired FDP, a number strictly between 0 and 1. If \code{zeta=NULL} (the default), then \code{zeta} is chosen equal to \code{alpha}.}
+\item{alpha}{single real number strictly between 0 and 1 specifying the target FDP.}
 
-\item{adaptive}{a boolean specifying whether to conduct an adaptive procedure or not.}
+\item{zeta}{single real number strictly between 0 and 1 specifying the target probability of not exceeding the desired FDP. If \code{zeta = NULL} (the default), then \code{zeta} is chosen equal to \code{alpha}.}
 
-\item{critical.values}{a boolean. If \code{TRUE}, critical constants are computed and returned (this is computationally intensive).}
+\item{adaptive}{single boolean indicating whether to conduct an adaptive procedure or not.}
 
-\item{raw.pvalues}{vector of the raw observed p-values, as provided by the end user and before matching with their nearest neighbor in the CDFs supports.}
+\item{critical.values}{single boolean indicating whether critical constants are to be computed.}
+
+\item{select.threshold}{single real number strictly between 0 and 1 indicating the largest raw p-value to be considered, i.e. only p-values below this threshold are considered and the procedures are adjusted in order to take this selection effect into account; if \code{threshold = 1} (the default), all raw p-values are selected.}
 }
 \value{
 A \code{FDX} S3 class object whose elements are:
-\item{Rejected}{Rejected raw p-values.}
-\item{Indices}{Indices of rejected hypotheses.}
-\item{Num.rejected}{Number of rejections.}
-\item{Adjusted}{Adjusted p-values (only for step-down direction).}
+\item{Rejected}{rejected raw \eqn{p}-values.}
+\item{Indices}{indices of rejected \eqn{p}-values.}
+\item{Num.rejected}{number of rejections.}
 
-\item{Critical.values}{Critical values (if requested).}
-\item{Method}{A character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
-\item{FDP.threshold}{FDP threshold \code{alpha}.}
-\item{Exceedance.probability}{Probability \code{zeta} of FDP exceeding \code{alpha}; thus, FDP is being controlled at level \code{alpha} with confidence \code{1 - zeta}.}
-\item{Adaptive}{A boolean specifying whether an adaptive procedure was conducted or not.}
+\item{Adjusted}{adjusted \eqn{p}-values.}
+\item{Critical.values}{critical values (only exists if computations where performed with \code{critical.values = TRUE}).}
+\item{Select}{list with data related to \eqn{p}-value selection.}
+\item{Select$Threshold}{\eqn{p}-value selection \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Select$Effective.Thresholds}{results of each \eqn{p}-value CDF evaluated at the selection threshold (only exists if \code{threshold < 1}).}
+\item{Select$Pvalues}{selected \eqn{p}-values that are \eqn{\leq} selection \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Select$Indices}{indices of \eqn{p}-values \eqn{\leq} selection \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Select$Scaled}{scaled selected \eqn{p}-values (only exists if \code{threshold < 1}).}
+\item{Select$Number}{number of selected \eqn{p}-values \eqn{\leq} \code{threshold} (only exists if \code{threshold < 1}).}
+\item{Data}{list with input data.}
+\item{Data$Method}{character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
+\item{Data$Raw.pvalues}{all observed raw \eqn{p}-values.}
 
-\item{Data$raw.pvalues}{The values of \code{raw.pvalues}.}
+\item{Data$FDP.threshold}{FDP threshold \code{alpha}.}
+\item{Data$Exceedance.probability}{probability \code{zeta} of FDP exceeding \code{alpha}; thus, FDP is being controlled at level \code{alpha} with confidence 1 - \code{zeta}.}
+\item{Data$Adaptive}{boolean indicating whether an adaptive procedure was conducted or not.}
 
-\item{Data$data.name}{The respective variable names of \code{raw.pvalues} and \code{pCDFlist}.}
+\item{Data$Data.name}{the respective variable name(s) of the input data.}
 }
 \description{
 Apply the usual continuous [GR] procedure, with or without computing the
@@ -89,11 +90,11 @@ Y2 <- N2 - X2
 df <- data.frame(X1, Y1, X2, Y2)
 df
 
-# Construction of the p-values and their supports (fisher.pvalues.support
-# is from 'DiscreteFDR' package!)
-df.formatted <- fisher.pvalues.support(counts = df, input = "noassoc")
-raw.pvalues <- df.formatted$raw
-pCDFlist <- df.formatted$support
+# Construction of the p-values and their supports with Fisher's exact test
+library(DiscreteTests)  # for Fisher's exact test
+test.results <- fisher_test_pv(df)
+raw.pvalues <- test.results$get_pvalues()
+pCDFlist <- test.results$get_pvalue_supports()
 
 GR.fast <- GR(raw.pvalues)
 summary(GR.fast)

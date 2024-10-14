@@ -10,6 +10,19 @@
 #' computation of the Poisson-Binomial distribution or a refined normal
 #' approximation.
 #' 
+#' @templateVar test.results TRUE
+#' @templateVar pCDFlist TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar adaptive TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar exact TRUE
+#' @templateVar select.threshold TRUE
+#' @templateVar pCDFlist.indices TRUE
+#' @templateVar triple.dots TRUE
+#' @templateVar weights FALSE
+#' @template param
+#'  
 #' @details
 #' `DPB` and `NDPB` are wrapper functions for `discrete.PB`.
 #' The first one simply passes all its arguments to `discrete.PB` with
@@ -22,22 +35,6 @@
 #' [`discrete.GR()`], [`weighted.LR()`],
 #' [`weighted.GR()`], [`weighted.PB()`]
 #' 
-#' @templateVar raw.pvalues TRUE
-#' @templateVar pCDFlist TRUE
-#' @templateVar alpha TRUE
-#' @templateVar zeta TRUE
-#' @templateVar direction FALSE
-#' @templateVar adaptive TRUE
-#' @templateVar critical.values TRUE
-#' @templateVar exact TRUE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
-#' @templateVar weights FALSE
-#' @templateVar weighting.method FALSE
-#' @template param
-#' 
 #' @section References:
 #'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
 #'  Heterogeneous Tests.
@@ -46,17 +43,41 @@
 #' @template example
 #' @examples
 #' 
-#' DPB.fast <- DPB(raw.pvalues, pCDFlist)
-#' summary(DPB.fast)
+#' # DPB (exact) without critical values; using results object
+#' DPB.exact.fast <- discrete.PB(test.results)
+#' summary(DPB.exact.fast)
 #' 
-#' DPB.crit <- DPB(raw.pvalues, pCDFlist, critical.values = TRUE)
-#' summary(DPB.crit)
+#' # DPB (exact) with critical values; using extracted p-values and supports
+#' DPB.exact.crit <- discrete.PB(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(DPB.exact.crit)
 #' 
-#' NDPB.fast <- NDPB(raw.pvalues, pCDFlist)
-#' summary(NDPB.fast)
+#' # DPB (normal approximation) without critical values; using extracted p-values and supports
+#' DPB.norm.fast <- discrete.PB(raw.pvalues, pCDFlist, exact = FALSE)
+#' summary(DPB.norm.fast)
 #' 
-#' NDPB.crit <- NDPB(raw.pvalues, pCDFlist, critical.values = TRUE)
-#' summary(NDPB.crit)
+#' # DPB (normal approximation) with critical values; using results object
+#' DPB.norm.crit <- discrete.PB(test.results, critical.values = TRUE,
+#'                              exact = FALSE)
+#' summary(DPB.norm.crit)
+#' 
+#' # Non-adaptive DPB (exact) without critical values; using results object
+#' NDPB.exact.fast <- discrete.PB(test.results, adaptive = FALSE)
+#' summary(NDPB.exact.fast)
+#' 
+#' # Non-adaptive DPB (exact) with critical values; using extracted p-values and supports
+#' NDPB.exact.crit <- discrete.PB(raw.pvalues, pCDFlist, adaptive = FALSE,
+#'                                critical.values = TRUE)
+#' summary(NDPB.exact.crit)
+#' 
+#' # Non-adaptive DPB (normal approx.) without critical values; using extracted p-values and supports
+#' NDPB.norm.fast <- discrete.PB(raw.pvalues, pCDFlist, adaptive = FALSE,
+#'                               exact = FALSE)
+#' summary(NDPB.norm.fast)
+#' 
+#' # Non-adaptive DPB (normal approx.) with critical values; using results object
+#' NDPB.norm.crit <- discrete.PB(test.results, adaptive = FALSE,
+#'                               critical.values = TRUE, exact = FALSE)
+#' summary(NDPB.norm.crit)
 #' 
 #' @templateVar Critical.values TRUE
 #' @template return
@@ -172,7 +193,7 @@ discrete.PB.default <- function(
   #----------------------------------------------------
   #       check and prepare p-values for processing
   #----------------------------------------------------
-  pvec <- match.pvals(pCDFlist, test.results, pCDFlist.indices)
+  pvec <- match.pvals(test.results, pCDFlist, pCDFlist.indices)
   
   #----------------------------------------------------
   #       execute computations
@@ -259,8 +280,6 @@ discrete.PB.DiscreteTestResults <- function(
   return(output)
 }
 
-#' @rdname discrete.PB
-#' @export
 discrete.PB2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE, exact = TRUE){
   #--------------------------------------------
   #       check arguments
@@ -276,7 +295,7 @@ discrete.PB2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adapti
   #--------------------------------------------
   #       prepare p-values for processing
   #--------------------------------------------
-  pvec <- match.pvals(pCDFlist, raw.pvalues)
+  pvec <- match.pvals(raw.pvalues, pCDFlist)
   #--------------------------------------------
   #       Determine sort order and do sorting
   #--------------------------------------------
@@ -353,136 +372,4 @@ discrete.PB2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, adapti
   
   class(output) <- "FDX"
   return(output)
-}
-
-#' @rdname discrete.PB
-#' @export
-DPB <- function(test.results, ...) UseMethod("DPB")
-
-#' @rdname discrete.PB
-#' @export
-DPB.default <- function(
-    test.results,
-    pCDFlist,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    exact            = TRUE,
-    select.threshold = 1,
-    pCDFlist.indices = NULL,
-    ...
-){
-  out <- discrete.PB.default(
-    test.results     = test.results,
-    pCDFlist         = pCDFlist,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = TRUE, 
-    critical.values  = critical.values,
-    exact            = exact,
-    select.threshold = select.threshold,
-    pCDFlist.indices = pCDFlist.indices,
-    ...
-  )
-  
-  out$Data$Data.name <- paste(
-    deparse(substitute(test.results)),
-    "and",
-    deparse(substitute(pCDFlist))
-  )
-  
-  return(out)
-}
-
-#' @rdname discrete.PB
-#' @export
-DPB.DiscreteTestResults <- function(
-    test.results,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    exact            = TRUE,
-    select.threshold = 1,
-    ...
-){
-  out <- discrete.PB.DiscreteTestResults(
-    test.results     = test.results,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = TRUE, 
-    critical.values  = critical.values,
-    exact            = exact,
-    select.threshold = select.threshold,
-    ...
-  )
-  
-  out$Data$Data.name <- deparse(substitute(test.results))
-  
-  return(out)
-}
-
-#' @rdname discrete.PB
-#' @export
-NDPB <- function(test.results, ...) UseMethod("NDPB")
-
-#' @rdname discrete.PB
-#' @export
-NDPB.default <- function(
-    test.results,
-    pCDFlist,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    exact            = TRUE,
-    select.threshold = 1,
-    pCDFlist.indices = NULL,
-    ...
-){
-  out <- discrete.PB.default(
-    test.results     = test.results,
-    pCDFlist         = pCDFlist,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = FALSE, 
-    critical.values  = critical.values,
-    exact            = exact,
-    select.threshold = select.threshold,
-    pCDFlist.indices = pCDFlist.indices,
-    ...
-  )
-  
-  out$Data$Data.name <- paste(
-    deparse(substitute(test.results)),
-    "and",
-    deparse(substitute(pCDFlist))
-  )
-  
-  return(out)
-}
-
-#' @rdname discrete.PB
-#' @export
-NDPB.DiscreteTestResults <- function(
-    test.results,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    critical.values  = FALSE,
-    exact            = TRUE,
-    select.threshold = 1,
-    ...
-){
-  out <- discrete.PB.DiscreteTestResults(
-    test.results     = test.results,
-    alpha            = alpha,
-    zeta             = zeta,
-    adaptive         = FALSE, 
-    critical.values  = critical.values,
-    exact            = exact,
-    select.threshold = select.threshold,
-    ...
-  )
-  
-  out$Data$Data.name <- deparse(substitute(test.results))
-  
-  return(out)
 }

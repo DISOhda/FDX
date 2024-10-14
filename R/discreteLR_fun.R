@@ -8,35 +8,31 @@
 #' to a set of p-values and their discrete support. Both step-down and step-up
 #' procedures can be computed and non-adaptive versions are available as well.
 #' 
-#' @details
-#' `DLR` and `NDLR` are wrapper functions for `discrete.LR`.
-#' The first one simply passes all its arguments to `discrete.LR` with
-#' `adaptive = TRUE` and `NDLR` does the same with
-#' `adaptive = FALSE`.
-#' 
-#' @seealso
-#' [`kernel`], [`FDX`][FDX-package], [`continuous.LR()`],
-#' [`continuous.GR()`], [`discrete.GR()`], 
-#' [`discrete.PB()`], [`weighted.LR()`],
-#' [`weighted.GR()`], [`weighted.PB()`]
-#' 
-#' @templateVar raw.pvalues TRUE
+#' @templateVar test.results TRUE
 #' @templateVar pCDFlist TRUE
 #' @templateVar alpha TRUE
 #' @templateVar zeta TRUE
 #' @templateVar direction TRUE
 #' @templateVar adaptive TRUE
 #' @templateVar critical.values TRUE
-#' @templateVar exact FALSE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
+#' @templateVar select.threshold TRUE
+#' @templateVar pCDFlist.indices TRUE
+#' @templateVar triple.dots TRUE
 #' @templateVar weights FALSE
-#' @templateVar weighting.method FALSE
 #' @template param
+#'  
+#' @template details_crit
 #' 
-#' @section References:
+#' @templateVar Adaptive TRUE
+#' @templateVar Weighting FALSE
+#' @template return
+#' 
+#' @seealso
+#' [`FDX`][FDX-package], [`discrete.GR()`], [`discrete.PB()`], 
+#' [`continuous.LR()`], [`continuous.GR()`], [`weighted.LR()`],
+#' [`weighted.GR()`], [`weighted.PB()`]
+#' 
+#' @references
 #'  S. Döhler and E. Roquain (2019). Controlling False Discovery Exceedance for
 #'  Heterogeneous Tests.
 #'  [arXiv:1912.04607v1](https://arxiv.org/abs/1912.04607v1).
@@ -44,28 +40,41 @@
 #' @template example
 #' @examples
 #' 
-#' DLR.sd.fast <- DLR(raw.pvalues, pCDFlist)
+#' # DLR without critical values; using results object
+#' DLR.sd.fast <- discrete.LR(test.results)
 #' summary(DLR.sd.fast)
-#' DLR.su.fast <- DLR(raw.pvalues, pCDFlist, direction = "su")
+#' 
+#' # DLR with critical values; using extracted p-values and supports
+#' DLR.sd.crit <- discrete.LR(raw.pvalues, pCDFlist, critical.values = TRUE)
+#' summary(DLR.sd.crit)
+#' 
+#' # DLR (step-up) without critical values; using extracted p-values and supports
+#' DLR.su.fast <- discrete.LR(raw.pvalues, pCDFlist, direction = "su")
 #' summary(DLR.su.fast)
 #' 
-#' DLR.sd.crit <- DLR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#' summary(DLR.sd.crit)
-#' DLR.su.crit <- DLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
+#' # DLR (step-up) with critical values; using results object
+#' DLR.su.crit <- discrete.LR(test.results, direction = "su",
+#'                            critical.values = TRUE)
 #' summary(DLR.su.crit)
 #' 
-#' NDLR.sd.fast <- NDLR(raw.pvalues, pCDFlist)
+#' # Non-adaptive DLR without critical values; using results object
+#' NDLR.sd.fast <- discrete.LR(test.results, adaptive = FALSE)
 #' summary(NDLR.sd.fast)
-#' NDLR.su.fast <- NDLR(raw.pvalues, pCDFlist, direction = "su")
+#' 
+#' # Non-adaptive DLR with critical values; using extracted p-values and supports
+#' NDLR.sd.crit <- discrete.LR(raw.pvalues, pCDFlist, adaptive = FALSE,
+#'                             critical.values = TRUE)
+#' summary(NDLR.sd.crit)
+#' 
+#' # Non-adaptive DLR (step-up) without critical values; using extracted p-values and supports
+#' NDLR.su.fast <- discrete.LR(raw.pvalues, pCDFlist, direction = "su",
+#'                             adaptive = FALSE)
 #' summary(NDLR.su.fast)
 #' 
-#' NDLR.sd.crit <- NDLR(raw.pvalues, pCDFlist, critical.values = TRUE)
-#' summary(NDLR.sd.crit)
-#' NDLR.su.crit <- NDLR(raw.pvalues, pCDFlist, direction = "su", critical.values = TRUE)
+#' # Non-adaptive DLR (step-up) with critical values; using results object
+#' NDLR.su.crit <- discrete.LR(test.results, direction = "su",
+#'                             adaptive = FALSE, critical.values = TRUE)
 #' summary(NDLR.su.crit)
-#' 
-#' @templateVar Critical.values TRUE
-#' @template return
 #' 
 #' @export
 discrete.LR <- function(test.results, ...) UseMethod("discrete.LR")
@@ -178,7 +187,7 @@ discrete.LR.default <- function(
   #----------------------------------------------------
   #       check and prepare p-values for processing
   #----------------------------------------------------
-  pvec <- match.pvals(pCDFlist, test.results, pCDFlist.indices)
+  pvec <- match.pvals(test.results, pCDFlist, pCDFlist.indices)
   
   #----------------------------------------------------
   #       execute computations
@@ -265,8 +274,6 @@ discrete.LR.DiscreteTestResults <- function(
   return(output)
 }
 
-#' @rdname discrete.LR
-#' @export
 discrete.LR2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, direction = "sd", adaptive = TRUE, critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
@@ -282,7 +289,7 @@ discrete.LR2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, direct
   #--------------------------------------------
   #       prepare p-values for processing
   #--------------------------------------------
-  pvec <- match.pvals(pCDFlist, raw.pvalues)
+  pvec <- match.pvals(raw.pvalues, pCDFlist)
   #--------------------------------------------
   #       Determine sort order and do sorting
   #--------------------------------------------
@@ -395,136 +402,4 @@ discrete.LR2 <- function(raw.pvalues, pCDFlist, alpha = 0.05, zeta = 0.5, direct
   
   class(output) <- "FDX"
   return(output)
-}
-
-#' @rdname discrete.LR
-#' @export
-DLR <- function(test.results, ...) UseMethod("DLR")
-
-#' @rdname discrete.LR
-#' @export
-DLR.default <- function(
-    test.results,
-    pCDFlist,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    direction        = "sd",
-    critical.values  = FALSE,
-    select.threshold = 1,
-    pCDFlist.indices = NULL,
-    ...
-){
-  out <- discrete.LR.default(
-    test.results     = test.results,
-    pCDFlist         = pCDFlist,
-    alpha            = alpha,
-    zeta             = zeta,
-    direction        = direction,
-    adaptive         = TRUE, 
-    critical.values  = critical.values,
-    select.threshold = select.threshold,
-    pCDFlist.indices = pCDFlist.indices,
-    ...
-  )
-  
-  out$Data$Data.name <- paste(
-    deparse(substitute(test.results)),
-    "and",
-    deparse(substitute(pCDFlist))
-  )
-  
-  return(out)
-}
-
-#' @rdname discrete.LR
-#' @export
-DLR.DiscreteTestResults <- function(
-    test.results,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    direction        = "sd",
-    critical.values  = FALSE,
-    select.threshold = 1,
-    ...
-){
-  out <- discrete.LR.DiscreteTestResults(
-    test.results     = test.results,
-    alpha            = alpha,
-    zeta             = zeta,
-    direction        = direction,
-    adaptive         = TRUE, 
-    critical.values  = critical.values,
-    select.threshold = select.threshold,
-    ...
-  )
-  
-  out$Data$Data.name <- deparse(substitute(test.results))
-  
-  return(out)
-}
-
-#' @rdname discrete.LR
-#' @export
-NDLR <- function(test.results, ...) UseMethod("NDLR")
-
-#' @rdname discrete.LR
-#' @export
-NDLR.default <- function(
-    test.results,
-    pCDFlist,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    direction        = "sd",
-    critical.values  = FALSE,
-    select.threshold = 1,
-    pCDFlist.indices = NULL,
-    ...
-){
-  out <- discrete.LR.default(
-    test.results     = test.results,
-    pCDFlist         = pCDFlist,
-    alpha            = alpha,
-    zeta             = zeta,
-    direction        = direction,
-    adaptive         = FALSE, 
-    critical.values  = critical.values,
-    select.threshold = select.threshold,
-    pCDFlist.indices = pCDFlist.indices,
-    ...
-  )
-  
-  out$Data$Data.name <- paste(
-    deparse(substitute(test.results)),
-    "and",
-    deparse(substitute(pCDFlist))
-  )
-  
-  return(out)
-}
-
-#' @rdname discrete.LR
-#' @export
-NDLR.DiscreteTestResults <- function(
-    test.results,
-    alpha            = 0.05,
-    zeta             = 0.5,
-    direction        = "sd",
-    critical.values  = FALSE,
-    select.threshold = 1,
-    ...
-){
-  out <- discrete.LR.DiscreteTestResults(
-    test.results     = test.results,
-    alpha            = alpha,
-    zeta             = zeta,
-    direction        = direction,
-    adaptive         = FALSE, 
-    critical.values  = critical.values,
-    select.threshold = select.threshold,
-    ...
-  )
-  
-  out$Data$Data.name <- deparse(substitute(test.results))
-  
-  return(out)
 }

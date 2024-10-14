@@ -8,6 +8,15 @@
 #' critical values, to a set of p-values. A non-adaptive version is available as
 #' well.
 #' 
+#' @templateVar test.results TRUE
+#' @templateVar alpha TRUE
+#' @templateVar zeta TRUE
+#' @templateVar adaptive TRUE
+#' @templateVar critical.values TRUE
+#' @templateVar select.threshold TRUE
+#' @templateVar weights FALSE
+#' @template param 
+#' 
 #' @details
 #' `LR` and `NLR` are wrapper functions for `continuous.LR`. The
 #' first one simply passes all its arguments to `continuous.LR` with
@@ -19,22 +28,6 @@
 #' [`discrete.LR()`], [`discrete.GR()`], 
 #' [`discrete.PB()`], [`weighted.LR()`], 
 #' [`weighted.GR()`], [`weighted.PB()`]
-#' 
-#' @templateVar raw.pvalues TRUE
-#' @templateVar pCDFlist FALSE
-#' @templateVar alpha TRUE
-#' @templateVar zeta TRUE
-#' @templateVar direction FALSE
-#' @templateVar adaptive TRUE
-#' @templateVar critical.values TRUE
-#' @templateVar exact FALSE
-#' @templateVar pvalues FALSE
-#' @templateVar sorted_pv FALSE
-#' @templateVar stepUp FALSE
-#' @templateVar support FALSE
-#' @templateVar weights FALSE
-#' @templateVar weighting.method FALSE
-#' @template param 
 #' 
 #' @template example
 #' @examples
@@ -106,7 +99,7 @@ continuous.LR <- function(
   #----------------------------------------------------
   #       execute computations
   #----------------------------------------------------
-  output <- FDX:::continuous.fdx.int(
+  output <- continuous.fdx.int(
     pvec        = pvals,
     method      = "LR",
     alpha       = alpha,
@@ -120,8 +113,6 @@ continuous.LR <- function(
   return(output)
 }
 
-#' @rdname continuous.LR 
-#' @export
 continuous.LR2 <- function(raw.pvalues, alpha = 0.05, zeta = 0.5, adaptive = TRUE, critical.values = FALSE){
   #--------------------------------------------
   #       check arguments
