@@ -11,7 +11,7 @@
 #' exact test.
 #' 
 #' **Note**: These functions are deprecated and will be removed in a future
-#' version. Please use (e.g.) [`direct.discrete.*()`][direct.discrete] with
+#' version. Please use [`direct.discrete.*()`][direct.discrete] with
 #' `test.fun = DiscreteTests::fisher.test.pv` and (optional) 
 #' `preprocess.fun = DiscreteDatasets::reconstruct_two` or 
 #' `preprocess.fun = DiscreteDatasets::reconstruct_four` instead. Alternatively,
