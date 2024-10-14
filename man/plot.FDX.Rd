@@ -99,7 +99,7 @@ plot(DPB.fast, col = c(2, 4), pch = c(2, 3), lwd = c(2, 2),
 # DGR with critical values; using extracted p-values and supports
 DGR.crit <- DGR(raw.pvalues, pCDFlist, critical.values = TRUE)
 # additional customized plot parameters
-plot(DLR.sd.crit, col = c(2, 4, 1), pch = c(1, 1, 4), lwd = c(1, 1, 2), 
+plot(DGR.crit, col = c(2, 4, 1), pch = c(1, 1, 4), lwd = c(1, 1, 2), 
      type.crit = 'o', legend = c(1, 0.4), lty = 1, xlim = c(1, 5), 
      ylim = c(0, 0.4), cex = c(3, 3, 2))
 
