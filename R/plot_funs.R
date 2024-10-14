@@ -1,5 +1,7 @@
 #' @name hist.FDX
-#' @title Histogram of Raw p-Values
+#' 
+#' @title
+#' Histogram of Raw P-Values
 #' 
 #' @description
 #' Computes a histogram of the raw p-values of a `FDX` object.
@@ -7,13 +9,15 @@
 #' @param x          object of class `FDX`.
 #' @param breaks     as in [`graphics::hist()`]; here, the Friedman-Diaconis
 #'                   algorithm (`"FD"`) is used as default.
+#' @param mode       single character string specifying for which $p$-values the
+#'                   histogram is to be generated; must be one of `"raw"`,
+#'                   `"selected"` or `"weighted"`.
 #' @param ...        further arguments to [`graphics::hist()`] or 
 #'                   [`graphics::plot.histogram()`], respectively.
 #' 
 #' @details
-#' If `x` contains results of a weighted approach, a histogram of the
-#' weighted p-values is constructed. Otherwise, it is constituted by the
-#' raw ones. 
+#' If `x` does not contain results of a weighting or selection approach, a
+#' warning is issued and a histogram of the raw $p$-values is drawn. 
 #' 
 #' @return
 #' An object of class `histogram`.
@@ -104,31 +108,39 @@ hist.FDX <- function(
 #' Plot Method for `FDX` objects
 #' 
 #' @description
-#' Plots raw p-values of a `FDX` object and highlights rejected and
-#' accepted p-values. If present, the critical values are plotted, too.
+#' Plots raw $p$-values of a `FDX` object and highlights rejected and
+#' non-rejected $p$-values. If present, the critical values are plotted, too.
 #' 
 #' @param x          an object of class "`FDX`".
-#' @param col        a numeric or character vector of length 3 indicating the
+#' @param col        numeric or character vector of length 3 indicating the
 #'                   colors of the \enumerate{
+#'                     \item rejected $p$-values
+#'                     \item non-rejected $p$-values
+#'                     \item critical values (if present).
+#'                   }
+#' @param pch        numeric or character vector of length 3 indicating the
+#'                   point characters of the \enumerate{
+#'                     \item rejected $p$-values
+#'                     \item non-rejected $p$-values
+#'                     \item critical values (if present and `type.crit`
+#'                           is a plot type like `'p'`, `'b'` etc.).
+#'                   }
+#' @param lwd        numeric vector of length 3 indicating the thickness of the
+#'                   points and lines; defaults to current `par()$lwd` setting
+#'                   for all components.
+#' @param type.crit  single character giving the type of plot desired for the
+#'                   critical values (e.g.: `'p'`, `'l'` etc; see
+#'                   [`graphics::plot.default()`]).
+#' @param legend     if `NULL`, no legend is plotted; otherwise expecting a
+#'                   character string like `"topleft"` etc. or a numeric vector
+#'                   of two elements indicating (x, y) coordinates.
+#' @param cex        numeric vector of length 3 indicating the size of point
+#'                   characters or lines of the \enumerate{
 #'                     \item rejected p-values
 #'                     \item accepted p-values
 #'                     \item critical values (if present).
 #'                   }
-#' @param pch        a numeric or character vector of length 3 indicating the
-#'                   point characters of the \enumerate{
-#'                     \item rejected p-values
-#'                     \item accepted p-values
-#'                     \item critical values (if present and `type.crit`
-#'                           is a plot type like `'p'`, `'b'` etc.).
-#'                   }
-#' @param lwd        a numeric vector of length 3 indicating the thickness of
-#'                   the points and lines.
-#' @param type.crit  single character giving the type of plot desired for the
-#'                   critical values (e.g.: `'p'`, `'l'` etc; see
-#'                   [`graphics::plot.default()`]).
-#' @param legend     if NULL, no legend is plotted; otherwise expecting a
-#'                   character string like "topleft" etc. or a numeric vector
-#'                    of two elements indicating (x, y) coordinates.
+#'                   defaults to current `par()$cex` setting for all components.
 #' @param ...        further arguments to [`graphics::plot.default()`].
 #' 
 #' @details
@@ -150,10 +162,11 @@ hist.FDX <- function(
 #'      legend = "topleft", xlim = c(1, 5), ylim = c(0, 0.4))
 #' plot(DLR.sd.crit, col = c(2, 4, 1), pch = c(1, 1, 4), lwd = c(1, 1, 2), 
 #'      type.crit = 'o', legend = c(1, 0.4), lty = 1, xlim = c(1, 5), 
-#'      ylim = c(0, 0.4))
+#'      ylim = c(0, 0.4), cex = c(3, 3, 2))
 #' 
 #' @importFrom graphics legend lines par plot points
 #' @importFrom checkmate assert assert_string check_character check_choice check_numeric
+#' @importFrom stats na.omit
 #' @export
 plot.FDX <- function(
     x,
@@ -365,9 +378,9 @@ plot.FDX <- function(
 rejection.path <- function(x, xlim = NULL, ylim = NULL, main = NULL, xlab = expression(zeta), ylab = "Number of Rejections", verticals = FALSE, pch = 19, ref.show = FALSE, ref.col = "gray", ref.lty = 2, ref.lwd = 2, ...){
   if(!is(x, "FDX")) stop("'x' must be an object of class 'FDX'!")
   # number of hypotheses
-  m <- length(x$Data$raw.pvalues)
+  m <- length(x$Data$Raw.pvalues)
   # number of BH rejections
-  num.rejections.BH <- sum(p.adjust(x$Data$raw.pvalues, "BH") <= x$FDP.threshold)
+  num.rejections.BH <- sum(p.adjust(x$Data$Raw.pvalues, "BH") <= x$Data$FDP.threshold)
   
   # create step function
   ecdf.env <- environment(ecdf(x$Adjusted))
@@ -380,8 +393,8 @@ rejection.path <- function(x, xlim = NULL, ylim = NULL, main = NULL, xlab = expr
   if(is.null(xlim)) xlim <- c(0, 1)
   if(is.null(ylim)) ylim <- c(0, min(m, 2 * stepfun.x(0.5)))
   if(is.null(main)){
-    main <- bquote(bold("Rejection path for"~alpha==.(as.character(x$FDP.threshold))))
-    if(!exists('add', where = lst) || (exists('add', where = lst) && !lst$add)) subt <- x$Method
+    main <- bquote(bold("Rejection path for"~alpha==.(as.character(x$Data$FDP.threshold))))
+    if(!exists('add', where = lst) || (exists('add', where = lst) && !lst$add)) subt <- x$Data$Method
   }
   
   plot.stepfun(stepfun.x, xlim = xlim, ylim = ylim, main = main, xlab = xlab, ylab = ylab, verticals = verticals, pch = pch, ...)
