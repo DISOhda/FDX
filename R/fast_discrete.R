@@ -4,10 +4,23 @@
 #' Fast application of discrete procedures
 #' 
 #' @description
+#' `r lifecycle::badge('deprecated')`
+#' 
 #' Applies the \[DLR\], \[DGR\] or \[DPB\] procedures, without computing the
 #' critical values, to a data set of 2 x 2 contingency tables using Fisher's
 #' exact test.
 #' 
+#' **Note**: These functions are deprecated and will be removed in a future
+#' version. Please use (e.g.) [`direct.discrete.*()`][direct.discrete] with
+#' `test.fun = DiscreteTests::fisher.test.pv` and (optional) 
+#' `preprocess.fun = DiscreteDatasets::reconstruct_two` or 
+#' `preprocess.fun = DiscreteDatasets::reconstruct_four` instead. Alternatively,
+#' use a pipeline like\cr
+#' `data |>`\cr
+#' `  DiscreteDatasets::reconstruct_*(<args>) |>`\cr
+#' `  DiscreteTests::*.test.pv(<args>) |>`\cr
+#' `  discrete.*(<args>)`.
+#'
 #' @templateVar alpha TRUE
 #' @templateVar zeta TRUE
 #' @templateVar direction TRUE
@@ -120,7 +133,7 @@ fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc",
   return(out)
 }
 
-#' @name direct.Discrete
+#' @name direct.discrete
 #' 
 #' @title 
 #' Direct Application of Multiple Testing Procedures to Dataset
@@ -229,7 +242,7 @@ direct.discrete.LR <- function(
   return(out)
 }
 
-#' @name direct.Discrete
+#' @name direct.discrete
 #' @importFrom DiscreteFDR generate.pvalues
 #' @export
 direct.discrete.GR <- function(
@@ -264,7 +277,7 @@ direct.discrete.GR <- function(
   return(out)
 }
 
-#' @name direct.Discrete
+#' @name direct.discrete
 #' @importFrom DiscreteFDR generate.pvalues
 #' @export
 direct.discrete.PB <- function(

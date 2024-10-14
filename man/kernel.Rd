@@ -137,6 +137,12 @@ calculation of critical values. Kernels followed by ".crit", e.g.
 \code{kernel.DGR.crit}, compute and return these critical values, while
 kernels ending in ".fast" only transform p-values and are therefore faster.
 The end user should not use these functions directly.
+
+\strong{Note}: As of version 2.0, these functions are purely internal functions!
+As a consequence, they have to be called directly via \code{:::}, e.g.
+\code{FDX:::kernel_DGR_fast()}. But users should \strong{not} rely on them, as
+parameters (including their names, order, etc.) may be changed without
+notice!
 }
 \examples{
 X1 <- c(4, 2, 2, 14, 6, 9, 4, 0, 1)

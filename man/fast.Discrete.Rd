@@ -89,9 +89,22 @@ A \code{FDX} S3 class object whose elements are:
 \item{Data$Data.name}{the respective variable name(s) of the input data.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
 Applies the [DLR], [DGR] or [DPB] procedures, without computing the
 critical values, to a data set of 2 x 2 contingency tables using Fisher's
 exact test.
+
+\strong{Note}: These functions are deprecated and will be removed in a future
+version. Please use (e.g.) \code{\link[=direct.discrete]{direct.discrete.*()}} with
+\code{test.fun = DiscreteTests::fisher.test.pv} and (optional)
+\code{preprocess.fun = DiscreteDatasets::reconstruct_two} or
+\code{preprocess.fun = DiscreteDatasets::reconstruct_four} instead. Alternatively,
+use a pipeline like\cr
+\verb{data |>}\cr
+\verb{  DiscreteDatasets::reconstruct_*(<args>) |>}\cr
+\verb{  DiscreteTests::*.test.pv(<args>) |>}\cr
+\verb{  discrete.*(<args>)}.
 }
 \examples{
 
