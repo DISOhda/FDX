@@ -2,8 +2,10 @@
 ^\.Rproj\.user$
 ^.*\.github$
 ^cran-comments\.md$
-^man-roxygen$
-^src-i386$
-^src-x64$
 ^CRAN-RELEASE$
 ^CRAN-SUBMISSION$
+^man-roxygen$
+^R/old$
+^src/old$
+^src-i386$
+^src-x64$
