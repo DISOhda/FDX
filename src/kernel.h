@@ -64,16 +64,16 @@
 //' 
 //' # If not searching for critical constants, we use only the observed p-values
 //' sorted.pvals <- sort(raw.pvalues)
-//' y.DLR.fast <- kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
-//' y.NDGR.fast <- kernel_DGR_fast(pCDFlist, sorted.pvals, FALSE)$pval.transf
+//' y.DLR.fast <- FDX:::kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
+//' y.NDGR.fast <- FDX:::kernel_DGR_fast(pCDFlist, sorted.pvals, FALSE)$pval.transf
 //' # transformed values
 //' y.DLR.fast
 //' y.NDGR.fast
 //' 
 //' # compute support
 //' pv.list <- sort(unique(unlist(pCDFlist)))
-//' y.DGR.crit <- kernel_DGR_crit(pCDFlist, pv.list, sorted.pvals, TRUE)
-//' y.NDPB.crit <- kernel_DPB_crit(pCDFlist, pv.list, sorted.pvals, FALSE)
+//' y.DGR.crit <- FDX:::kernel_DGR_crit(pCDFlist, pv.list, sorted.pvals, TRUE)
+//' y.NDPB.crit <- FDX:::kernel_DPB_crit(pCDFlist, pv.list, sorted.pvals, FALSE)
 //' # critical constants
 //' y.DGR.crit$crit.consts
 //' y.NDPB.crit$crit.consts

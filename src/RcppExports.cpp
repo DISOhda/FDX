@@ -156,102 +156,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// kernel_DLR_fast2
-NumericVector kernel_DLR_fast2(const List& pCDFlist, const NumericVector& pvalues, const bool adaptive, const double alpha, const bool stepUp, const double zeta, const NumericVector& support);
-RcppExport SEXP _FDX_kernel_DLR_fast2(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP stepUpSEXP, SEXP zetaSEXP, SEXP supportSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
-    Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
-    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< const bool >::type stepUp(stepUpSEXP);
-    Rcpp::traits::input_parameter< const double >::type zeta(zetaSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type support(supportSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DLR_fast2(pCDFlist, pvalues, adaptive, alpha, stepUp, zeta, support));
-    return rcpp_result_gen;
-END_RCPP
-}
-// kernel_DLR_crit2
-List kernel_DLR_crit2(const List& pCDFlist, const NumericVector& pvalues, const NumericVector& sorted_pv, const bool adaptive, const double alpha, const double zeta, const bool stepUp);
-RcppExport SEXP _FDX_kernel_DLR_crit2(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP sorted_pvSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP zetaSEXP, SEXP stepUpSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sorted_pv(sorted_pvSEXP);
-    Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
-    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< const double >::type zeta(zetaSEXP);
-    Rcpp::traits::input_parameter< const bool >::type stepUp(stepUpSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DLR_crit2(pCDFlist, pvalues, sorted_pv, adaptive, alpha, zeta, stepUp));
-    return rcpp_result_gen;
-END_RCPP
-}
-// kernel_DGR_fast2
-List kernel_DGR_fast2(const List& pCDFlist, const NumericVector& pvalues, const bool adaptive, const double alpha);
-RcppExport SEXP _FDX_kernel_DGR_fast2(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
-    Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
-    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DGR_fast2(pCDFlist, pvalues, adaptive, alpha));
-    return rcpp_result_gen;
-END_RCPP
-}
-// kernel_DGR_crit2
-List kernel_DGR_crit2(const List& pCDFlist, const NumericVector& pvalues, const NumericVector& sorted_pv, const bool adaptive, const double alpha, const double zeta);
-RcppExport SEXP _FDX_kernel_DGR_crit2(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP sorted_pvSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP zetaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sorted_pv(sorted_pvSEXP);
-    Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
-    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< const double >::type zeta(zetaSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DGR_crit2(pCDFlist, pvalues, sorted_pv, adaptive, alpha, zeta));
-    return rcpp_result_gen;
-END_RCPP
-}
-// kernel_DPB_fast2
-NumericVector kernel_DPB_fast2(const List& pCDFlist, const NumericVector& pvalues, const bool adaptive, const double alpha, const bool exact);
-RcppExport SEXP _FDX_kernel_DPB_fast2(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP exactSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
-    Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
-    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< const bool >::type exact(exactSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DPB_fast2(pCDFlist, pvalues, adaptive, alpha, exact));
-    return rcpp_result_gen;
-END_RCPP
-}
-// kernel_DPB_crit2
-List kernel_DPB_crit2(const List& pCDFlist, const NumericVector& pvalues, const NumericVector& sorted_pv, const bool adaptive, const double alpha, const double zeta, const bool exact);
-RcppExport SEXP _FDX_kernel_DPB_crit2(SEXP pCDFlistSEXP, SEXP pvaluesSEXP, SEXP sorted_pvSEXP, SEXP adaptiveSEXP, SEXP alphaSEXP, SEXP zetaSEXP, SEXP exactSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List& >::type pCDFlist(pCDFlistSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type pvalues(pvaluesSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sorted_pv(sorted_pvSEXP);
-    Rcpp::traits::input_parameter< const bool >::type adaptive(adaptiveSEXP);
-    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< const double >::type zeta(zetaSEXP);
-    Rcpp::traits::input_parameter< const bool >::type exact(exactSEXP);
-    rcpp_result_gen = Rcpp::wrap(kernel_DPB_crit2(pCDFlist, pvalues, sorted_pv, adaptive, alpha, zeta, exact));
-    return rcpp_result_gen;
-END_RCPP
-}
 // geom_weight
 NumericVector geom_weight(const NumericVector& pvalues, const NumericVector& weights);
 RcppExport SEXP _FDX_geom_weight(SEXP pvaluesSEXP, SEXP weightsSEXP) {
@@ -275,12 +179,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_FDX_kernel_DPB_fast", (DL_FUNC) &_FDX_kernel_DPB_fast, 6},
     {"_FDX_kernel_DPB_crit", (DL_FUNC) &_FDX_kernel_DPB_crit, 8},
     {"_FDX_kernel_wPB_fast", (DL_FUNC) &_FDX_kernel_wPB_fast, 5},
-    {"_FDX_kernel_DLR_fast2", (DL_FUNC) &_FDX_kernel_DLR_fast2, 7},
-    {"_FDX_kernel_DLR_crit2", (DL_FUNC) &_FDX_kernel_DLR_crit2, 7},
-    {"_FDX_kernel_DGR_fast2", (DL_FUNC) &_FDX_kernel_DGR_fast2, 4},
-    {"_FDX_kernel_DGR_crit2", (DL_FUNC) &_FDX_kernel_DGR_crit2, 6},
-    {"_FDX_kernel_DPB_fast2", (DL_FUNC) &_FDX_kernel_DPB_fast2, 5},
-    {"_FDX_kernel_DPB_crit2", (DL_FUNC) &_FDX_kernel_DPB_crit2, 7},
     {"_FDX_geom_weight", (DL_FUNC) &_FDX_geom_weight, 2},
     {NULL, NULL, 0}
 };
