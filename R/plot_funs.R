@@ -378,7 +378,7 @@ plot.FDX <- function(
 #' 
 #' @return
 #' Invisibly returns a `stepfun` object that computes the number of
-#' rejectionsin dependence on the exceedance probability `zeta`.
+#' rejections in dependence on the exceedance probability `zeta`.
 #' 
 #' @template example
 #' @examples
