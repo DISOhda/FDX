@@ -6,13 +6,13 @@
 #' <%=ifelse(exists("Weighting") && Weighting, "\\item{Weighted}{weighted \\eqn{p}-values.}","") %>
 #' \item{Adjusted}{adjusted \eqn{p}-values<%=ifelse(exists("direction") && direction, " (only for step-down direction)", "")%>.}
 #' \item{Critical.values}{critical values (only exists if computations where performed with `critical.values = TRUE`).}
-#' \item{Select}{list with data related to \eqn{p}-value selection.}
-#' \item{Select$Threshold}{\eqn{p}-value selection `threshold` (only exists if `threshold < 1`).}
-#' \item{Select$Effective.Thresholds}{results of each \eqn{p}-value CDF evaluated at the selection threshold (only exists if `threshold < 1`).}
-#' \item{Select$Pvalues}{selected \eqn{p}-values that are \eqn{\leq} selection `threshold` (only exists if `threshold < 1`).}
-#' \item{Select$Indices}{indices of \eqn{p}-values \eqn{\leq} selection `threshold` (only exists if `threshold < 1`).}
-#' \item{Select$Scaled}{scaled selected \eqn{p}-values (only exists if `threshold < 1`).}
-#' \item{Select$Number}{number of selected \eqn{p}-values \eqn{\leq} `threshold` (only exists if `threshold < 1`).}
+#' \item{Select}{list with data related to \eqn{p}-value selection; only exists if `threshold < 1`.}
+#' \item{Select$Threshold}{\eqn{p}-value selection `threshold`.}
+#' \item{Select$Effective.Thresholds}{results of each \eqn{p}-value CDF evaluated at the selection threshold.}
+#' \item{Select$Pvalues}{selected \eqn{p}-values that are \eqn{\leq} selection `threshold`.}
+#' \item{Select$Indices}{indices of \eqn{p}-values \eqn{\leq} selection `threshold`.}
+#' \item{Select$Scaled}{scaled selected \eqn{p}-values.}
+#' \item{Select$Number}{number of selected \eqn{p}-values \eqn{\leq} `threshold`.}
 #' \item{Data}{list with input data.}
 #' \item{Data$Method}{character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
 #' \item{Data$Raw.pvalues}{all observed raw \eqn{p}-values.}

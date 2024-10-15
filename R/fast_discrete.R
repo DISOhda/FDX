@@ -94,7 +94,15 @@
 #' @importFrom DiscreteFDR fisher.pvalues.support
 #' @importFrom lifecycle deprecate_soft
 #' @export
-fast.Discrete.LR <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, direction = "sd", adaptive = TRUE){
+fast.Discrete.LR <- function(
+    counts,
+    alternative = "greater",
+    input = "noassoc",
+    alpha = 0.05,
+    zeta = 0.5,
+    direction = "sd",
+    adaptive = TRUE
+) {
   deprecate_soft("2.0.0", "fast.Discrete.LR()", "direct.discrete.LR()")
   
   data.formatted <- fisher.pvalues.support(counts, alternative, input)
@@ -109,7 +117,14 @@ fast.Discrete.LR <- function(counts, alternative = "greater", input = "noassoc",
 
 #' @rdname fast.Discrete
 #' @export
-fast.Discrete.GR <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, adaptive = TRUE){
+fast.Discrete.GR <- function(
+    counts,
+    alternative = "greater",
+    input = "noassoc",
+    alpha = 0.05,
+    zeta = 0.5,
+    adaptive = TRUE
+) {
   deprecate_soft("2.0.0", "fast.Discrete.GR()", "direct.discrete.GR()")
   
   data.formatted <- fisher.pvalues.support(counts, alternative, input)
@@ -124,7 +139,15 @@ fast.Discrete.GR <- function(counts, alternative = "greater", input = "noassoc",
 
 #' @rdname fast.Discrete
 #' @export
-fast.Discrete.PB <- function(counts, alternative = "greater", input = "noassoc", alpha = 0.05, zeta = 0.5, adaptive = TRUE, exact = FALSE){
+fast.Discrete.PB <- function(
+    counts,
+    alternative = "greater",
+    input = "noassoc",
+    alpha = 0.05,
+    zeta = 0.5,
+    adaptive = TRUE,
+    exact = FALSE
+) {
   deprecate_soft("2.0.0", "fast.Discrete.PB()", "direct.discrete.PB()")
   
   data.formatted <- fisher.pvalues.support(counts, alternative, input)
