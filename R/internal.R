@@ -335,6 +335,7 @@ discrete.fdx.int <- function(
   return(output)
 }
 
+#' @importFrom stats pbinom
 continuous.fdx.int <- function(
     pvec,
     method      = "GR",
