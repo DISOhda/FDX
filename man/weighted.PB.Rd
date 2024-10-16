@@ -62,13 +62,13 @@ A \code{FDX} S3 class object whose elements are:
 \item{Weighted}{weighted \eqn{p}-values.}
 \item{Adjusted}{adjusted \eqn{p}-values.}
 \item{Critical.values}{critical values (only exists if computations where performed with \code{critical.values = TRUE}).}
-\item{Select}{list with data related to \eqn{p}-value selection; only exists if \code{threshold < 1}.}
-\item{Select$Threshold}{\eqn{p}-value selection \code{threshold}.}
+\item{Select}{list with data related to \eqn{p}-value selection; only exists if \code{select.threshold < 1}.}
+\item{Select$Threshold}{\eqn{p}-value selection threshold.}
 \item{Select$Effective.Thresholds}{results of each \eqn{p}-value CDF evaluated at the selection threshold.}
-\item{Select$Pvalues}{selected \eqn{p}-values that are \eqn{\leq} selection \code{threshold}.}
-\item{Select$Indices}{indices of \eqn{p}-values \eqn{\leq} selection \code{threshold}.}
+\item{Select$Pvalues}{selected \eqn{p}-values that are \eqn{\leq} selection threshold.}
+\item{Select$Indices}{indices of \eqn{p}-values \eqn{\leq} selection threshold.}
 \item{Select$Scaled}{scaled selected \eqn{p}-values.}
-\item{Select$Number}{number of selected \eqn{p}-values \eqn{\leq} \code{threshold}.}
+\item{Select$Number}{number of selected \eqn{p}-values \eqn{\leq} selection threshold.}
 \item{Data}{list with input data.}
 \item{Data$Method}{character string describing the used algorithm, e.g. 'Discrete Lehmann-Romano procedure (step-up)'.}
 \item{Data$Raw.pvalues}{all observed raw \eqn{p}-values.}
