@@ -162,6 +162,7 @@ pCDFlist <- test.results$get_pvalue_supports()
 
 alpha <- 0.05
 
+\dontrun{
 # If not searching for critical constants, we use only the observed p-values
 sorted.pvals <- sort(raw.pvalues)
 y.DLR.fast <- FDX:::kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
@@ -180,6 +181,7 @@ y.NDPB.crit$crit.consts
 # transformed values
 y.DGR.crit$pval.transf
 y.NDPB.crit$pval.transf
+}
 
 }
 \seealso{

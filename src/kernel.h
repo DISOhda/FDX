@@ -62,6 +62,7 @@
 //' 
 //' alpha <- 0.05
 //' 
+//' \dontrun{
 //' # If not searching for critical constants, we use only the observed p-values
 //' sorted.pvals <- sort(raw.pvalues)
 //' y.DLR.fast <- FDX:::kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
@@ -80,6 +81,7 @@
 //' # transformed values
 //' y.DGR.crit$pval.transf
 //' y.NDPB.crit$pval.transf
+//' }
 //' 
 //' @return
 //' For ".fast" kernels, a vector of transformed p-values is returned; ".crit"
@@ -95,62 +97,62 @@ struct tau_m_results{
   std::vector<double> eval;
 };
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 NumericVector kernel_DLR_fast(const List &pCDFlist, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const bool stepUp = false, const double zeta = 0.5, const NumericVector &support = NumericVector(), const Nullable<IntegerVector> &pCDFcounts = R_NilValue);
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 List kernel_DLR_crit(const List &pCDFlist, const NumericVector &support, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool stepUp = false, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);
 
 
 ////////// Weighted Lehmann-Romano
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 NumericVector kernel_wLR_fast(const NumericVector &sorted_w_pv, const NumericVector &weights, double alpha = 0.05, bool geom_weighting = false);
 
 
 ////////// Discrete Guo-Romano
   
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 List kernel_DGR_fast(const List &pCDFlist, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 List kernel_DGR_crit(const List &pCDFlist, const NumericVector &support, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);
 
 
 ////////// Weighted Guo-Romano
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 NumericVector kernel_wGR_fast(const NumericVector &sorted_w_pv, const NumericVector &weights, double alpha = 0.05, bool geom_weighting = false);
 
 
 ////////// Discrete Poisson-Binomial
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 NumericVector kernel_DPB_fast(const List &pCDFlist, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const bool exact = true, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);//, const Nullable<List> &pCDFindices = R_NilValue);
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 List kernel_DPB_crit(const List &pCDFlist, const NumericVector &support, const NumericVector &sorted_pv, const bool adaptive = true, const double alpha = 0.05, const double zeta = 0.5, const bool exact = true, const Nullable<IntegerVector> &pCDFcounts = R_NilValue);//, const Nullable<List> &pCDFindices = R_NilValue);
 
 
 ////////// Weighted Poisson-Binomial
 
+///' @export
 //' @rdname kernel
-//' @export
 // [[Rcpp::export]]
 NumericVector kernel_wPB_fast(const NumericVector &sorted_w_pv, const NumericVector &weights, double alpha = 0.05, bool geom_weighting = false, bool exact = true);

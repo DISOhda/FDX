@@ -62,6 +62,7 @@
 #' 
 #' alpha <- 0.05
 #' 
+#' \dontrun{
 #' # If not searching for critical constants, we use only the observed p-values
 #' sorted.pvals <- sort(raw.pvalues)
 #' y.DLR.fast <- FDX:::kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
@@ -80,6 +81,7 @@
 #' # transformed values
 #' y.DGR.crit$pval.transf
 #' y.NDPB.crit$pval.transf
+#' }
 #' 
 #' @return
 #' For ".fast" kernels, a vector of transformed p-values is returned; ".crit"
@@ -89,55 +91,46 @@
 NULL
 
 #' @rdname kernel
-#' @export
 kernel_DLR_fast <- function(pCDFlist, sorted_pv, adaptive = TRUE, alpha = 0.05, stepUp = FALSE, zeta = 0.5, support = numeric(), pCDFcounts = NULL) {
     .Call('_FDX_kernel_DLR_fast', PACKAGE = 'FDX', pCDFlist, sorted_pv, adaptive, alpha, stepUp, zeta, support, pCDFcounts)
 }
 
 #' @rdname kernel
-#' @export
 kernel_DLR_crit <- function(pCDFlist, support, sorted_pv, adaptive = TRUE, alpha = 0.05, zeta = 0.5, stepUp = FALSE, pCDFcounts = NULL) {
     .Call('_FDX_kernel_DLR_crit', PACKAGE = 'FDX', pCDFlist, support, sorted_pv, adaptive, alpha, zeta, stepUp, pCDFcounts)
 }
 
 #' @rdname kernel
-#' @export
 kernel_wLR_fast <- function(sorted_w_pv, weights, alpha = 0.05, geom_weighting = FALSE) {
     .Call('_FDX_kernel_wLR_fast', PACKAGE = 'FDX', sorted_w_pv, weights, alpha, geom_weighting)
 }
 
 #' @rdname kernel
-#' @export
 kernel_DGR_fast <- function(pCDFlist, sorted_pv, adaptive = TRUE, alpha = 0.05, pCDFcounts = NULL) {
     .Call('_FDX_kernel_DGR_fast', PACKAGE = 'FDX', pCDFlist, sorted_pv, adaptive, alpha, pCDFcounts)
 }
 
 #' @rdname kernel
-#' @export
 kernel_DGR_crit <- function(pCDFlist, support, sorted_pv, adaptive = TRUE, alpha = 0.05, zeta = 0.5, pCDFcounts = NULL) {
     .Call('_FDX_kernel_DGR_crit', PACKAGE = 'FDX', pCDFlist, support, sorted_pv, adaptive, alpha, zeta, pCDFcounts)
 }
 
 #' @rdname kernel
-#' @export
 kernel_wGR_fast <- function(sorted_w_pv, weights, alpha = 0.05, geom_weighting = FALSE) {
     .Call('_FDX_kernel_wGR_fast', PACKAGE = 'FDX', sorted_w_pv, weights, alpha, geom_weighting)
 }
 
 #' @rdname kernel
-#' @export
 kernel_DPB_fast <- function(pCDFlist, sorted_pv, adaptive = TRUE, alpha = 0.05, exact = TRUE, pCDFcounts = NULL) {
     .Call('_FDX_kernel_DPB_fast', PACKAGE = 'FDX', pCDFlist, sorted_pv, adaptive, alpha, exact, pCDFcounts)
 }
 
 #' @rdname kernel
-#' @export
 kernel_DPB_crit <- function(pCDFlist, support, sorted_pv, adaptive = TRUE, alpha = 0.05, zeta = 0.5, exact = TRUE, pCDFcounts = NULL) {
     .Call('_FDX_kernel_DPB_crit', PACKAGE = 'FDX', pCDFlist, support, sorted_pv, adaptive, alpha, zeta, exact, pCDFcounts)
 }
 
 #' @rdname kernel
-#' @export
 kernel_wPB_fast <- function(sorted_w_pv, weights, alpha = 0.05, geom_weighting = FALSE, exact = TRUE) {
     .Call('_FDX_kernel_wPB_fast', PACKAGE = 'FDX', sorted_w_pv, weights, alpha, geom_weighting, exact)
 }
