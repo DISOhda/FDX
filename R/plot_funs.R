@@ -17,7 +17,7 @@
 #' 
 #' @details
 #' If `x` does not contain results of a weighting or selection approach, a
-#' warning is issued and a histogram of the raw $p$-values is drawn. 
+#' warning is issued and a histogram of the raw p-values is drawn. 
 #' 
 #' @return
 #' An object of class `histogram`.
@@ -100,13 +100,15 @@ hist.FDX <- function(
   )
   
   # call 'hist'
-  r <- do.call(hist, lst)
+  fig <- do.call(hist, lst)
   
-  r$xname <- deparse(substitute(x))
+  # add input data variable name to result
+  fig$xname <- deparse(substitute(x))
   
-  plot <- if(exists('plot', lst)) lst$plot else TRUE
-  
-  if(plot) return(invisible(r)) else return(r)
+  # output
+  if(ifelse(exists('plot', lst), lst$plot, TRUE))
+    return(invisible(fig)) else
+      return(fig)
 }
 
 
