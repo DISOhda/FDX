@@ -5,9 +5,7 @@
 #' 
 #' @keywords internal
 #' 
-#' @description
-#' `r lifecycle::badge('deprecated')`
-#' 
+#' @description 
 #' Constructs the observed p-values from the raw observed p-values, by rounding
 #' them to their nearest neighbor matching with the supports of their
 #' respective CDFs (as in function `p.discrete.adjust()` of package
@@ -20,7 +18,7 @@
 #' Well computed raw p-values should already belong to their respective CDF
 #' support. So this function is called at the beginning of [`discrete.GR()`],
 #' [`discrete.LR()`], [`discrete.PB()`] and their respective wrappers, just in
-#' case raw $p$-values may be biased.
+#' case raw p-values may be biased.
 #'
 #' For each raw p-value that needs to be rounded, a warning is issued.
 #'
@@ -45,35 +43,36 @@
 #' A vector where each raw p-value has been replaced by its nearest neighbor, if
 #' necessary.
 #'
-match.pvals <- function(test.results, pCDFlist, pCDFlist.indices = NULL){
+match.pvals <- function(test.results, pCDFlist, pCDFlist.indices = NULL) {
   m <- length(test.results)
-  if(!is.null(pCDFlist.indices)){
+  if(!is.null(pCDFlist.indices)) {
     idx <- unlist(pCDFlist.indices)
     counts <- sapply(pCDFlist.indices, length)
     pCDFlist <- rep(pCDFlist, counts)[order(idx)]
   }
   n <- length(pCDFlist)
-  if(m > 0 && m == n){
+  if(m > 0 && m == n) {
     pvec <- test.results
     in.CDF <- numeric(m)
-    for (k in seq_len(m)) {
+    for(k in seq_len(m)) {
       in.CDF[k] <- match(pvec[k], pCDFlist[[k]])
-      if (is.na(in.CDF[k])){
+      if(is.na(in.CDF[k])) {
         in.CDF[k] <- which.min(abs(pCDFlist[[k]] - pvec[k]))
         pvec[k] <- pCDFlist[[k]][in.CDF[k]]
         ordinal <- "th"
-        if (k%%10==1) ordinal <- "st"
-        if (k%%10==2) ordinal <- "nd"
-        if (k%%10==3) ordinal <- "rd"
-        if (k%%100-k%%10==10) ordinal <- "th"
+        if(k %% 10 == 1) ordinal <- "st"
+        if(k %% 10 == 2) ordinal <- "nd"
+        if(k %% 10 == 3) ordinal <- "rd"
+        if(k %% 100 - k %% 10 == 10) ordinal <- "th"
         warning("Since ", test.results[k], 
-                " is not a value of the CDF of the ",k,ordinal ," p-value,\n  the p-value is rounded to be ", 
-                pCDFlist[[k]][in.CDF[k]], call. = F)
+                " is not a value of the CDF of the ", k, ordinal, " p-value,\n",
+                "  the p-value is rounded to be ", pCDFlist[[k]][in.CDF[k]],
+                call. = F)
       }
     }
     return(pvec)
-  }else{
-    stop("'pCDFlist' and 'test.results' must have the same non-zero length")
+  } else {
+    stop("'pCDFlist' and 'test.results' do not match")
   }
 }
 
