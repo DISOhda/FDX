@@ -53,7 +53,7 @@ procedure.}
 }
 \value{
 Invisibly returns a \code{stepfun} object that computes the number of
-rejectionsin dependence on the exceedance probability \code{zeta}.
+rejections in dependence on the exceedance probability \code{zeta}.
 }
 \description{
 Displays the number of rejections of the raw p-values in a \code{FDX}

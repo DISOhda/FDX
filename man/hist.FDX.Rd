@@ -27,7 +27,7 @@ Computes a histogram of the raw p-values of a \code{FDX} object.
 }
 \details{
 If \code{x} does not contain results of a weighting or selection approach, a
-warning is issued and a histogram of the raw $p$-values is drawn.
+warning is issued and a histogram of the raw p-values is drawn.
 }
 \examples{
 X1 <- c(4, 2, 2, 14, 6, 9, 4, 0, 1)
