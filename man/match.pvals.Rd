@@ -18,8 +18,6 @@ A vector where each raw p-value has been replaced by its nearest neighbor, if
 necessary.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
-
 Constructs the observed p-values from the raw observed p-values, by rounding
 them to their nearest neighbor matching with the supports of their
 respective CDFs (as in function \code{p.discrete.adjust()} of package
@@ -32,7 +30,7 @@ respective CDFs (as in function \code{p.discrete.adjust()} of package
 Well computed raw p-values should already belong to their respective CDF
 support. So this function is called at the beginning of \code{\link[=discrete.GR]{discrete.GR()}},
 \code{\link[=discrete.LR]{discrete.LR()}}, \code{\link[=discrete.PB]{discrete.PB()}} and their respective wrappers, just in
-case raw $p$-values may be biased.
+case raw p-values may be biased.
 
 For each raw p-value that needs to be rounded, a warning is issued.
 }
