@@ -58,16 +58,4 @@ inline int binary_search(const NumericVector &vec, const double value, const int
 
 NumericVector sort_combine(const NumericVector &x, const NumericVector &y);
 
-
-
-//////////// OLD, TO BE REMOVED!!!!! /////////////////
-
 IntegerVector order(const NumericVector &x, bool descending);
-
-NumericVector stepfun(const NumericVector &x, const NumericVector &sfun);
-NumericVector stepfun_leq(const NumericVector &x, const NumericVector &sfun);
-
-NumericVector short_eff(const NumericVector &x, const double limit);
-
-void colsortdec(NumericMatrix &mat);
-void colsortasc(NumericMatrix &mat);

@@ -225,9 +225,6 @@ List kernel_DGR_crit(const List &pCDFlist, const NumericVector &support, const N
       for(j = 0; j < numPV; j++)
         eval_pv_rev_nolim(mat(k, j), pv[j], log_sfuns[k], pos[k]);
     
-    // sort columns in ascending order
-    //if(adaptive) colsortasc(mat);//colsortdec(mat);
-    
     // compute transformed p-value support (as in pv_list)
     // start with first p-value of the current chunk
     j = 0;
