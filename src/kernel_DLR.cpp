@@ -6,26 +6,27 @@ tau_m_results DLR_su_tau_m(const NumericVector* sfuns, const IntegerVector &CDFc
   // number of p-values to be transformed
   int numValues = support.length();
   
+  // index of tau_m
+  int idx_tau = 0;
+  // tau_m
+  double tau_m = 1;
+  // step function evaluations
+  std::vector<double> tau_m_eval(numCDF);
+  
   // last evaluation positions of step functions
   int* pos = new int[numCDF];
   for(int i = 0; i < numCDF; i++) pos[i] = lens[i] - 1;
   
   // positions for binary search
-  int pos_left = 0, pos_right = numValues - 1, pos_mid = numValues - 1;
-  // index of tau_m
-  int idx_tau = 0;
-  // tau_m
-  double tau_m = 0;
-  // step function evaluations
-  std::vector<double> f_eval(numCDF);
+  int idx_left = 0, idx_right = numValues - 1, idx_mid = numValues - 1;
   // bool variable to indicate end of search
   bool stop = false;
   // traverse step functions increasingly
   bool sf_incr = false;
-  // sum
-  double sum = 0;
   // loop index
   int i = 0;
+  // sum
+  double sum = 0;
   // number of remaining needed values for adaptive sum
   int rem = 0;
   // sorting order (for adaptive sum)
@@ -38,17 +39,17 @@ tau_m_results DLR_su_tau_m(const NumericVector* sfuns, const IntegerVector &CDFc
     // evaluate pCDFs
     if(sf_incr)
       for(i = 0; i < numCDF; i++)
-        eval_pv(f_eval[i], support[pos_mid], sfuns[i], lens[i], pos[i]);
+        eval_pv(tau_m_eval[i], support[idx_mid], sfuns[i], lens[i], pos[i]);
     else
       for(i = 0; i < numCDF; i++)
-        eval_pv_rev(f_eval[i], support[pos_mid], sfuns[i], pos[i]);
+        eval_pv_rev(tau_m_eval[i], support[idx_mid], sfuns[i], pos[i]);
     
     // compute sum in (21)
     sum = 0;
     if(adaptive) {
       NumericVector fracs(numCDF);
       for(i = 0; i < numCDF; i++)
-        fracs[i] = f_eval[i] / (1 - f_eval[i]);
+        fracs[i] = tau_m_eval[i] / (1 - tau_m_eval[i]);
       
       if(numCDF == numTests) {
         std::sort(fracs.begin(), fracs.end(), std::greater<double>());
@@ -57,41 +58,50 @@ tau_m_results DLR_su_tau_m(const NumericVector* sfuns, const IntegerVector &CDFc
       
       i = 0;
       rem = a;
-      while(i < numCDF && sum <= zeta * a && CDFcounts[ord[i]] <= rem){
+      while(i < numCDF && CDFcounts[ord[i]] <= rem){
         sum += CDFcounts[ord[i]] * fracs[ord[i]];
         rem -= CDFcounts[ord[i]];
         i++;
       }
       if(rem > 0) sum += rem * fracs[ord[i]];
     } else {
-      for(i = 0; i < numCDF && sum <= zeta * a; i++)
-        sum += CDFcounts[i] * f_eval[i] / (1 - f_eval[i]);
+      for(i = 0; i < numCDF; i++)
+        sum += CDFcounts[i] * tau_m_eval[i] / (1 - tau_m_eval[i]);
     }
     
     if(sum > zeta * a) {
-      if(pos_mid == 0) {
-        // no more p-value can satisfy condition
-        idx_tau = -1;
-        tau_m = 0;
-        std::fill(f_eval.begin(), f_eval.end(), 0.0);
+      if(idx_mid == 0) {
+        // no p-value can satisfy condition
+        idx_tau = idx_mid;
+        tau_m = support[idx_tau];
+        for(i = 0; i < numCDF; i++) 
+          eval_pv_rev(tau_m_eval[i], support[idx_tau], sfuns[i], pos[i]);
         stop = true;
+      } else if(idx_mid - idx_left == 1) {
+        stop = true;
+        // left p-value is the last one to satisfy condition
+        idx_tau = idx_left;
+        tau_m = support[idx_left];
+        for(i = 0; i < numCDF; i++) 
+          eval_pv_rev(tau_m_eval[i], support[idx_left], sfuns[i], pos[i]);
       } else {
         // tau_m MUST be smaller than the current p-value
-        pos_right = pos_mid;
-        pos_mid = pos_left + (pos_right - pos_left) / 2;
+        idx_right = idx_mid;
+        idx_mid = idx_left + (idx_mid - idx_left) / 2;
         sf_incr = false;
       }
-    } else if(sum <= zeta * a) {
+    } else {
       // tau_m COULD be larger than the current p-value
-      if(sum == zeta * a || pos_mid == numValues - 1 || pos_right - pos_mid == 1) {
+      if(idx_mid == numValues - 1 ||  sum == zeta * a || idx_right - idx_mid == 1) {
         // if difference between mid and right position equals 1 or the largest
-        //   p-value satisfies the condition, we found tau_m
-        idx_tau = pos_mid;
-        tau_m = support[pos_mid];
+        //   p-value satisfies the condition or sum equals threshold, then we
+        //   found tau_m
         stop = true;
+        idx_tau = idx_mid;
+        tau_m = support[idx_mid];
       } else {
-        pos_left = pos_mid;
-        pos_mid = pos_left + (pos_right - pos_left) / 2;
+        idx_left = idx_mid;
+        idx_mid = idx_left + (idx_right - idx_mid + 1) / 2;
         sf_incr = true;
       }
     }
@@ -100,7 +110,7 @@ tau_m_results DLR_su_tau_m(const NumericVector* sfuns, const IntegerVector &CDFc
   // garbage collection
   delete[] pos;
   //Rcout << tau_m << "\n";
-  return {tau_m, idx_tau, f_eval};
+  return {tau_m, idx_tau, tau_m_eval};
 }
 
 NumericVector kernel_DLR_fast(const List &pCDFlist, const NumericVector &sorted_pv, const bool adaptive, const double alpha, const bool stepUp, const double zeta, const NumericVector &support, const Nullable<IntegerVector> &pCDFcounts) {
