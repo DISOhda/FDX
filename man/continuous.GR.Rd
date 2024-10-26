@@ -117,7 +117,7 @@ summary(NGR.crit)
 Guo, W. & Romano, J. P. (2007). A generalized Sidak-Holm procedure and
 control of generalized error rates under independence.
 \emph{Statistical Applications in Genetics and Molecular Biology}, \emph{6}(1),
-Art. 3, 35 pp. (eletronic). \doi{10.2202/1544-6115.1247}
+Art. 3, 35 pp. (electronic). \doi{10.2202/1544-6115.1247}
 }
 \seealso{
 \code{\link{kernel}}, \code{\link{FDX-package}}, \code{\link[=continuous.LR]{continuous.LR()}},
