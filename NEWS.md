@@ -4,7 +4,7 @@
 -   Minor documentation corrections.
 -   Fixed bugs for discrete Lehmann-Romano procedure that could lead to
     incorrect results or to infinite loops.
--   Changed maintainer eMail address.
+-   Changed maintainer e-mail address.
 
 
 # FDX 2.0.0
