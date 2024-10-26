@@ -57,7 +57,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Florian Junge \email{florian.junge@h-da.de} (\href{https://orcid.org/0009-0001-6856-6938}{ORCID})
+\strong{Maintainer}: Florian Junge \email{diso.fbmn@h-da.de} (\href{https://orcid.org/0009-0001-6856-6938}{ORCID})
 
 Authors:
 \itemize{
