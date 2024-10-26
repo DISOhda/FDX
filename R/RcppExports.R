@@ -11,10 +11,10 @@
 #' \[HLR\], \[PB\] and \[HGR\]. The output is used by [`discrete.LR()`],
 #' [`discrete.PB()`] and [`discrete.GR()`], respectively.
 #' For each procedure, there is a kernel for fast computation and one for
-#' calculation of critical values. Kernels followed by ".crit", e.g.
-#' `kernel.DGR.crit`, compute and return these critical values, while
-#' kernels ending in ".fast" only transform p-values and are therefore faster.
-#' The end user should not use these functions directly.
+#' calculation of critical values. Kernel function names followed by `_crit`,
+#' e.g. `kernel_DGR_crit`, compute and return these critical values, while
+#' kernel functions ending with `_fast` only transform p-values and are
+#' therefore faster.
 #' 
 #' **Note**: As of version 2.0, these functions are purely internal functions!
 #' As a consequence, they have to be called directly via `:::`, e.g. 
@@ -84,9 +84,9 @@
 #' }
 #' 
 #' @return
-#' For ".fast" kernels, a vector of transformed p-values is returned; ".crit"
-#' kernels return a list object with critical constants (`$crit.consts`)
-#' and transformed p-values (`$pval.transf`).
+#' For `*_fast` kernels, a vector of transformed p-values is returned; `*_crit`
+#' kernels return a list object with critical constants (`$crit.consts`) and
+#' transformed p-values (`$pval.transf`).
 #' 
 NULL
 
