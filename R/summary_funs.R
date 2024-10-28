@@ -46,7 +46,7 @@
 #' @method summary FDX
 #' @export
 ## S3 method for class 'FDX'
-summary.FDX <- function(object, ...){
+summary.FDX <- function(object, ...) {
   if(!("FDX" %in% class(object)))
     return(summary(object))
   
@@ -65,55 +65,54 @@ summary.FDX <- function(object, ...){
   r <- i %in% object$Indices
   
   # create summary table
-  out <- c(object, list(Table = data.frame(
-    'Index' = i,
-    'P.value' = object$Data$Raw.pvalues
-  )))
+  tab <- data.frame(
+    Index = i,
+    P.value = object$Data$Raw.pvalues
+  )
   
   # add selection (T/F) and scaled p-values
-  if(select){
-    out$Table$Selected <- i %in% object$Select$Indices
-    out$Table$Scaled <- NA
-    out$Table$Scaled[out$Table$Selected] <- object$Select$Scaled
+  if(select) {
+    tab$Selected <- i %in% object$Select$Indices
+    tab$Scaled <- NA
+    tab$Scaled[tab$Selected] <- object$Select$Scaled
   }
   
   # add weights and weighted p-values; determine order
   if(weight) {
     # add weights and weighted p-values
-    out$Table <- data.frame(
-      out$Table,
-      'Weights' = out$Data$Weights,
-      'Weighted' = out$Weighted
-    )
+    tab$Weights <- out$Data$Weights
+    tab$Weighted <- out$Weighted
     # determine order of weighted p-values
-    o <- order(out$Table$Weighted, object$Data$Raw.pvalues)
+    o <- order(tab$Weighted, object$Data$Raw.pvalues)
   } else {
     if(select) {
       # determine order of scaled selected p-values
-      o <- order(out$Table$Scaled, object$Data$Raw.pvalues)
+      o <- order(tab$Scaled, object$Data$Raw.pvalues)
     } else
       # determine order of raw p-values
       o <- order(object$Data$Raw.pvalues)
   }
   
   # sort rows in ascending order
-  out$Table <- out$Table[o, ]
+  tab <- tab[o, ]
   
   # add critical constants (if present)
   if(exists('Critical.values', where = object)) {
-    out$Table$Critical.value <- object$Critical.values
+    tab$Critical.value <- object$Critical.values
   }
   
   # add adjusted p-values (if present)
   if(exists('Adjusted', where = object)) {
-    out$Table$Adjusted <- object$Adjusted[o]
+    tab$Adjusted <- object$Adjusted[o]
   }
   
   # add rejection decisions
-  out$Table <- data.frame(out$Table, 'Rejected' = r[o])
-  rownames(out$Table) <- i
+  tab <- data.frame(tab, 'Rejected' = r[o])
+  # if row names are numbers, rearrange them to represent sort order
+  if(all(rownames(tab) == tab$Index)) rownames(tab) <- i
   
   # return output object
+  out <- c(object, list(Table = tab))
   class(out) <- c("summary.FDX", class(object)) # basically a 'FDX' object, but with a summary table (just like 'lm' and 'summary.lm' classes)
   return(out)
 }
@@ -122,7 +121,7 @@ summary.FDX <- function(object, ...){
 #' @method print summary.FDX
 #' @export
 ## S3 method for class 'summary.FDX'
-print.summary.FDX <- function(x, max = NULL, ...){
+print.summary.FDX <- function(x, max = NULL, ...) {
   if(!("summary.FDX" %in% class(x)))
     return(print(x))
   
