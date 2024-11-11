@@ -58,11 +58,10 @@
 #'                          weighting.
 #'
 #' @template example
-#' @examples
+#' @examples \dontrun{
 #' 
 #' alpha <- 0.05
 #' 
-#' \dontrun{
 #' # If not searching for critical constants, we use only the observed p-values
 #' sorted.pvals <- sort(raw.pvalues)
 #' y.DLR.fast <- FDX:::kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)

@@ -159,10 +159,10 @@ library(DiscreteTests)  # for Fisher's exact test
 test.results <- fisher_test_pv(df)
 raw.pvalues <- test.results$get_pvalues()
 pCDFlist <- test.results$get_pvalue_supports()
+\dontrun{
 
 alpha <- 0.05
 
-\dontrun{
 # If not searching for critical constants, we use only the observed p-values
 sorted.pvals <- sort(raw.pvalues)
 y.DLR.fast <- FDX:::kernel_DLR_fast(pCDFlist, sorted.pvals, TRUE)
