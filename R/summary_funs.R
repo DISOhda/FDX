@@ -80,8 +80,8 @@ summary.FDX <- function(object, ...) {
   # add weights and weighted p-values; determine order
   if(weight) {
     # add weights and weighted p-values
-    tab$Weights <- out$Data$Weights
-    tab$Weighted <- out$Weighted
+    tab$Weights <- object$Data$Weights
+    tab$Weighted <- object$Weighted
     # determine order of weighted p-values
     o <- order(tab$Weighted, object$Data$Raw.pvalues)
   } else {
