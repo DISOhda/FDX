@@ -1,3 +1,9 @@
+# FDX 2.0.3
+
+-   Bugfix for wrong p-value CDF indices after selection which could cause
+    crashes.
+    
+
 # FDX 2.0.2
 
 -   If input p-values vector includes names, they are now included in the
