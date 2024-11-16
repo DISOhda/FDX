@@ -1,7 +1,7 @@
 # FDX 2.0.3
 
--   Bugfix for wrong p-value CDF indices after selection which could cause
-    crashes.
+-   Minor for wrong p-value CDF indices after selection. For the way they are
+    used, this was inconsequential, but may have caused problems in the future.
     
 
 # FDX 2.0.2
