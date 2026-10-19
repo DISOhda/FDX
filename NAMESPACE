@@ -55,38 +55,48 @@ export(weighted.GR)
 export(weighted.LR)
 export(weighted.PB)
 import(Rcpp)
-importFrom(DiscreteFDR,fisher.pvalues.support)
-importFrom(DiscreteFDR,generate.pvalues)
+importFrom(DiscreteFDR,
+  fisher.pvalues.support,
+  generate.pvalues
+)
 importFrom(PoissonBinomial,ppbinom)
-importFrom(Rcpp,evalCpp)
-importFrom(Rcpp,sourceCpp)
-importFrom(checkmate,assert)
-importFrom(checkmate,assert_integerish)
-importFrom(checkmate,assert_list)
-importFrom(checkmate,assert_numeric)
-importFrom(checkmate,assert_r6)
-importFrom(checkmate,assert_string)
-importFrom(checkmate,check_character)
-importFrom(checkmate,check_choice)
-importFrom(checkmate,check_numeric)
-importFrom(checkmate,check_r6)
-importFrom(checkmate,qassert)
-importFrom(graphics,abline)
-importFrom(graphics,hist)
-importFrom(graphics,legend)
-importFrom(graphics,lines)
-importFrom(graphics,mtext)
-importFrom(graphics,par)
-importFrom(graphics,plot)
-importFrom(graphics,points)
+importFrom(Rcpp,
+  evalCpp,
+  sourceCpp
+)
+importFrom(checkmate,
+  assert,
+  assert_integerish,
+  assert_list,
+  assert_numeric,
+  assert_r6,
+  assert_string,
+  check_character,
+  check_choice,
+  check_numeric,
+  check_r6,
+  qassert
+)
+importFrom(graphics,
+  abline,
+  hist,
+  legend,
+  lines,
+  mtext,
+  par,
+  plot,
+  points
+)
 importFrom(lifecycle,deprecate_soft)
 importFrom(methods,is)
 importFrom(pracma,fzero)
-importFrom(stats,ecdf)
-importFrom(stats,na.omit)
-importFrom(stats,p.adjust)
-importFrom(stats,pbinom)
-importFrom(stats,plot.stepfun)
-importFrom(stats,qbeta)
-importFrom(stats,stepfun)
+importFrom(stats,
+  ecdf,
+  na.omit,
+  p.adjust,
+  pbinom,
+  plot.stepfun,
+  qbeta,
+  stepfun
+)
 useDynLib(FDX)
