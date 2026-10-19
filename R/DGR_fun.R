@@ -67,6 +67,7 @@ DGR.default <- function(
     zeta             = zeta,
     adaptive         = TRUE,
     critical.values  = critical.values,
+    select.threshold = select.threshold,
     pCDFlist.indices = pCDFlist.indices,
     ...
   )
