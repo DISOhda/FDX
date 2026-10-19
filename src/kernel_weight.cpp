@@ -108,7 +108,7 @@ NumericVector kernel_wPB_fast(const NumericVector &sorted_w_pv, const NumericVec
       probs = geom_weight(NumericVector(numWeights[i], sorted_w_pv[i]), weights[Range(0, numWeights[i] - 1)]);
     else {
       probs = sorted_w_pv[i] * clone(weights)[Range(0, numWeights[i] - 1)];
-      probs = pmin(probs, NumericVector(numTests, 1.0));
+      probs = pmin(probs, 1.0);
     }
     // transformed values
     pval_transf[i] = ppbinom_vec(a, probs, int(exact), false)[i];
