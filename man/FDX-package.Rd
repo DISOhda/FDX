@@ -61,6 +61,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Florian Junge \email{diso.fbmn@h-da.de} (\href{https://orcid.org/0009-0001-6856-6938}{ORCID})
   \item Sebastian Döhler \email{sebastian.doehler@h-da.de} (\href{https://orcid.org/0000-0002-0321-6355}{ORCID})
 }
 

@@ -17,7 +17,7 @@ histogram is to be generated; must be one of \code{"raw"},
 \code{"selected"} or \code{"weighted"}.}
 
 \item{...}{further arguments to \code{\link[graphics:hist]{graphics::hist()}} or
-\code{\link[graphics:plothistogram]{graphics::plot.histogram()}}, respectively.}
+\code{\link[graphics:plot.histogram]{graphics::plot.histogram()}}, respectively.}
 }
 \value{
 An object of class \code{histogram}.
